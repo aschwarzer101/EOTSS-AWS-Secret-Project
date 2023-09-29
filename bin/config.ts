@@ -23,7 +23,7 @@ export function getConfig(): SystemConfig {
       enabled: false,
       engines: {
         aurora: {
-          enabled: true,
+          enabled: false,
         },
         opensearch: {
           enabled: false,
@@ -49,6 +49,11 @@ export function getConfig(): SystemConfig {
           provider: "bedrock",
           name: "amazon.titan-e1t-medium",
           dimensions: 4096,
+        },
+        {
+          provider: "bedrock",
+          name: "amazon.titan-embed-text-v1",
+          dimensions: 1536,
         },
         {
           provider: "openai",

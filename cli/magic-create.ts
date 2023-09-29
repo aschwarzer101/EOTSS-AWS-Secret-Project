@@ -12,11 +12,13 @@ import {
 } from "../lib/shared/types";
 import * as fs from "fs";
 import { exec } from "child_process";
-import { CodeBuild} from '@aws-sdk/client-codebuild'
-import { CloudWatchLogs } from '@aws-sdk/client-cloudwatch-logs'
-
+import { CodeBuild } from "@aws-sdk/client-codebuild";
+import { CloudWatchLogs } from "@aws-sdk/client-cloudwatch-logs";
+import { LIB_VERSION } from "./version";
 
 const versionRegExp = /\d+.\d+.\d+/;
+const arnRegExp = RegExp(/arn:aws:iam::\d+:role\/[\w-_]+/)
+const kendraIdRegExp = RegExp(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/)
 
 const embeddingModels = [
   {
@@ -35,6 +37,11 @@ const embeddingModels = [
     dimensions: 4096,
   },
   {
+    provider: "bedrock",
+    name: "amazon.titan-embed-text-v1",
+    dimensions: 1536,
+  },
+  {
     provider: "openai",
     name: "text-embedding-ada-002",
     dimensions: 1536,
@@ -49,7 +56,7 @@ const embeddingModels = [
   let program = new Command().description(
     "Creates a new chatbot configuration"
   );
-  program.version("3.0.0");
+  program.version(LIB_VERSION);
 
   program.option("-p, --prefix <prefix>", "The prefix for the stack");
 
@@ -64,6 +71,7 @@ const embeddingModels = [
       options.bedrockEndpoint = config.bedrock?.endpointUrl;
       options.bedrockRoleArn = config.bedrock?.roleArn;
       options.sagemakerLLMs = config.llms.sagemaker;
+      options.enableRag = config.rag.enabled;
       options.ragsToEnable = Object.keys(config.rag.engines).filter(
         (v: string) => (config.rag.engines as any)[v].enabled
       );
@@ -78,36 +86,51 @@ const embeddingModels = [
         let buildProjectName: string;
         const cp = exec(
           "npx cdk deploy GenAIChatBuildStack --require-approval never --ci --no-color",
-          async (err, stdout) => {
-            if (err) {
-              console.log(stdout);
-              console.log(err);
-              return;
-            }
-            console.log("\nBuilding ", buildProjectName);
-            const cbClient = new CodeBuild();
-            try {
-                const build = await cbClient.startBuild({projectName:buildProjectName});
-                async function checkBuild() {
-                    if ((await cbClient.batchGetBuilds({ids:[build.build?.id ?? ""]})).builds?.at(0)?.buildStatus == "IN_PROGRESS") {
-                        process.stdout.write(".")
-                        setTimeout(checkBuild, 1000);
+          (err, stdout) => {
+            (async () => {
+              if (err) {
+                console.log(stdout);
+                console.log(err);
+                return;
+              }
+              console.log("\nBuilding ", buildProjectName);
+              const cbClient = new CodeBuild();
+              try {
+                const build = await cbClient.startBuild({
+                  projectName: buildProjectName,
+                });
+                function checkBuild() {
+                  (async () => {
+                    if (
+                      (
+                        await cbClient.batchGetBuilds({
+                          ids: [build.build?.id ?? ""],
+                        })
+                      ).builds?.at(0)?.buildStatus == "IN_PROGRESS"
+                    ) {
+                      process.stdout.write(".");
+                      setTimeout(checkBuild, 1000);
                     } else {
-                        console.log("\n");
-                        const cwLogs = new CloudWatchLogs();
-                        const logs = await cwLogs.filterLogEvents({logGroupName: `/aws/codebuild/${buildProjectName}`, startTime: Date.now()-10*60*1000})
-                        logs.events?.forEach(e => process.stdout.write(e.message ?? ""));
+                      console.log("\n");
+                      const cwLogs = new CloudWatchLogs();
+                      const logs = await cwLogs.filterLogEvents({
+                        logGroupName: `/aws/codebuild/${buildProjectName}`,
+                        startTime: Date.now() - 10 * 60 * 1000,
+                      });
+                      logs.events?.forEach((e:any) =>
+                        process.stdout.write(e.message ?? "")
+                      );
                     }
+                  })();
                 }
                 setTimeout(checkBuild, 1000);
-            } catch (err) {
+              } catch (err) {
                 console.error(err);
-            }
-            
+              }
+            })();
           }
         );
         cp.stdout?.on("data", (data: string) => {
-          //console.log(data);
           process.stdout.write(".");
           if (data.includes("GenAIChatBuildStack.BuildProjectName")) {
             buildProjectName = data.split(" = ")[1].split("\n")[0];
@@ -172,7 +195,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
       name: "bedrockEndpoint",
       message: "Bedrock endpoint - leave as is for standard endpoint",
       initial() {
-        return `https://bedrock.${
+        return `https://bedrock-runtime.${
           (this as any).state.answers.bedrockRegion
         }.amazonaws.com`;
       },
@@ -183,7 +206,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
       message:
         "Cross account role arn to invoke Bedrock - leave empty if Bedrock is in same account",
       validate: (v: string) => {
-        const valid = RegExp(/arn:aws:iam::\d+:role\/[\w-_]+/).test(v);
+        const valid = arnRegExp.test(v);
         return v.length === 0 || valid;
       },
       initial: options.bedrockRoleArn || "",
@@ -191,7 +214,8 @@ async function processCreateOptions(options: any): Promise<boolean> {
     {
       type: "multiselect",
       name: "sagemakerLLMs",
-      message: "Which Sagemaker LLMs do you want to enable",
+      message:
+        "Which Sagemaker LLMs do you want to enable (enter for None, space to select)",
       choices: Object.values(SupportedSageMakerLLM),
       initial: options.sagemakerLLMs || [],
     },
@@ -207,9 +231,8 @@ async function processCreateOptions(options: any): Promise<boolean> {
       message: "Which datastores do you want to enable for RAG",
       choices: [
         { message: "Aurora", name: "aurora" },
-        // Not yet supported
-        // {message:'OpenSearch', name:'opensearch'},
-        // {message:'Kendra (managed)', name:'kendra'},
+        { message: "OpenSearch", name: "opensearch" },
+        { message: "Kendra (managed)", name: "kendra" },
       ],
       skip: function (): boolean {
         // workaround for https://github.com/enquirer/enquirer/issues/298
@@ -222,7 +245,10 @@ async function processCreateOptions(options: any): Promise<boolean> {
       type: "confirm",
       name: "kendra",
       message: "Do you want to add existing Kendra indexes",
-      initial: !!options.kendraExternal || false,
+      initial:
+        (options.kendraExternal !== undefined &&
+          options.kendraExternal.length > 0) ||
+        false,
       skip: function (): boolean {
         // workaround for https://github.com/enquirer/enquirer/issues/298
         (this as any).state._choices = (this as any).state.choices;
@@ -234,9 +260,6 @@ async function processCreateOptions(options: any): Promise<boolean> {
   const kendraExternal = [];
   let newKendra = answers.enableRag && answers.kendra;
 
-  // if (options.kendraExternal) {
-  //     options.kendraExternal.forEach((v: any) => console.log(v))
-  // }
   while (newKendra === true) {
     const kendraQ = [
       {
@@ -257,7 +280,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
         message:
           "Cross account role Arn to assume to call Kendra, leave empty if not needed",
         validate: (v: string) => {
-          const valid = RegExp(/arn:aws:iam::\d+:role\/[\w-_]+/).test(v);
+          const valid = arnRegExp.test(v);
           return v.length === 0 || valid;
         },
         initial: "",
@@ -267,7 +290,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
         name: "kendraId",
         message: "Kendra ID",
         validate(v: string) {
-          return RegExp(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/).test(v);
+          return kendraIdRegExp.test(v);
         },
       },
       {
@@ -326,7 +349,11 @@ async function processCreateOptions(options: any): Promise<boolean> {
         opensearch: {
           enabled: answers.ragsToEnable.includes("opensearch"),
         },
-        kendra: { enabled: false, external: [{}] },
+        kendra: {
+          enabled: false,
+          createIndex: false,
+          external: [{}],
+        },
       },
       embeddingsModels: [{}],
       crossEncoderModels: [
@@ -339,6 +366,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
     },
   };
   config.rag.engines.kendra.enabled = answers.ragsToEnable.includes("kendra");
+  config.rag.engines.kendra.createIndex = config.rag.engines.kendra.enabled;
   config.rag.engines.kendra.external = [...kendraExternal];
   config.rag.embeddingsModels = embeddingModels;
   config.rag.embeddingsModels.forEach((m: any) => {

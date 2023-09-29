@@ -59,6 +59,18 @@ export class LangChainInterface extends Construct {
           ?.secretArn as string,
         SAGEMAKER_RAG_MODELS_ENDPOINT:
           props.ragEngines?.sageMakerRagModelsEndpoint?.attrEndpointName ?? "",
+        OPEN_SEARCH_COLLECTION_ENDPOINT:
+          props.ragEngines?.openSearchVector?.openSearchCollectionEndpoint ??
+          "",
+        DEFAULT_KENDRA_INDEX_ID:
+          props.ragEngines?.kendraRetrieval?.kendraIndex?.attrId ?? "",
+        DEFAULT_KENDRA_INDEX_NAME:
+          props.ragEngines?.kendraRetrieval?.kendraIndex?.name ?? "",
+        DEFAULT_KENDRA_S3_DATA_SOURCE_ID:
+          props.ragEngines?.kendraRetrieval?.kendraS3DataSource?.attrId ?? "",
+        DEFAULT_KENDRA_S3_DATA_SOURCE_BUCKET_NAME:
+          props.ragEngines?.kendraRetrieval?.kendraS3DataSourceBucket
+            ?.bucketName ?? "",
       },
     });
 
@@ -69,7 +81,7 @@ export class LangChainInterface extends Construct {
           resources: ["*"],
         })
       );
-    
+
       if (props.config.bedrock?.roleArn) {
         requestHandler.addToRolePolicy(
           new iam.PolicyStatement({
@@ -90,6 +102,15 @@ export class LangChainInterface extends Construct {
     }
 
     if (props.ragEngines?.openSearchVector) {
+      requestHandler.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: ["aoss:APIAccessAll"],
+          resources: [
+            props.ragEngines?.openSearchVector.openSearchCollection.attrArn,
+          ],
+        })
+      );
+
       props.ragEngines.openSearchVector.addToAccessPolicy(
         "request-handler-langchain",
         [requestHandler.role?.roleArn],
@@ -107,6 +128,32 @@ export class LangChainInterface extends Construct {
           resources: [props.ragEngines?.sageMakerRagModelsEndpoint.ref],
         })
       );
+    }
+
+    if (props.ragEngines?.kendraRetrieval) {
+      props.ragEngines?.kendraRetrieval?.kendraS3DataSourceBucket?.grantRead(
+        requestHandler
+      );
+
+      if (props.ragEngines.kendraRetrieval.kendraIndex) {
+        requestHandler.addToRolePolicy(
+          new iam.PolicyStatement({
+            actions: ["kendra:Retrieve", "kendra:Query"],
+            resources: [props.ragEngines.kendraRetrieval.kendraIndex.attrArn],
+          })
+        );
+      }
+
+      for (const item of props.config.rag.engines.kendra.external || []) {
+        if (!item.roleArn) continue;
+
+        requestHandler.addToRolePolicy(
+          new iam.PolicyStatement({
+            actions: ["sts:AssumeRole"],
+            resources: [item.roleArn],
+          })
+        );
+      }
     }
 
     props.sessionsTable.grantReadWriteData(requestHandler);

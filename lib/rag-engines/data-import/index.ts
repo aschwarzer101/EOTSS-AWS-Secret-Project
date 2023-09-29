@@ -7,6 +7,8 @@ import { BatchJobs } from "./batch-jobs";
 import { RagDynamoDBTables } from "../rag-dynamodb-tables";
 import { FileImportWorkflow } from "./file-import-workflow";
 import { WebsiteCrawlingWorkflow } from "./website-crawling-workflow";
+import { OpenSearchVector } from "../opensearch-vector";
+import { KendraRetrieval } from "../kendra-retrieval";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as sqs from "aws-cdk-lib/aws-sqs";
 import * as lambda from "aws-cdk-lib/aws-lambda";
@@ -25,6 +27,8 @@ export interface DataImportProps {
   readonly shared: Shared;
   readonly auroraDatabase?: rds.DatabaseCluster;
   readonly ragDynamoDBTables: RagDynamoDBTables;
+  readonly openSearchVector?: OpenSearchVector;
+  readonly kendraRetrieval?: KendraRetrieval;
   readonly sageMakerRagModelsEndpoint?: sagemaker.CfnEndpoint;
   readonly workspacesTable: dynamodb.Table;
   readonly documentsTable: dynamodb.Table;
@@ -113,6 +117,7 @@ export class DataImport extends Construct {
         auroraDatabase: props.auroraDatabase,
         ragDynamoDBTables: props.ragDynamoDBTables,
         sageMakerRagModelsEndpoint: props.sageMakerRagModelsEndpoint,
+        openSearchVector: props.openSearchVector,
       }
     );
 
@@ -126,6 +131,7 @@ export class DataImport extends Construct {
         auroraDatabase: props.auroraDatabase,
         ragDynamoDBTables: props.ragDynamoDBTables,
         sageMakerRagModelsEndpoint: props.sageMakerRagModelsEndpoint,
+        openSearchVector: props.openSearchVector,
       }
     );
 
@@ -165,6 +171,8 @@ export class DataImport extends Construct {
           props.sageMakerRagModelsEndpoint?.attrEndpointName ?? "",
         FILE_IMPORT_WORKFLOW_ARN:
           fileImportWorkflow?.stateMachine.stateMachineArn ?? "",
+        DEFAULT_KENDRA_S3_DATA_SOURCE_BUCKET_NAME:
+          props.kendraRetrieval?.kendraS3DataSourceBucket?.bucketName ?? "",
       },
     });
 
@@ -174,6 +182,10 @@ export class DataImport extends Construct {
     props.shared.configParameter.grantRead(uploadHandler);
     props.workspacesTable.grantReadWriteData(uploadHandler);
     props.documentsTable.grantReadWriteData(uploadHandler);
+    props.kendraRetrieval?.kendraS3DataSourceBucket?.grantReadWrite(
+      uploadHandler
+    );
+
     ingestionQueue.grantConsumeMessages(uploadHandler);
     fileImportWorkflow.stateMachine.grantStartExecution(uploadHandler);
 

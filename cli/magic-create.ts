@@ -83,59 +83,7 @@ const embeddingModels = [
     }
     try {
       if (await processCreateOptions(options)) {
-        let buildProjectName: string;
-        const cp = exec(
-          "npx cdk deploy GenAIChatBuildStack --require-approval never --ci --no-color",
-          (err, stdout) => {
-            (async () => {
-              if (err) {
-                console.log(stdout);
-                console.log(err);
-                return;
-              }
-              console.log("\nBuilding ", buildProjectName);
-              const cbClient = new CodeBuild();
-              try {
-                const build = await cbClient.startBuild({
-                  projectName: buildProjectName,
-                });
-                function checkBuild() {
-                  (async () => {
-                    if (
-                      (
-                        await cbClient.batchGetBuilds({
-                          ids: [build.build?.id ?? ""],
-                        })
-                      ).builds?.at(0)?.buildStatus == "IN_PROGRESS"
-                    ) {
-                      process.stdout.write(".");
-                      setTimeout(checkBuild, 1000);
-                    } else {
-                      console.log("\n");
-                      const cwLogs = new CloudWatchLogs();
-                      const logs = await cwLogs.filterLogEvents({
-                        logGroupName: `/aws/codebuild/${buildProjectName}`,
-                        startTime: Date.now() - 10 * 60 * 1000,
-                      });
-                      logs.events?.forEach((e:any) =>
-                        process.stdout.write(e.message ?? "")
-                      );
-                    }
-                  })();
-                }
-                setTimeout(checkBuild, 1000);
-              } catch (err) {
-                console.error(err);
-              }
-            })();
-          }
-        );
-        cp.stdout?.on("data", (data: string) => {
-          process.stdout.write(".");
-          if (data.includes("GenAIChatBuildStack.BuildProjectName")) {
-            buildProjectName = data.split(" = ")[1].split("\n")[0];
-          }
-        });
+        performCloudBuild();
       } else {
         console.log("\nRun\n\nnpx cdk deploy\n");
       }
@@ -148,6 +96,59 @@ const embeddingModels = [
 
   program.parse(process.argv);
 })();
+
+function performCloudBuild() {
+    let buildProjectName: string;
+    const cp = exec(
+        "npx cdk deploy GenAIChatBuildStack --require-approval never --ci --no-color",
+        (err, stdout) => {
+            (async () => {
+                if (err) {
+                    console.log(stdout);
+                    console.log(err);
+                    return;
+                }
+                console.log("\nBuilding ", buildProjectName);
+                const cbClient = new CodeBuild();
+                try {
+                    const build = await cbClient.startBuild({
+                        projectName: buildProjectName,
+                    });
+                    function checkBuild() {
+                        (async () => {
+                            if ((
+                                await cbClient.batchGetBuilds({
+                                    ids: [build.build?.id ?? ""],
+                                })
+                            ).builds?.at(0)?.buildStatus == "IN_PROGRESS") {
+                                process.stdout.write(".");
+                                setTimeout(checkBuild, 1000);
+                            } else {
+                                console.log("\n");
+                                const cwLogs = new CloudWatchLogs();
+                                const logs = await cwLogs.filterLogEvents({
+                                    logGroupName: `/aws/codebuild/${buildProjectName}`,
+                                    startTime: Date.now() - 10 * 60 * 1000,
+                                });
+                                logs.events?.forEach((e: any) => process.stdout.write(e.message ?? "")
+                                );
+                            }
+                        })();
+                    }
+                    setTimeout(checkBuild, 1000);
+                } catch (err) {
+                    console.error(err);
+                }
+            })();
+        }
+    );
+    cp.stdout?.on("data", (data: string) => {
+        process.stdout.write(".");
+        if (data.includes("GenAIChatBuildStack.BuildProjectName")) {
+            buildProjectName = data.split(" = ")[1].split("\n")[0];
+        }
+    });
+}
 
 function createConfig(config: any): void {
   fs.writeFileSync("./bin/config.json", JSON.stringify(config, undefined, 2));
@@ -326,68 +327,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
   const models: any = await enquirer.prompt(modelsPrompts);
 
   // Create the config object
-  const config = {
-    prefix: answers.prefix,
-    bedrock: answers.bedrockEnable
-      ? {
-          enabled: answers.bedrockEnable,
-          region: answers.bedrockRegion,
-          roleArn:
-            answers.bedrockRoleArn === "" ? undefined : answers.bedrockRoleArn,
-          endpointUrl: answers.bedrockEndpoint,
-        }
-      : undefined,
-    llms: {
-      sagemaker: answers.sagemakerLLMs,
-    },
-    rag: {
-      enabled: answers.enableRag,
-      engines: {
-        aurora: {
-          enabled: answers.ragsToEnable.includes("aurora"),
-        },
-        opensearch: {
-          enabled: answers.ragsToEnable.includes("opensearch"),
-        },
-        kendra: {
-          enabled: false,
-          createIndex: false,
-          external: [{}],
-        },
-      },
-      embeddingsModels: [{}],
-      crossEncoderModels: [
-        {
-          provider: "sagemaker",
-          name: "cross-encoder/ms-marco-MiniLM-L-12-v2",
-          default: true,
-        },
-      ],
-    },
-  };
-  config.rag.engines.kendra.enabled = answers.ragsToEnable.includes("kendra");
-  config.rag.engines.kendra.createIndex = config.rag.engines.kendra.enabled;
-  config.rag.engines.kendra.external = [...kendraExternal];
-  config.rag.embeddingsModels = embeddingModels;
-  config.rag.embeddingsModels.forEach((m: any) => {
-    if (m.name === models.defaultEmbedding) {
-      m.default = true;
-    }
-  });
-  console.log("\n✨ This is the chosen configuration:\n");
-  console.log(JSON.stringify(config, undefined, 2));
-  (
-    (await enquirer.prompt([
-      {
-        type: "confirm",
-        name: "create",
-        message: "Do you want to create a new config based on the above",
-        initial: false,
-      },
-    ])) as any
-  ).create
-    ? createConfig(config)
-    : console.log("Skipping");
+  await createConfigFile(answers, kendraExternal, models);
 
   return (
     (await enquirer.prompt([
@@ -400,3 +340,69 @@ async function processCreateOptions(options: any): Promise<boolean> {
     ])) as any
   ).deploy;
 }
+
+
+async function createConfigFile(answers: any, kendraExternal: { enabled: boolean; external: { name: any; roleArn: any; kendraId: any; region: any; }; }[], models: any) {
+    const config = {
+        prefix: answers.prefix,
+        bedrock: answers.bedrockEnable
+            ? {
+                enabled: answers.bedrockEnable,
+                region: answers.bedrockRegion,
+                roleArn: answers.bedrockRoleArn === "" ? undefined : answers.bedrockRoleArn,
+                endpointUrl: answers.bedrockEndpoint,
+            }
+            : undefined,
+        llms: {
+            sagemaker: answers.sagemakerLLMs,
+        },
+        rag: {
+            enabled: answers.enableRag,
+            engines: {
+                aurora: {
+                    enabled: answers.ragsToEnable.includes("aurora"),
+                },
+                opensearch: {
+                    enabled: answers.ragsToEnable.includes("opensearch"),
+                },
+                kendra: {
+                    enabled: false,
+                    createIndex: false,
+                    external: [{}],
+                },
+            },
+            embeddingsModels: [{}],
+            crossEncoderModels: [
+                {
+                    provider: "sagemaker",
+                    name: "cross-encoder/ms-marco-MiniLM-L-12-v2",
+                    default: true,
+                },
+            ],
+        },
+    };
+    config.rag.engines.kendra.enabled = answers.ragsToEnable.includes("kendra");
+    config.rag.engines.kendra.createIndex = config.rag.engines.kendra.enabled;
+    config.rag.engines.kendra.external = [...kendraExternal];
+    config.rag.embeddingsModels = embeddingModels;
+    config.rag.embeddingsModels.forEach((m: any) => {
+        if (m.name === models.defaultEmbedding) {
+            m.default = true;
+        }
+    });
+    console.log("\n✨ This is the chosen configuration:\n");
+    console.log(JSON.stringify(config, undefined, 2));
+    (
+        (await enquirer.prompt([
+            {
+                type: "confirm",
+                name: "create",
+                message: "Do you want to create a new config based on the above",
+                initial: false,
+            },
+        ])) as any
+    ).create
+        ? createConfig(config)
+        : console.log("Skipping");
+}
+

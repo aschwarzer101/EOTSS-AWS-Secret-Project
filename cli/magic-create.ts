@@ -16,9 +16,8 @@ import { CodeBuild } from "@aws-sdk/client-codebuild";
 import { CloudWatchLogs } from "@aws-sdk/client-cloudwatch-logs";
 import { LIB_VERSION } from "./version";
 
-const versionRegExp = /\d+.\d+.\d+/;
-const arnRegExp = RegExp(/arn:aws:iam::\d+:role\/[\w-_]+/)
-const kendraIdRegExp = RegExp(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/)
+const iamRoleRegExp = RegExp(/arn:aws:iam::\d+:role\/[\w-_]+/);
+const kendraIdRegExp = RegExp(/^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/);
 
 const embeddingModels = [
   {
@@ -75,6 +74,9 @@ const embeddingModels = [
       options.ragsToEnable = Object.keys(config.rag.engines).filter(
         (v: string) => (config.rag.engines as any)[v].enabled
       );
+      if (options.ragsToEnable.includes("kendra") && !config.rag.engines.kendra.createIndex) {
+        options.ragsToEnable.pop("kendra")
+      }
       options.embeddings = config.rag.embeddingsModels.map((m: any) => m.name);
       options.defaultEmbedding = config.rag.embeddingsModels.filter(
         (m: any) => m.default
@@ -207,7 +209,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
       message:
         "Cross account role arn to invoke Bedrock - leave empty if Bedrock is in same account",
       validate: (v: string) => {
-        const valid = arnRegExp.test(v);
+        const valid = iamRoleRegExp.test(v);
         return v.length === 0 || valid;
       },
       initial: options.bedrockRoleArn || "",
@@ -235,7 +237,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
         { message: "OpenSearch", name: "opensearch" },
         { message: "Kendra (managed)", name: "kendra" },
       ],
-      skip: function (): boolean {
+      skip(): boolean {
         // workaround for https://github.com/enquirer/enquirer/issues/298
         (this as any).state._choices = (this as any).state.choices;
         return !(this as any).state.answers.enableRag;
@@ -260,20 +262,27 @@ async function processCreateOptions(options: any): Promise<boolean> {
   const answers: any = await enquirer.prompt(questions);
   const kendraExternal = [];
   let newKendra = answers.enableRag && answers.kendra;
-
+  const existingKendraIndices = Array.from(options.kendraExternal);
   while (newKendra === true) {
+    let existingIndex: any = existingKendraIndices.pop();
+    console.log(existingIndex?.region, Object.values(SupportedRegion).indexOf(existingIndex?.region))
     const kendraQ = [
       {
         type: "input",
         name: "name",
         message: "Kendra source name",
+        validate(v: string) {
+            return RegExp(/^\w[\w-_]*\w$/).test(v)
+        },
+        initial: existingIndex?.name,
       },
       {
         type: "autocomplete",
         limit: 8,
         name: "region",
         choices: Object.values(SupportedRegion),
-        message: "Region of the Kendra index",
+        message: `Region of the Kendra index${existingIndex?.region ? " ("+existingIndex?.region+")" : ""}`,
+        initial: Object.values(SupportedRegion).indexOf(existingIndex?.region),
       },
       {
         type: "input",
@@ -281,10 +290,10 @@ async function processCreateOptions(options: any): Promise<boolean> {
         message:
           "Cross account role Arn to assume to call Kendra, leave empty if not needed",
         validate: (v: string) => {
-          const valid = arnRegExp.test(v);
+          const valid = iamRoleRegExp.test(v);
           return v.length === 0 || valid;
         },
-        initial: "",
+        initial: existingIndex?.roleArn ?? "",
       },
       {
         type: "input",
@@ -293,16 +302,24 @@ async function processCreateOptions(options: any): Promise<boolean> {
         validate(v: string) {
           return kendraIdRegExp.test(v);
         },
+        initial: existingIndex?.kendraId,
+      },
+      {
+        type: "confirm",
+        name: "enabled",
+        message: "Enable this index",
+        initial: existingIndex?.enabled ?? true,
       },
       {
         type: "confirm",
         name: "newKendra",
         message: "Do you want to add another Kendra source",
-        default: false,
+        initial: false,
       },
     ];
     const kendraInstance: any = await enquirer.prompt(kendraQ);
-    const ext = (({ name, roleArn, kendraId, region }) => ({
+    const ext = (({ enabled, name, roleArn, kendraId, region }) => ({
+      enabled, 
       name,
       roleArn,
       kendraId,
@@ -310,8 +327,7 @@ async function processCreateOptions(options: any): Promise<boolean> {
     }))(kendraInstance);
     if (ext.roleArn === "") ext.roleArn = undefined;
     kendraExternal.push({
-      enabled: true,
-      external: ext,
+      ...ext,
     });
     newKendra = kendraInstance.newKendra;
   }
@@ -322,15 +338,77 @@ async function processCreateOptions(options: any): Promise<boolean> {
       message: "Which is the default embedding model",
       choices: embeddingModels.map((m) => ({ name: m.name, value: m })),
       initial: options.defaultEmbedding || undefined,
+      skip(): boolean {
+        return !(this as any).state.answers.enableRag
+      }
     },
   ];
   const models: any = await enquirer.prompt(modelsPrompts);
 
   // Create the config object
+ 
+  const config = {
+    prefix: answers.prefix,
+    bedrock: answers.bedrockEnable
+      ? {
+          enabled: answers.bedrockEnable,
+          region: answers.bedrockRegion,
+          roleArn:
+            answers.bedrockRoleArn === "" ? undefined : answers.bedrockRoleArn,
+          endpointUrl: answers.bedrockEndpoint,
+        }
+      : undefined,
+    llms: {
+      sagemaker: answers.sagemakerLLMs,
+    },
+    rag: {
+      enabled: answers.enableRag,
+      engines: {
+        aurora: {
+          enabled: answers.ragsToEnable.includes("aurora"),
+        },
+        opensearch: {
+          enabled: answers.ragsToEnable.includes("opensearch"),
+        },
+        kendra: {
+          enabled: false,
+          createIndex: false,
+          external: [{}],
+        },
+      },
+      embeddingsModels: [{}],
+      crossEncoderModels: [
+        {}
+      ],
+    },
+  };
+  
+  // If we have not enabled rag the default embedding is set to the first model
+  if (!answers.enableRag) {
+    models.defaultEmbedding = embeddingModels[0].name;
+  }
+
+  config.rag.crossEncoderModels[0] = {
+      provider: "sagemaker",
+      name: "cross-encoder/ms-marco-MiniLM-L-12-v2",
+      default: true,
+    }
+  config.rag.embeddingsModels = embeddingModels;
+  config.rag.embeddingsModels.forEach((m: any) => {
+    if (m.name === models.defaultEmbedding) {
+      m.default = true;
+    }
+    });
+  
+  config.rag.engines.kendra.createIndex = answers.ragsToEnable.includes("kendra");
+  config.rag.engines.kendra.enabled = config.rag.engines.kendra.createIndex || kendraExternal.length > 0;
+  config.rag.engines.kendra.external = [...kendraExternal];
+
+  console.log("\n✨ This is the chosen configuration:\n");
+  console.log(JSON.stringify(config, undefined, 2));
   await createConfigFile(answers, kendraExternal, models);
 
-  return (
-    (await enquirer.prompt([
+  return ((await enquirer.prompt([
       {
         type: "confirm",
         name: "deploy",

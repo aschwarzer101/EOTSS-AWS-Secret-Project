@@ -41,18 +41,18 @@ export class AwsGenAIChatBuildStack extends cdk.Stack {
           pre_build: {
             commands: [
               "echo 'Running pre-build commands...'",
-              "git clone -b v3-dev https://github.com/aws-samples/aws-genai-llm-chatbot.git",
+              "git clone https://github.com/aws-samples/aws-genai-llm-chatbot.git",
               "cd aws-genai-llm-chatbot",
-              "echo $GENAI_CONFIG > config.json"
+              'if [ ! "$GENAI_CONFIG" == "" ]; then echo ${GENAI_CONFIG} > ./bin/config.json; fi',
             ],
           },
           build: {
             commands: [
               "echo 'Running build commands...'",
+              "cat ./bin/config.json",
               "npm  install",
               "npm run build",
-              "echo 'Build complete!'",
-              "npx cdk deploy --require-approval never",
+              "npx cdk deploy ${PREFIX}GenAIChatBotStack --require-approval never",
             ],
           },
         },

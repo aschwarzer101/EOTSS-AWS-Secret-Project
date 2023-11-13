@@ -18,14 +18,15 @@ export class EmbeddingsClient extends ApiClientBase {
   async getEmbeddings(
     provider: string,
     model: string,
-    input: string[]
+    input: string[],
+    task: "retrieve" | "store"
   ): Promise<ApiResult<number[][]>> {
     try {
       const headers = await this.getHeaders();
       const result = await fetch(this.getApiUrl("/embeddings"), {
         method: "POST",
         headers,
-        body: JSON.stringify({ provider, model, input }),
+        body: JSON.stringify({ provider, model, input, task }),
       });
 
       return result.json();

@@ -7,7 +7,7 @@ export function getConfig(): SystemConfig {
   }
   // Default config
   return {
-    prefix: "",
+    prefix: "X1",
     /*vpc: {
       vpcId: "vpc-00000000000000000",
       createVpcEndpoints: true,
@@ -22,17 +22,17 @@ export function getConfig(): SystemConfig {
       sagemaker: [],
     },
     rag: {
-      enabled: false,
+      enabled: true,
       engines: {
         aurora: {
-          enabled: false,
+          enabled: true,
         },
         opensearch: {
-          enabled: false,
+          enabled: true,
         },
         kendra: {
-          enabled: false,
-          createIndex: false,
+          enabled: true,
+          createIndex: true,
         },
       },
       embeddingsModels: [
@@ -51,6 +51,16 @@ export function getConfig(): SystemConfig {
           name: "amazon.titan-embed-text-v1",
           dimensions: 1536,
           default: true,
+        },
+        {
+          provider: "bedrock",
+          name: "cohere.embed-english-v3",
+          dimensions: 1024,
+        },
+        {
+          provider: "bedrock",
+          name: "cohere.embed-multilingual-v3",
+          dimensions: 1024,
         },
         {
           provider: "openai",

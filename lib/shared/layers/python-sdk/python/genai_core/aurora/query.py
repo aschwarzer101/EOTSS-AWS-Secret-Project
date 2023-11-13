@@ -10,6 +10,7 @@ from aws_lambda_powertools import Logger
 
 logger = Logger()
 
+
 def query_workspace_aurora(
     workspace_id: str,
     workspace: dict,
@@ -44,7 +45,7 @@ def query_workspace_aurora(
         raise genai_core.types.CommonError("Cross encoder model not found")
 
     query_embeddings = genai_core.embeddings.generate_embeddings(
-        selected_model, [query]
+        selected_model, [query], "retrieve"
     )[0]
 
     language_name, detected_languages = genai_core.utils.comprehend.get_query_language(
@@ -119,7 +120,8 @@ def query_workspace_aurora(
             raise Exception("Unknown metric")
 
         vector_search_records = cursor.fetchall()
-        vector_search_records = _convert_records("vector_search", vector_search_records)
+        vector_search_records = _convert_records(
+            "vector_search", vector_search_records)
         items.extend(vector_search_records)
 
         if hybrid_search:
@@ -197,7 +199,7 @@ def query_workspace_aurora(
             score_dict[unique_items[i]["chunk_id"]] = score
 
     unique_items = sorted(unique_items, key=lambda x: x["score"], reverse=True)
-    
+
     for record in vector_search_records:
         record["score"] = score_dict[record["chunk_id"]]
     for record in keyword_search_records:
@@ -216,7 +218,8 @@ def query_workspace_aurora(
             "keyword_search_items": convert_types(keyword_search_records),
         }
     else:
-        ret_items = list(filter(lambda val: val["score"] > threshold, unique_items))[:limit]
+        ret_items = list(filter(lambda val: val["score"] > threshold, unique_items))[
+            :limit]
         if len(ret_items) < limit:
             # inner product metric is negative hence we sort ascending
             if metric == "inner":
@@ -225,16 +228,18 @@ def query_workspace_aurora(
                 )
                 ret_items = ret_items + (
                     list(
-                        filter(lambda val: (val["vector_search_score"] or 1) < -0.5, unique_items)
+                        filter(lambda val: (
+                            val["vector_search_score"] or 1) < -0.5, unique_items)
                     )[: (limit - len(ret_items))]
                 )
-            else: 
+            else:
                 unique_items = sorted(
                     unique_items, key=lambda x: x["vector_search_score"] or -1, reverse=True
                 )
                 ret_items = ret_items + (
                     list(
-                        filter(lambda val: (val["vector_search_score"] or -1) > 0.5 , unique_items)
+                        filter(lambda val: (
+                            val["vector_search_score"] or -1) > 0.5, unique_items)
                     )[: (limit - len(ret_items))]
                 )
 

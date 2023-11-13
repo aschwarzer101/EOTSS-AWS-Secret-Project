@@ -40,11 +40,12 @@ def add_chunks(
         raise genai_core.types.CommonError("Embeddings model not found")
 
     chunk_embeddings = genai_core.embeddings.generate_embeddings(
-        embeddings_model, chunks
+        embeddings_model, chunks, "store"
     )
     chunk_ids = [uuid.uuid4() for _ in chunks]
 
-    store_chunks_on_s3(workspace_id, document_id, document_sub_id, chunk_ids, chunks)
+    store_chunks_on_s3(workspace_id, document_id,
+                       document_sub_id, chunk_ids, chunks)
 
     if engine == "aurora":
         result = genai_core.aurora.chunks.add_chunks_aurora(

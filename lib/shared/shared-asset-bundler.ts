@@ -1,6 +1,7 @@
 import {
   BundlingOutput,
   DockerImage,
+  DockerVolumeConsistency,
   IAsset,
   aws_s3_assets,
 } from "aws-cdk-lib";
@@ -42,6 +43,7 @@ export class SharedAssetBundler extends Construct {
           volumes: this.sharedAssets.map((f) => ({
             containerPath: path.join(this.WORKING_PATH, path.basename(f)),
             hostPath: f,
+            consistency: DockerVolumeConsistency.CONSISTENT,
           })),
           workingDirectory: this.WORKING_PATH,
           outputType: BundlingOutput.ARCHIVED,

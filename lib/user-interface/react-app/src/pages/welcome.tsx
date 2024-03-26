@@ -33,7 +33,7 @@ export default function Welcome() {
           header={
             <Header
               variant="h1"
-              description="An opensource, modular and comprehensive solution to deploy a multi-model and multi-RAG powered chatbot using AWS CDK on AWS."
+              description="Experiment and chat with different models. Compare and contrast their responses for your target uses. "
               actions={
                 <RouterButton
                   iconAlign="right"
@@ -45,7 +45,7 @@ export default function Welcome() {
                 </RouterButton>
               }
             >
-              Chatbot Home
+              Sandbox Home
             </Header>
           }
         >
@@ -82,7 +82,7 @@ export default function Welcome() {
                   },
                   {
                     id: "type",
-                    header: "Type",
+                    header: " ",
                     content: (item) => item.type,
                   },
                 ],
@@ -90,88 +90,39 @@ export default function Welcome() {
               cardsPerRow={[{ cards: 1 }, { minWidth: 700, cards: 3 }]}
               items={[
                 {
-                  name: "Amazon Bedrock",
+                  name: "Chatbot",
                   external: true,
-                  type: "AWS Fully Managed",
-                  href: "https://aws.amazon.com/bedrock/",
-                  img: "/images/welcome/amazon-bedrock.png",
+                  type: " ", 
+                  href: "/chatbot/playground",
+                  img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z3JhZGllbnR8ZW58MHx8MHx8fDA%3D",
                   description:
-                    "Amazon Bedrock is a fully managed service that makes foundation models (FMs) from Amazon and leading AI startups available through an API.",
+                    "Experiment using different models to automate your everyday tasks",
                 },
                 {
-                  name: "Amazon SageMaker",
+                  name: "Multi-Chat Playground",
                   external: true,
-                  type: "AWS Self hosted",
-                  href: "https://aws.amazon.com/sagemaker/",
-                  img: "/images/welcome/self-hosted.jpg",
+                  type: " ",
+                  href: "/chatbot/playground",
+                  img: "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=1878&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   description:
-                    "CDK construct to deploy and run self hosted models on Amazon SageMaker. Deploy pre-trained models from SageMaker Foundation/Jumpstart and HuggingFace.",
+                    "Compare how models respond to the same prompt",
                 },
                 {
-                  name: "3P Models",
+                  name: "Models",
                   type: "External API",
                   href: "#",
-                  img: "/images/welcome/3p.png",
+                  img: "https://images.unsplash.com/photo-1632516643720-e7f5d7d6ecc9?q=80&w=1911&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   description:
-                    "Interface with 3rd party models via provided API. Such as AI21 Labs, OpenAI, HuggingFace Interface Endpoints etc.",
+                    "Explore models such as AI21 Labs, OpenAI, HuggingFace Interface Endpoints etc.",
                 },
               ]}
             />
-            <Container
-              media={{
-                content: (
-                  <img src="/images/welcome/ui-dark.png" alt="placeholder" />
-                ),
-                width: 300,
-                position: "side",
-              }}
-            >
-              <Header
-                variant="h1"
-                description="CDK construct available to deploy a React based webapp"
-              >
-                Full-fledged user interface
-              </Header>
-              <p>
-                The web app is hosted on{" "}
-                <Link external href="https://aws.amazon.com/s3/">
-                  Amazon S3
-                </Link>{" "}
-                behind{" "}
-                <Link external href="https://aws.amazon.com/cloudfront/">
-                  Amazon CloudFront
-                </Link>{" "}
-                with{" "}
-                <Link external href="https://aws.amazon.com/cognito/">
-                  Cognito Authentication
-                </Link>{" "}
-                to help you interact and experiment with{" "}
-                <strong>multiple Models</strong>,{" "}
-                <strong>multiple RAG sources</strong>,{" "}
-                <strong>conversational history support</strong> and{" "}
-                <strong>documents upload</strong>.
-              </p>
-              <p>
-                The interface layer between the UI and backend is build on top
-                of{" "}
-                <Link
-                  external
-                  href="https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api.html"
-                >
-                  Amazon API Gateway WebSocket APIs
-                </Link>
-                <br />
-                Build on top of{" "}
-                <Link external href="https://cloudscape.design/">
-                  AWS Cloudscape design system
-                </Link>
-              </p>
-            </Container>
+
             <Header
               variant="h1"
-              description="You can optionally experiment with one or more of the following CDK constructs to implement RAG requests."
+              description="Automate daily tasks with AI driven solutions. Optimize how you summarize, draft, and extract information."
             >
-              Retrieval Augmented Generation (RAG) sources
+              Tasks
             </Header>
             <Cards
               cardDefinition={{
@@ -190,7 +141,7 @@ export default function Welcome() {
                   },
                   {
                     id: "type",
-                    header: "Type",
+                    header: " ",
                     content: (item) => item.type,
                   },
                 ],
@@ -198,32 +149,116 @@ export default function Welcome() {
               cardsPerRow={[{ cards: 1 }, { minWidth: 700, cards: 3 }]}
               items={[
                 {
-                  name: "Amazon Aurora with pgvector",
-                  type: "Vector Database",
+                  name: "Summarize Text",
                   external: true,
-                  href: "https://aws.amazon.com/about-aws/whats-new/2023/07/amazon-aurora-postgresql-pgvector-vector-storage-similarity-search/",
+                  type: " ",
+                  href: "chatbot/playground",
                   description:
-                    "Amazon Aurora PostgreSQL-Compatible Edition now supports the pgvector extension to store embeddings from machine learning (ML) models in your database and to perform efficient similarity searches.",
-                  tags: ["Fully managed"],
+                    "Summarize meeting notes, articles, transcripts to create concise notes.",
                 },
                 {
-                  name: "Amazon Opensearch VectorSearch",
-                  type: "Vector Database",
+                  name: "Draft A Memo",
                   external: true,
-                  href: "https://aws.amazon.com/blogs/big-data/amazon-opensearch-services-vector-database-capabilities-explained/",
+                  type: " ",
+                  href: "chatbot/playground",
                   description:
-                    "With OpenSearch Service’s vector database capabilities, you can implement semantic search, Retrieval Augmented Generation (RAG) with LLMs, recommendation engines, and search rich media.",
+                    "Compose concise memos through automated drafting",
                 },
                 {
-                  name: "Amazon Kendra",
-                  external: true,
-                  type: "Search Engine",
-                  href: "https://aws.amazon.com/kendra/",
+                  name: "Translate",
+                  type: " ",
+                  href: "chatbot/playground",
                   description:
-                    "Amazon Kendra is an intelligent search service powered by machine learning (ML).",
+                    "Translate and generate text in 25+ languages ",
                 },
               ]}
             />
+
+            <Header
+              variant="h1"
+              description="Create custom solutions for your organization. Optimize your workflows with Tailored AI, Data Analytics, and Cloud Computing Solutions."
+            >
+              Create
+            </Header>
+            <Container
+              header={
+                <Header
+                  variant="h2"
+                  description="Create custom solutions for your organization. Optimize your workflows with Tailored AI, Data Analytics, and Cloud Computing Soluions."
+                  >
+                    Create
+                  </Header>
+              }> 
+            <Cards
+              cardDefinition={{
+                header: (item) => (
+                  <Link
+                    href={item.href}
+                    external={item.external}
+                    fontSize="heading-m"
+                  >
+                    {item.name}
+                  </Link>
+                ),
+                sections: [
+                  {
+                    content: (item) => (
+                    <div>
+                      <img
+                        src={item.img}
+                        alt="Placeholder"
+                        style={{width: "100%"}}
+                      />
+                    </div>
+                    ),
+                  },
+                  {
+                    content: (item) => (
+                      <div>
+                        <div>{item.description}</div>
+                      </div>
+                    ),
+                  },
+                  {
+                    id: "type",
+                    header: " ",
+                    content: (item) => item.type,
+                  },
+                ],
+              }}
+              cardsPerRow={[{ cards: 1 }, { minWidth: 700, cards: 3 }]}
+              items={[
+                {
+                  name: "Tailored AI Solutions",
+                  type: "Sagemaker",
+                  external: true,
+                  href: "https://aws.amazon.com/about-aws/whats-new/2023/07/amazon-aurora-postgresql-pgvector-vector-storage-similarity-search/",
+                  img: "/images/welcome/sagemaker.png",
+                  description:
+                    "Empower your applications by integrating advanced AI capabilities effortlessly.",
+                  tags: ["Fully managed"],
+                },
+                {
+                  name: "Advanced Data Analytics",
+                  type: " ",
+                  external: true,
+                  href: "https://aws.amazon.com/blogs/big-data/amazon-opensearch-services-vector-database-capabilities-explained/",
+                  img: "/images/welcome/advanData.jpg",
+                  description:
+                    "Transform data into actionable insights, driving strategic decisions for your organization.",
+                },
+                {
+                  name: "Cloud Computing Solutions",
+                  external: true,
+                  type: "Search Engine",
+                  href: "https://aws.amazon.com/kendra/",
+                  img: "/images/welcome/lambda.png", 
+                  description:
+                    "Use AWS resources to create secure and adaptable solutions for your operational demands.",
+                },
+              ]}
+            />
+            </Container>
           </SpaceBetween>
         </ContentLayout>
       }

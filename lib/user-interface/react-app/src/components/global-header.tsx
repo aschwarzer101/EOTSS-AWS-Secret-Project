@@ -5,7 +5,7 @@ import {
 import { Mode } from "@cloudscape-design/global-styles";
 import { useEffect, useState } from "react";
 import { StorageHelper } from "../common/helpers/storage-helper";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import useOnFollow from "../common/hooks/use-on-follow";
 import { CHATBOT_NAME } from "../common/constants";
 
@@ -54,20 +54,13 @@ export default function GlobalHeader() {
       <TopNavigation
         identity={{
           href: "/",
-          logo: { src: "/images/logo.png", alt: { CHATBOT_NAME } + " Logo" },
+          logo: { src: "/images/stateseal-color.png", alt: { CHATBOT_NAME } + " Logo" },
         }}
         utilities={[
           {
             type: "button",
             text: theme === Mode.Dark ? "Light Mode" : "Dark Mode",
             onClick: onChangeThemeClick,
-          },
-          {
-            type: "button",
-            text: "GitHub",
-            href: "https://github.com/aws-samples/aws-genai-llm-chatbot",
-            external: true,
-            externalIconAriaLabel: " (opens in a new tab)",
           },
           {
             type: "menu-dropdown",

@@ -8,6 +8,9 @@ import { AppContext } from "../common/app-context";
 import { useContext, useState } from "react";
 import { CHATBOT_NAME } from "../common/constants";
 
+
+
+
 export default function NavigationPanel() {
   const appContext = useContext(AppContext);
   const onFollow = useOnFollow();
@@ -22,18 +25,52 @@ export default function NavigationPanel() {
       },
       {
         type: "section",
-        text: "Chatbot",
+        text: "Experiment With AI",
         items: [
           { type: "link", text: "Playground", href: "/chatbot/playground" },
           {
             type: "link",
-            text: "Multi-chat playground",
-            href: "/chatbot/multichat",
+            text: "Compare Models",
+            href: "/chatbot/playground",
           },
           {
             type: "link",
             text: "Models",
             href: "/chatbot/models",
+          },
+        ],
+      },
+      {
+        type: "section",
+        text: "Explore AI Solutions",
+        items: [
+          { type: "link", text: "Draft A Memo", href: "/chatbot/playground" },
+          {
+            type: "link",
+            text: "Summarize Text",
+            href: "/chatbot/playground",
+          },
+          {
+            type: "link",
+            text: "Translate",
+            href: "/chatbot/playground",
+          },
+        ],
+      },
+      {
+        type: "section",
+        text: "Create",
+        items: [
+          { type: "link", text: "Workspaces", href: "/chatbot/playground" },
+          {
+            type: "link",
+            text: "Storage",
+            href: "/chatbot/playground",
+          },
+          {
+            type: "link",
+            text: "Embeddings",
+            href: "/chatbot/playground",
           },
         ],
       },

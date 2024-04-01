@@ -70,7 +70,8 @@ export default function Welcome() {
                           alt="Placeholder"
                           style={{ width: "100%",
                                   height: '180px', //setting fixed height
-                                  objectFit: 'cover', 
+                                  objectFit: 'cover',
+                                  borderRadius: '8px'
                                 }}
                         />
                       </div>

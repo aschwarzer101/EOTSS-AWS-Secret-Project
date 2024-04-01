@@ -1,0 +1,21 @@
+type SolutionsCard @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  body: String!
+  image: AWSURL!
+}
+
+type TaskCard @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  taskName: String
+  description: String
+  icon: AWSURL
+}
+
+type FeatureCard @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  body: String
+  image: AWSURL
+}
+ 

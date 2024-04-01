@@ -64,11 +64,14 @@ export default function Welcome() {
                 sections: [
                   {
                     content: (item) => (
-                      <div className="card-image-container">
+                      <div style={{minHeight: '200px' }}>
                         <img
                           src={item.img}
                           alt="Placeholder"
-                          // style={{ width: "100%" }}
+                          style={{ width: "100%",
+                                  height: '180px', //setting fixed height
+                                  objectFit: 'cover', 
+                                }}
                         />
                       </div>
                     ),

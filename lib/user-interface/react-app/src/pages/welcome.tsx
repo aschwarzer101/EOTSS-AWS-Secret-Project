@@ -71,7 +71,7 @@ export default function Welcome() {
                           style={{ width: "100%",
                                   height: '180px', //setting fixed height
                                   objectFit: 'cover',
-                                  borderRadius: '8px'
+                                  borderRadius: '20px'
                                 }}
                         />
                       </div>

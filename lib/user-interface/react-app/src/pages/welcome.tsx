@@ -64,11 +64,15 @@ export default function Welcome() {
                 sections: [
                   {
                     content: (item) => (
-                      <div>
+                      <div style={{minHeight: '200px' }}>
                         <img
                           src={item.img}
                           alt="Placeholder"
-                          style={{ width: "100%" }}
+                          style={{ width: "100%",
+                                  height: '180px', //setting fixed height
+                                  objectFit: 'cover',
+                                  borderRadius: '8px'
+                                }}
                         />
                       </div>
                     ),
@@ -91,7 +95,7 @@ export default function Welcome() {
               items={[
                 {
                   name: "Chatbot",
-                  external: true,
+                  external: false,
                   type: " ", 
                   href: "/chatbot/playground",
                   img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z3JhZGllbnR8ZW58MHx8MHx8fDA%3D",
@@ -100,7 +104,7 @@ export default function Welcome() {
                 },
                 {
                   name: "Multi-Chat Playground",
-                  external: true,
+                  external: false,
                   type: " ",
                   href: "/chatbot/playground",
                   img: "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=1878&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -150,7 +154,7 @@ export default function Welcome() {
               items={[
                 {
                   name: "Summarize Text",
-                  external: true,
+                  external: false,
                   type: " ",
                   href: "chatbot/playground",
                   description:
@@ -158,7 +162,7 @@ export default function Welcome() {
                 },
                 {
                   name: "Draft A Memo",
-                  external: true,
+                  external: false,
                   type: " ",
                   href: "chatbot/playground",
                   description:
@@ -174,12 +178,7 @@ export default function Welcome() {
               ]}
             />
 
-            <Header
-              variant="h1"
-              description="Create custom solutions for your organization. Optimize your workflows with Tailored AI, Data Analytics, and Cloud Computing Solutions."
-            >
-              Create
-            </Header>
+        
             <Container
               header={
                 <Header

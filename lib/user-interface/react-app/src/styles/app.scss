@@ -40,12 +40,24 @@ body.awsui-dark-mode {
   }
 }
 
+// .card-image-contrainer {
+//   width: 100%; 
+//   max-height: 200px;
+//   overflow: hidden;
+
+//   img {
+//     width: 100%;
+//     height: auto;
+//     display: block;
+//   }
+// }
+
 .awsui-dark-mode {
   .matrix-table {
     border: 1px solid rgb(95, 107, 122);
 
     th {
-      border: 1px solid rgb(95, 107, 122);
+      border: 1px solid #535353;
     }
 
     td {

@@ -15,8 +15,6 @@ This solution provides ready-to-use code so you can start **experimenting with a
 Supported model providers:
 
 - [Amazon Bedrock](https://aws.amazon.com/bedrock/)
-- [Amazon SageMaker](https://aws.amazon.com/sagemaker/) self-hosted models from Foundation, Jumpstart and HuggingFace.
-- Third-party providers via API such as Anthropic, Cohere, AI21 Labs, OpenAI, etc. [See available langchain integrations](https://python.langchain.com/docs/integrations/llms/) for a comprehensive list.
 
 # Additional Resources
 
@@ -27,15 +25,12 @@ Supported model providers:
 
 # Roadmap
 
-Roadmap is available through the [GitHub Project](https://github.com/orgs/aws-samples/projects/69)
+[Roadmap](https://docs.google.com/document/d/1sdMllBzb0-4jc7J6-oybvX0xrWbJ9Ybjsp4J5WDwfGY/edit?usp=sharing)
 
-# Authors
+# Creators
 
-- [Bigad Soleiman](https://www.linkedin.com/in/bigadsoleiman/)
-- [Sergey Pugachev](https://www.linkedin.com/in/spugachev/)
-
-# Contributors
-[![contributors](https://contrib.rocks/image?repo=aws-samples/aws-genai-llm-chatbot&max=2000)](https://github.com/aws-samples/aws-genai-llm-chatbot/graphs/contributors)
+- [Alayna Schwarzer](https://www.linkedin.com/in/alayna-schwarzer/)
+- [Dhruv Kamalesh Kumar](https://www.linkedin.com/in/dhruvkamaleshkumar)
 
 # License
 
@@ -46,6 +41,3 @@ This library is licensed under the MIT-0 License. See the LICENSE file.
 - [Code of Conduct](CODE_OF_CONDUCT.md) of the project.
 - [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 
-# Legal Disclaimer
-
-You should consider doing your own independent assessment before using the content in this sample for production purposes. This may include (amongst other things) testing, securing, and optimizing the content provided in this sample, based on your specific quality control practices and standards.

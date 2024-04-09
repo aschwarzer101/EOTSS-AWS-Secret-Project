@@ -30,7 +30,7 @@ def handle_run(record):
     user_id = record["userId"]
     data = record["data"]
     provider = data["provider"]
-    model_id = data["modelName"]
+    model_id = data["modelId"]
     mode = data["mode"]
     model_kwargs = data.get("modelKwargs", {})
     prompt = data["text"]

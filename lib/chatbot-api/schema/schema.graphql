@@ -152,6 +152,7 @@ input ListDocumentsInput {
 
 type Model @aws_cognito_user_pools {
   name: String!
+  modelId: String!
   provider: String!
   interface: String!
   ragSupported: Boolean!

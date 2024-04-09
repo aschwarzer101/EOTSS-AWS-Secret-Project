@@ -1,4 +1,4 @@
-# Deploying a Multi-Model and Multi-RAG Powered Chatbot Using AWS CDK on AWS
+# EOTSS-AWS Gen-AI Sandbox 
 
 [![Release Notes](https://img.shields.io/github/v/release/aws-samples/aws-genai-llm-chatbot)](https://github.com/aws-samples/aws-genai-llm-chatbot/releases)
 [![GitHub star chart](https://img.shields.io/github/stars/aws-samples/aws-genai-llm-chatbot?style=social)](https://star-history.com/#aws-samples/aws-genai-llm-chatbot)
@@ -10,7 +10,7 @@
 
 ![sample](docs/about/assets/chabot-sample.gif "AWS GenAI Chatbot")
 
-This solution provides ready-to-use code so you can start **experimenting with a variety of Large Language Models and Multimodal Language Models, settings and prompts** in your own AWS account.
+This solution provides ready-to-use code so you can start **experimenting with a variety of Large Language Models and Multimodal Language Models, settings, and prompts** in a safe environment.
 
 Supported model providers:
 

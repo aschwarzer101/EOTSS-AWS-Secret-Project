@@ -67,6 +67,7 @@ export interface ChatBotRunRequest {
   modelInterface: ModelInterface;
   data: {
     modelName: string;
+    modelId: string; 
     provider: string;
     sessionId: string;
     files: ImageFile[] | null;

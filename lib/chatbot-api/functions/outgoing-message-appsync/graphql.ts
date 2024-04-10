@@ -4,7 +4,7 @@ import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { HttpRequest } from "@aws-sdk/protocol-http";
 
 const { Sha256 } = crypto;
-const AWS_REGION = process.env.AWS_REGION || "eu-west-1";
+const AWS_REGION = process.env.AWS_REGION || "us-east-1";
 
 const endpoint = new URL(process.env.GRAPHQL_ENDPOINT ?? "");
 

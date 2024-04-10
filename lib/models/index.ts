@@ -173,6 +173,7 @@ export class Models extends Construct {
       models.push({
         name: MISTRAL_7B_INSTRUCT2_ENDPOINT_NAME!,
         endpoint: mistral7BInstruct2.cfnEndpoint,
+        // adding in model IDs
         responseStreamingSupported: false,
         inputModalities: [Modality.Text],
         outputModalities: [Modality.Text],
@@ -366,6 +367,8 @@ export class Models extends Construct {
       stringValue: JSON.stringify(
         models.map((model) => ({
           name: model.name,
+          // adding in model ID here #1 
+          id: 
           endpoint: model.endpoint.endpointName,
           responseStreamingSupported: model.responseStreamingSupported,
           inputModalities: model.inputModalities,

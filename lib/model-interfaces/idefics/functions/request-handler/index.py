@@ -95,7 +95,7 @@ def handle_run(record):
     response = {
         "sessionId": session_id,
         "type": "text",
-        "content": f"Model used: {model_id}"+mlm_response,
+        "content": mlm_response,
         "metadata": metadata,
     }
 

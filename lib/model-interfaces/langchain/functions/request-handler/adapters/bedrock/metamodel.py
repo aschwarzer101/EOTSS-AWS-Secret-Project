@@ -117,7 +117,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
 
 
 # Register the adapter
-registry.register(r"^bedrock.meta_model*", BedrockMetaModelAdapter)
+registry.register(r"^bedrock.meta_model_as_db_supersecret_id", BedrockMetaModelAdapter)
 
 # import genai_core.clients
 # import json

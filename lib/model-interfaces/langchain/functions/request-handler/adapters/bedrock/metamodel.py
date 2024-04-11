@@ -14,6 +14,15 @@ class BedrockMetaModelAdapter(ModelAdapter):
         self.model_id = model_id
         super().__init__(*args, **kwargs)
 
+    def get_llm(self, model_kwargs={}):
+        # Example of setting up model parameters and creating an LLM instance
+        client = genai_core.clients.get_bedrock_client()
+        model_params = {
+            "model_id": self.model_id,  # Assuming self.model_id is the ID for the LLM
+            **model_kwargs
+        }
+        return client.create_model(**model_params)
+
     def get_csv_data_as_text(self):
         """
         Function to read the CSV data from a file and return it as text.

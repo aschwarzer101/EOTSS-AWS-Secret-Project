@@ -3,6 +3,7 @@ from botocore.exceptions import ClientError
 from aws_lambda_powertools import Logger
 import genai_core.clients
 
+from .base import Bedrock
 from ..base import ModelAdapter
 from genai_core.registry import registry
 
@@ -16,7 +17,22 @@ class BedrockMetaModelAdapter(ModelAdapter):
 
     def get_llm(self, model_kwargs={}):
         bedrock = genai_core.clients.get_bedrock_client()
-        return bedrock
+        params = {}
+        if "temperature" in model_kwargs:
+            params["temperature"] = model_kwargs["temperature"]
+        if "topP" in model_kwargs:
+            params["top_p"] = model_kwargs["topP"]
+        if "maxTokens" in model_kwargs:
+            params["max_tokens"] = model_kwargs["maxTokens"]
+
+        params["anthropic_version"] = "bedrock-2023-05-31"
+        return Bedrock(
+            client=bedrock,
+            model_id=self.model_id,
+            model_kwargs=params,
+            streaming=model_kwargs.get("streaming", False),
+            callbacks=[self.callback_handler],
+        )
 
     def get_csv_data_as_text(self):
         """

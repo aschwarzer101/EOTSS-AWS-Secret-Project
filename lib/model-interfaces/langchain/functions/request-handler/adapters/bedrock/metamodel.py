@@ -15,13 +15,8 @@ class BedrockMetaModelAdapter(ModelAdapter):
         super().__init__(*args, **kwargs)
 
     def get_llm(self, model_kwargs={}):
-        # Example of setting up model parameters and creating an LLM instance
-        client = genai_core.clients.get_bedrock_client()
-        model_params = {
-            "model_id": self.model_id,  # Assuming self.model_id is the ID for the LLM
-            **model_kwargs
-        }
-        return client.create_model(**model_params)
+        bedrock = genai_core.clients.get_bedrock_client()
+        return bedrock
 
     def get_csv_data_as_text(self):
         """
@@ -95,7 +90,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
 
         Note: It is crucial to adhere to the requested output format, delivering only the name of the chosen model with exact spelling as listed, to maintain consistency across all responses."""
 
-        bedrock = genai_core.clients.get_bedrock_client()
+        bedrock = self.get_llm()
         try:
             response = bedrock.invoke_model(
                 model_id=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,

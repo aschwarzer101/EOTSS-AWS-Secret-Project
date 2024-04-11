@@ -16,7 +16,7 @@ def list_models():
     meta_model = {
         "modelArn": "as_db_supersecret_arn",
         "provider": Provider.BEDROCK.value,
-        "modelId": "anthropic.claude-3-sonnet-20240229-v1:0",
+        "modelId": "meta_model_as_db_supersecret_id",
         "name": "Smart Model",
         "streaming": True,
         "inputModalities": [Modality.TEXT.value],

@@ -28,7 +28,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         params["anthropic_version"] = "bedrock-2023-05-31"
         return Bedrock(
             client=bedrock,
-            model_id=self.model_id,
+            model_id=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
             model_kwargs=params,
             streaming=model_kwargs.get("streaming", False),
             callbacks=[self.callback_handler],

@@ -353,7 +353,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
         text: value,
         files: props.configuration.files ?? [],
         modelName: name,
-        modelId: state.selectedModel.value, 
+        modelId: name, 
         provider: provider,
         sessionId: props.session.id,
         workspaceId: state.selectedWorkspace?.value,

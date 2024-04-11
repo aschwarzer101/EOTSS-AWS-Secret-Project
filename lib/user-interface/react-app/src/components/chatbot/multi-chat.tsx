@@ -186,6 +186,7 @@ export default function MultiChat() {
         modelInterface: chatSession.modelMetadata!.interface as ModelInterface,
         data: {
           modelName: name,
+          modelId: name, 
           provider: provider,
           sessionId: chatSession.id,
           files: [],

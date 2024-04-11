@@ -368,7 +368,7 @@ export class Models extends Construct {
         models.map((model) => ({
           name: model.name,
           // adding in model ID here #1 
-          id: model.endpoint.id, 
+          // id: model.endpoint.id,
           endpoint: model.endpoint.endpointName,
           responseStreamingSupported: model.responseStreamingSupported,
           inputModalities: model.inputModalities,

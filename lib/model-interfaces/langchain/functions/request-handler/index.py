@@ -79,6 +79,18 @@ def handle_run(record):
     if not session_id:
         session_id = str(uuid.uuid4())
 
+    BEDROCK_MODEL_ID_CLAUDE_3_Sonnet = "anthropic.claude-3-sonnet-20240229-v1:0"
+
+    if model_id == "meta_model_as_db_supersecret_id":
+        meta_model_adapter = registry.get_adapter(f"{provider}.{model_id}")
+        model_suggestion = meta_model_adapter.get_model_suggestion(prompt)  # returns a model id
+        if model_suggestion:
+            logger.info(f"Meta model suggested: {model_suggestion}")
+            model_id = model_suggestion  # Update model_id with the suggested model
+        else:
+            logger.error("Meta model failed to suggest a suitable model.")
+            model_id = BEDROCK_MODEL_ID_CLAUDE_3_Sonnet
+
     adapter = registry.get_adapter(f"{provider}.{model_id}")
 
     adapter.on_llm_new_token = lambda *args, **kwargs: on_llm_new_token(

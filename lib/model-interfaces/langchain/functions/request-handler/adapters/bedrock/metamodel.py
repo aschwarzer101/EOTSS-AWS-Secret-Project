@@ -2,6 +2,7 @@ import json
 from botocore.exceptions import ClientError
 from aws_lambda_powertools import Logger
 import genai_core.clients
+import os
 
 from .base import Bedrock
 from ..base import ModelAdapter
@@ -11,10 +12,15 @@ logger = Logger()
 
 
 class BedrockMetaModelAdapter(ModelAdapter):
-    def __init__(self, model_id="meta_model_as_db_supersecret_id", *args, **kwargs):
+    def __init__(self, session_id, user_id, model_id="meta_model_as_db_supersecret_id",
+                 model_kwargs={}, *args, **kwargs):
+        # Initialize the model_id for this instance
         self.model_id = model_id
+        # A specific model identifier for a particular version of a model
         self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet = "anthropic.claude-3-sonnet-20240229-v1:0"
-        super().__init__(*args, **kwargs)
+
+        # Call the superclass constructor with all required and optional parameters
+        super().__init__(session_id, user_id, model_kwargs=model_kwargs, *args, **kwargs)
 
     def get_llm(self, model_kwargs={}):
         bedrock = genai_core.clients.get_bedrock_client()
@@ -36,18 +42,15 @@ class BedrockMetaModelAdapter(ModelAdapter):
         )
 
     def get_csv_data_as_text(self):
-        """
-        Function to read the CSV data from a file and return it as text.
-        :return: The CSV data as text.
-        """
+        directory = os.path.dirname(os.path.abspath(__file__))
+        filepath = os.path.join(directory, "Bedrock_LLM_Guide.csv")
         try:
-            with open("Bedrock_LLM_Guide.csv", "r") as file:
+            with open(filepath, "r") as file:
                 return file.read()
         except Exception as e:
             logger.error(f"Error reading CSV data: {str(e)}")
             return None
 
-    BEDROCK_MODEL_ID_CLAUDE_3_Sonnet = "anthropic.claude-3-sonnet-20240229-v1:0"
 
     model_id_data = {
         "Titan Text G1 - Express": "amazon.titan-text-express-v1",
@@ -69,7 +72,8 @@ class BedrockMetaModelAdapter(ModelAdapter):
     def get_model_suggestion(self, user_prompt):
         csv_data = self.get_csv_data_as_text()
         if not csv_data:
-            return "Error: CSV data could not be loaded."
+            logger.error("Error reading CSV data.")
+            return self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet
 
         base_prompt = f"""Decision-Making Task with Model Name Consistency:
 
@@ -107,10 +111,10 @@ class BedrockMetaModelAdapter(ModelAdapter):
 
         Note: It is crucial to adhere to the requested output format, delivering only the name of the chosen model with exact spelling as listed, to maintain consistency across all responses."""
 
-        bedrock = self.get_llm()
+        bedrock = genai_core.clients.get_bedrock_client()
         try:
             response = bedrock.invoke_model(
-                model_id=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
+                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
                     "max_tokens": 1024,

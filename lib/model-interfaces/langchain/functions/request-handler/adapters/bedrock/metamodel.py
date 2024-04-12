@@ -13,6 +13,7 @@ logger = Logger()
 class BedrockMetaModelAdapter(ModelAdapter):
     def __init__(self, model_id="meta_model_as_db_supersecret_id", *args, **kwargs):
         self.model_id = model_id
+        self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet = "anthropic.claude-3-sonnet-20240229-v1:0"
         super().__init__(*args, **kwargs)
 
     def get_llm(self, model_kwargs={}):

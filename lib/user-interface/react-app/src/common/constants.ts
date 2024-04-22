@@ -92,7 +92,7 @@ export abstract class Labels {
     qna: "Q&A",
     rss: "RSS Feed",
   };
-
+// in here add the enumerated example prompts or pull into an interface 
   static getDistanceFunctionScoreName(result: SemanticSearchResult) {
     if (result.engine === "aurora") {
       return Labels.distanceFunctionScoreMapAurora[result.vectorSearchMetric!];
@@ -106,4 +106,18 @@ export abstract class Labels {
   }
 }
 
-export const CHATBOT_NAME = "AWS GenAI Chatbot";
+export const CHATBOT_NAME = "EOTSS AWS Sandbox";
+
+export abstract class TaskPrompts {
+
+  
+  // map prompts
+  static taskPromptMap: Record<string, string> = {
+    translate: "Translate the following text into ", 
+    memo: "Draft a concise, professional memo based on the following text: ",
+    summarize: "Summarize the following meeting notes. Pull out key topics, people, and next steps. ",
+  };
+
+  // further down have functions for getTranslation, getSummarize, getMemo 
+  //  that maps to a function 
+}

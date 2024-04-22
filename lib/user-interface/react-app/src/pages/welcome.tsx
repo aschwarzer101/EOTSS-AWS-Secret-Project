@@ -10,7 +10,7 @@ import {
 import BaseAppLayout from "../components/base-app-layout";
 import RouterButton from "../components/wrappers/router-button";
 import useOnFollow from "../common/hooks/use-on-follow";
-import { CHATBOT_NAME } from "../common/constants";
+import { CHATBOT_NAME, languageList } from "../common/constants";
 
 export default function Welcome() {
   const onFollow = useOnFollow();
@@ -113,11 +113,11 @@ export default function Welcome() {
                 },
                 {
                   name: "Models",
-                  type: "External API",
-                  href: "#",
+                  type: "/chatbot/models ",
+                  href: "/",
                   img: "https://images.unsplash.com/photo-1632516643720-e7f5d7d6ecc9?q=80&w=1911&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   description:
-                    "Explore models such as AI21 Labs, OpenAI, HuggingFace Interface Endpoints etc.",
+                    "Explore models with AWS Bedrock, Claude, and Llama",
                 },
               ]}
             />
@@ -135,6 +135,7 @@ export default function Welcome() {
                     href={item.href}
                     external={item.external}
                     fontSize="heading-m"
+                    data-prompt = {item.type}
                   >
                     {item.name}
                   </Link>
@@ -146,7 +147,7 @@ export default function Welcome() {
                   {
                     id: "type",
                     header: " ",
-                    content: (item) => item.type,
+                    // content: (item) => item.type,
                   },
                 ],
               }}
@@ -155,23 +156,24 @@ export default function Welcome() {
                 {
                   name: "Summarize Text",
                   external: false,
-                  type: " ",
-                  href: "chatbot/playground",
+                  type: "Summarize the following meeting notes for me",
+                  href: `/chatbot/playground?prompt=${encodeURIComponent("Summarize the following meeting notes for me:")}`,
+                    // sending to URL parser ^^ 
                   description:
                     "Summarize meeting notes, articles, transcripts to create concise notes.",
                 },
                 {
                   name: "Draft A Memo",
                   external: false,
-                  type: " ",
-                  href: "chatbot/playground",
+                  type: "Draft a concise, professional memo based on the following text: ",
+                  href: `/chatbot/playground?prompt=${encodeURIComponent("Draft a concise, professional memo based on the following text:")}`,
                   description:
                     "Compose concise memos through automated drafting",
                 },
                 {
                   name: "Translate",
-                  type: " ",
-                  href: "chatbot/playground",
+                  type: "Translate the following text into" + languageList,
+                  href: `/chatbot/playground?prompt=${encodeURIComponent("Translate the following text into: " + languageList.join(", "))}`,
                   description:
                     "Translate and generate text in 25+ languages ",
                 },

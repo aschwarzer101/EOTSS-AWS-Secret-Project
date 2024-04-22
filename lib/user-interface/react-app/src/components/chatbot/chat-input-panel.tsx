@@ -61,6 +61,7 @@ export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
+  initialPrompt?: string; 
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;
@@ -92,7 +93,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   const [state, setState] = useState<ChatInputState>({
-    value: "",
+    // have it so the value of the input is either the primer or mt string 
+    value: props.initialPrompt || "",
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],
@@ -111,6 +113,14 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   useEffect(() => {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
+
+  // useEffect(() => {
+  //   if (props.initialPrompt) {
+  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt })); 
+  //   }
+  // }, [props.initialPrompt]); 
+
+
 
   useEffect(() => {
     async function subscribe() {
@@ -198,6 +208,24 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       setState((state) => ({ ...state, value: transcript }));
     }
   }, [transcript]);
+
+  // useEffect(() => {
+  //   if (props.initialPrompt) {
+  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt }));
+  //   }
+  // }, [props.initialPrompt]);
+
+  useEffect(() => {
+    if (props.initialPrompt) {
+      setState((prevState) => {
+        const newState: ChatInputState = {
+          ...prevState,
+          value: props.initialPrompt,
+        };
+        return newState;
+      });
+    }
+  }, [props.initialPrompt]);
 
   useEffect(() => {
     if (!appContext) return;
@@ -327,6 +355,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     );
   };
 
+  // const [state, setState ] = useState<ChatInputState>({
+  //   value: props.initialPrompt || "", 
+  // }); 
   const handleSendMessage = () => {
     if (!state.selectedModel) return;
     if (props.running) return;
@@ -472,6 +503,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           />
           <TextareaAutosize
             className={styles.input_textarea}
+            value={state.value} // added here so the value in the  component is bound to state 
             maxRows={6}
             minRows={1}
             spellCheck={true}
@@ -485,7 +517,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
                 handleSendMessage();
               }
             }}
-            value={state.value}
+            // value={state.value}
             placeholder={listening ? "Listening..." : "Send a message"}
           />
           <div style={{ marginLeft: "8px" }}>
@@ -687,6 +719,7 @@ function getSelectedModelOption(models: Model[]): SelectProps.Option | null {
       candidate = bedrockModels.find((m) => m.name === "anthropic.claude-v1");
     }
 
+    // CHANGE IN HERE FOR DEFAULT TO BE SMART MODEL 
     if (!candidate) {
       candidate = bedrockModels.find(
         (m) => m.name === "amazon.titan-tg1-large"

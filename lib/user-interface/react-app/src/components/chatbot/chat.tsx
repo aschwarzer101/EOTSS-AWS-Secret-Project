@@ -40,11 +40,25 @@ export default function Chat(props: { sessionId?: string }) {
     if (!appContext) return;
     setMessageHistory([]);
 
+
     (async () => {
       if (!props.sessionId) {
         setSession({ id: uuidv4(), loading: false });
         return;
       }
+      
+      // NEW parse query params 
+      const queryParams = new URLSearchParams(window.location.search); 
+      const primingPrompt = queryParams.get('prompt'); 
+
+
+      // checks if prompt, prefills input 
+      if (primingPrompt) {
+        // prefill chat input panel
+        // ideas: input state method 
+        // prefillChatInput(primingPrompt)
+      }
+
 
       setSession({ id: props.sessionId, loading: true });
       const apiClient = new ApiClient(appContext);
@@ -80,6 +94,9 @@ export default function Chat(props: { sessionId?: string }) {
     })();
   }, [appContext, props.sessionId]);
 
+  // define state to keep track of initial prompt when mounting 
+  const [initialPrompt, setInitialPrompt] = useState("");
+
   const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
     if (message.metadata.sessionId) {
       
@@ -107,6 +124,8 @@ export default function Chat(props: { sessionId?: string }) {
     const apiClient = new ApiClient(appContext);
     await apiClient.userFeedback.addUserFeedback({feedbackData});
   };
+
+
 
   return (
     <div className={styles.chat_container}>
@@ -136,6 +155,7 @@ export default function Chat(props: { sessionId?: string }) {
           session={session}
           running={running}
           setRunning={setRunning}
+          initialPrompt={initialPrompt}
           messageHistory={messageHistory}
           setMessageHistory={(history) => setMessageHistory(history)}
           configuration={configuration}

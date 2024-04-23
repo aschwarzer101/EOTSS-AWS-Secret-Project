@@ -11,6 +11,7 @@ import BaseAppLayout from "../components/base-app-layout";
 import RouterButton from "../components/wrappers/router-button";
 import useOnFollow from "../common/hooks/use-on-follow";
 import { CHATBOT_NAME, languageList } from "../common/constants";
+import { useHref } from "react-router-dom";
 
 export default function Welcome() {
   const onFollow = useOnFollow();
@@ -135,7 +136,7 @@ export default function Welcome() {
                     href={item.href}
                     external={item.external}
                     fontSize="heading-m"
-                    data-prompt = {item.type}
+                    // data-prompt = {item.type}
                   >
                     {item.name}
                   </Link>
@@ -159,6 +160,7 @@ export default function Welcome() {
                   type: "Summarize the following meeting notes for me",
                   href: `/chatbot/playground?prompt=${encodeURIComponent("Summarize the following meeting notes for me:")}`,
                     // sending to URL parser ^^ 
+                  onFollow: useHref, 
                   description:
                     "Summarize meeting notes, articles, transcripts to create concise notes.",
                 },

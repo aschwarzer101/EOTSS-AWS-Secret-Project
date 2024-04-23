@@ -12,7 +12,7 @@ export default function Playground() {
       info={
         <HelpPanel header={<Header variant="h3">Using the chat</Header>}>
           <p>
-            This chat playground allows user to interact with a chosen LLM and
+           "react"playground allows user to interact with a chosen LLM and
             optional RAG retriever. You can create new RAG workspaces via the{" "}
             <Link to="/rag/workspaces">Workspaces</Link> console.
           </p>
@@ -40,6 +40,7 @@ export default function Playground() {
         </HelpPanel>
       }
       toolsWidth={300}
+      // 
       content={<Chat sessionId={sessionId} />}
     />
   );

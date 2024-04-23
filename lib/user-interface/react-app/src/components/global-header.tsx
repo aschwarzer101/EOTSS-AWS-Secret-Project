@@ -16,7 +16,7 @@ export default function GlobalHeader() {
 
   useEffect(() => {
     (async () => {
-      const result = await Auth.currentUserInfo();
+      const result = await Auth.currentAuthenticatedUser();
 
       if (!result || Object.keys(result).length === 0) {
         Auth.signOut();

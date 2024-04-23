@@ -220,7 +220,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       setState((prevState) => {
         const newState: ChatInputState = {
           ...prevState,
-          value: props.initialPrompt,
+         //  value: props.initialPrompt,
         };
         return newState;
       });

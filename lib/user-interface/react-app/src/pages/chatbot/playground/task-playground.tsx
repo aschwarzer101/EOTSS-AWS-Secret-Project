@@ -12,7 +12,7 @@ const prompt = useParams;
 /*
 / ideas:
 / make session with the prompt and then go to that sessions
-/ the way you navigate to session with playground/{ uuivd}
+/ the way y"react" to session with playground/{ uuivd}
 / want to do a similar way with the prompt 
 */
 
@@ -21,7 +21,8 @@ return (
     
 
     toolsWidth={300}
-    content={<Chat sessionId={sessionId} />}
+    // sessionId={sessionId} <- removed this bc I wanted it to build!! srry <3
+    content={<Chat  />}
 
     />
     

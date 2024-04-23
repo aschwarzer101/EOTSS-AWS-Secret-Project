@@ -53,7 +53,10 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
 
       // checks if prompt, prefills input 
-      if (props.sessionId) {
+      if (props.prompt) {
+        
+        console.log(props.prompt)
+        console.log(primingPrompt)
         return;
         // prefill chat input panel
         // ideas: input state method 

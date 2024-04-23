@@ -14,7 +14,7 @@ import ChatInputPanel, { ChatScrollState } from "./chat-input-panel";
 import styles from "../../styles/chat.module.scss";
 import { CHATBOT_NAME } from "../../common/constants";
 
-export default function Chat(props: { sessionId?: string }) {
+export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const appContext = useContext(AppContext);
   const [running, setRunning] = useState<boolean>(false);
   const [session, setSession] = useState<{ id: string; loading: boolean }>({
@@ -53,7 +53,8 @@ export default function Chat(props: { sessionId?: string }) {
 
 
       // checks if prompt, prefills input 
-      if (primingPrompt) {
+      if (props.sessionId) {
+        return;
         // prefill chat input panel
         // ideas: input state method 
         // prefillChatInput(primingPrompt)
@@ -92,10 +93,10 @@ export default function Chat(props: { sessionId?: string }) {
       setSession({ id: props.sessionId, loading: false });
       setRunning(false);
     })();
-  }, [appContext, props.sessionId]);
+  }, [appContext, props.sessionId, props.prompt]);
 
   // define state to keep track of initial prompt when mounting 
-  const [initialPrompt, setInitialPrompt] = useState("");
+  const [initialPrompt, setInitialPrompt] = useState(" ");
 
   const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
     if (message.metadata.sessionId) {
@@ -155,7 +156,7 @@ export default function Chat(props: { sessionId?: string }) {
           session={session}
           running={running}
           setRunning={setRunning}
-          initialPrompt={initialPrompt}
+          initialPrompt={props.prompt}
           messageHistory={messageHistory}
           setMessageHistory={(history) => setMessageHistory(history)}
           configuration={configuration}

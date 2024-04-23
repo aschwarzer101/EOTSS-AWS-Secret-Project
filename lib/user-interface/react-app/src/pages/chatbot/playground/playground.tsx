@@ -6,7 +6,7 @@ import { Header, HelpPanel } from "@cloudscape-design/components";
 
 export default function Playground() {
   const { sessionId } = useParams();
-
+  const { prompt } = useParams(); 
   return (
     <BaseAppLayout
       info={
@@ -41,7 +41,7 @@ export default function Playground() {
       }
       toolsWidth={300}
       // 
-      content={<Chat sessionId={sessionId} />}
+      content={<Chat sessionId={sessionId} prompt= {prompt} />}
     />
   );
 }

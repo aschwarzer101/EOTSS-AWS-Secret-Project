@@ -42,7 +42,7 @@ export default function Playground() {
       }
       toolsWidth={300}
       // 
-      content={<Chat sessionId={sessionId} prompt= {prompt} />}
+      content={<Chat sessionId={sessionId} prompt= {"Draft a concise, professional memo based on the following text: "} />}
     />
   );
 }

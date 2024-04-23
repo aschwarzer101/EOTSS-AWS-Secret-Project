@@ -57,6 +57,7 @@ export default function AppConfigured() {
     })();
   }, []);
   
+  
   // whenever the authentication state changes, if it's changed to un-authenticated, re-verify
   useEffect(() => {  
     if (!authenticated && configured) {

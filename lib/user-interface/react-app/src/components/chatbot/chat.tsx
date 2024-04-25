@@ -44,7 +44,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     if (!appContext) return;
     setMessageHistory([]);
 
-    // THIS WORKED
+    // THIS WORKED REINTRO PT1
     const queryParams = new URLSearchParams(window.location.search); 
     const urlPrompt = queryParams.get('prompt') || " "; 
 
@@ -63,7 +63,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
       // checks if prompt, prefills input 
       if (props.prompt) {
-        
+        const [initialPrompt, setInitialPrompt] = useState(prompt);
         console.log(props.prompt)
         // console.log(primingPrompt)
         return;
@@ -109,8 +109,8 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   // , props.prompt this worked 
 
   // define state to keep track of initial prompt when mounting 
-  // THIS WORKED MAYBE
-  const [initialPrompt, setInitialPrompt] = useState(prompt);
+  // THIS WORKED MAYBE || REINTRO PT 1 move to first use affec
+  
 
   const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
     if (message.metadata.sessionId) {

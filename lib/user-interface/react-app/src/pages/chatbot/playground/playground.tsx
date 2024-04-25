@@ -17,6 +17,12 @@ export default function Playground() {
             optional RAG retriever. You can create new RAG workspaces via the{" "}
             <Link to="/rag/workspaces">Workspaces</Link> console.
           </p>
+          <h2> Smart Model</h2>
+          <p> The Smart Model is set as the default model option. It automatically routes your input to the model
+            best suited for the task. To see which model was selected, see settings for the Metadata option. 
+            Of course, you are also encouraged to experiment with multiple models, and find your favorites!
+            and find the 
+          </p>
           <h3>Settings</h3>
           <p>
             You can configure additional settings for the LLM via the setting

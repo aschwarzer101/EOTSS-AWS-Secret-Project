@@ -61,7 +61,7 @@ export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
-  // initialPrompt: string; 
+  initialPrompt: string; 
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;
@@ -96,7 +96,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     // have it so the value of the input is either the primer or mt string 
     value:  " ",
     // props.initialPrompt +
-    // initialPrompt: props.initialPrompt, 
+    initialPrompt: props.initialPrompt, 
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],

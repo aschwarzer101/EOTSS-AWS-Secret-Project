@@ -160,7 +160,7 @@ export default function Welcome() {
                   type: "Summarize the following meeting notes for me",
                   href: `/chatbot/playground?prompt=${encodeURIComponent("Summarize the following meeting notes for me:")}`,
                     // sending to URL parser ^^ 
-                  onFollow: useHref, 
+                  // onFollow: useHref, 
                   description:
                     "Summarize meeting notes, articles, transcripts to create concise notes.",
                 },

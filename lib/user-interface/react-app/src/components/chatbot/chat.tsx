@@ -45,10 +45,10 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     setMessageHistory([]);
 
     // THIS WORKED
-    // const queryParams = new URLSearchParams(window.location.search); 
-    // const urlPrompt = queryParams.get('prompt') || " "; 
+    const queryParams = new URLSearchParams(window.location.search); 
+    const urlPrompt = queryParams.get('prompt') || " "; 
 
-    // setInitialPrompt(decodeURIComponent(urlPrompt)); 
+    setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
 
     (async () => {
       if (!props.sessionId) {
@@ -110,7 +110,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
   // define state to keep track of initial prompt when mounting 
   // THIS WORKED MAYBE
- //  const [initialPrompt, setInitialPrompt] = useState(prompt);
+  const [initialPrompt, setInitialPrompt] = useState(prompt);
 
   const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
     if (message.metadata.sessionId) {

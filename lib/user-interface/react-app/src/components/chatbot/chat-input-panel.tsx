@@ -94,8 +94,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     useSpeechRecognition();
   const [state, setState] = useState<ChatInputState>({
     // have it so the value of the input is either the primer or mt string 
-    value:  " ",
-    // props.initialPrompt +
+    value: props.initialPrompt + " ", 
     initialPrompt: props.initialPrompt, 
     selectedModel: null,
     selectedModelMetadata: null,

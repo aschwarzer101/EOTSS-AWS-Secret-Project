@@ -167,7 +167,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
           session={session}
           running={running}
           setRunning={setRunning}
-          // initialPrompt={initialPrompt}
+          initialPrompt={initialPrompt}
           // CHECK HERE
           messageHistory={messageHistory}
           setMessageHistory={(history) => setMessageHistory(history)}

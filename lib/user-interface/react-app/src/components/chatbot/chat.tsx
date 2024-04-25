@@ -35,11 +35,11 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const [messageHistory, setMessageHistory] = useState<ChatBotHistoryItem[]>(
     []
   );
+  const [initialPrompt, setInitialPrompt] = useState( ' ');
 
   useEffect(() => {
 
     
-
     
     if (!appContext) return;
     setMessageHistory([]);
@@ -49,7 +49,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     const urlPrompt = queryParams.get('prompt') || " "; 
 
     setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
-
+     
     (async () => {
       if (!props.sessionId) {
         setSession({ id: uuidv4(), loading: false });
@@ -63,13 +63,10 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
       // checks if prompt, prefills input 
       if (props.prompt) {
-        const [initialPrompt, setInitialPrompt] = useState(prompt);
+       
         console.log(props.prompt)
         // console.log(primingPrompt)
         return;
-        // prefill chat input panel
-        // ideas: input state method 
-        // prefillChatInput(primingPrompt)
       }
 
 

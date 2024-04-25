@@ -38,14 +38,16 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
   useEffect(() => {
 
+    
+
+    
+    if (!appContext) return;
+    setMessageHistory([]);
+
     const queryParams = new URLSearchParams(window.location.search); 
     const urlPrompt = queryParams.get('prompt') || " "; 
 
     setInitialPrompt(decodeURIComponent(urlPrompt)); 
-
-    if (!appContext) return;
-    setMessageHistory([]);
-
 
     (async () => {
       if (!props.sessionId) {

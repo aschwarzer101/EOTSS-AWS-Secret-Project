@@ -115,11 +115,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
 
-  useEffect(() => {
-    if (props.initialPrompt) {
-      setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-    }
-  }, [props.initialPrompt]);
+  
 
   // useEffect(() => {
   //   if (props.initialPrompt) {
@@ -173,6 +169,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       return sub;
     }
 
+    useEffect(() => {
+      if (props.initialPrompt) {
+        setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
+      }
+    }, [props.initialPrompt]);
+    
     const sub = subscribe();
     sub
       .then(() => {
@@ -223,18 +225,18 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   //     setState((prevState) => ({ ...prevState, value: props.initialPrompt }));
   //   }
   // }, [props.initialPrompt]);
-
-  useEffect(() => {
-    if (props.initialPrompt) {
-      setState((prevState) => {
-        const newState: ChatInputState = {
-          ...prevState,
-          value: props.initialPrompt,
-        };
-        return newState;
-      });
-    }
-  }, [props.initialPrompt]);
+// CHANGE HERE
+  // useEffect(() => {
+  //   if (props.initialPrompt) {
+  //     setState((prevState) => {
+  //       const newState: ChatInputState = {
+  //         ...prevState,
+  //         value: props.initialPrompt,
+  //       };
+  //       return newState;
+  //     });
+  //   }
+  // }, [props.initialPrompt]);
 
   useEffect(() => {
     if (!appContext) return;
@@ -285,7 +287,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           ...state,
           modelsStatus: "error",
         }));
-      }
+      } 
     })();
   }, [appContext, state.modelsStatus]);
 

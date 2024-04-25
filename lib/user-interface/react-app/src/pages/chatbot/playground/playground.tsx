@@ -6,7 +6,7 @@ import { Header, HelpPanel } from "@cloudscape-design/components";
 
 export default function Playground() {
   const { sessionId } = useParams();
-  const { prompt } = useParams(); 
+  // const { prompt } = useParams(); 
   // console.log(prompt + "testing #85")
   return (
     <BaseAppLayout

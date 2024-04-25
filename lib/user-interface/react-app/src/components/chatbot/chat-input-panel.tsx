@@ -290,13 +290,13 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           modelsStatus: "error",
         }));
         
-        // new place
-        useEffect(() => {
-          if (props.initialPrompt) {
-            console.log("got to prompts use affect 296")
-            setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-          }
-        }, [props.initialPrompt]);
+        // // new place
+        // useEffect(() => {
+        //   if (props.initialPrompt) {
+        //     console.log("got to prompts use affect 296")
+        //     setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
+        //   }
+        // }, [props.initialPrompt]);
       } 
     })();
   }, [appContext, state.modelsStatus]);
@@ -390,10 +390,10 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     );
     
     
-      if (props.initialPrompt) {
-        console.log("got to prompts handleSendMessage")
-        setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-      }; 
+      // if (props.initialPrompt) {
+      //   console.log("got to prompts handleSendMessage")
+      //   setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
+      // }; 
     
     const value = state.value.trim();
     const request: ChatBotRunRequest = {

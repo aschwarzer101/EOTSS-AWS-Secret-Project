@@ -95,7 +95,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const [state, setState] = useState<ChatInputState>({
     // have it so the value of the input is either the primer or mt string 
     value: props.initialPrompt + " ",
-    initialPrompt: props.initialPrompt,
+    initialPrompt: props.initialPrompt, 
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],
@@ -115,6 +115,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
 
+  useEffect(() => {
+    if (props.initialPrompt) {
+      setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
+    }
+  }, [props.initialPrompt]);
+
   // useEffect(() => {
   //   if (props.initialPrompt) {
   //     setState((prevState) => ({ ...prevState, value: props.initialPrompt })); 
@@ -133,7 +139,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
         query: receiveMessages,
         variables: {
           sessionId: props.session.id,
-          initialPrompt: props.initialPrompt
+          // initialPrompt: props.initialPrompt
         },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       }).subscribe({

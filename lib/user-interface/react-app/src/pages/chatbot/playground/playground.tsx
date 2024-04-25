@@ -7,7 +7,7 @@ import { Header, HelpPanel } from "@cloudscape-design/components";
 export default function Playground() {
   const { sessionId } = useParams();
   const { prompt } = useParams(); 
-  console.log(prompt + "testing #85")
+  // console.log(prompt + "testing #85")
   return (
     <BaseAppLayout
       info={
@@ -42,7 +42,7 @@ export default function Playground() {
       }
       toolsWidth={300}
       // 
-      content={<Chat sessionId={sessionId} prompt= {"Draft a concise, professional memo based on the following text: "} />}
+      content={<Chat sessionId={sessionId} />}
     />
-  );
+  ); //send prompt here : prompt = {}
 }

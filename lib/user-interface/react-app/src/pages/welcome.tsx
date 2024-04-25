@@ -239,7 +239,7 @@ export default function Welcome() {
                   img: "/images/welcome/sagemaker.png",
                   description:
                     "Empower your applications by integrating advanced AI capabilities effortlessly.",
-                  tags: ["Fully managed"],
+                  tags: [""],
                 },
                 {
                   name: "Advanced Data Analytics",

@@ -119,12 +119,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   
 
-  // useEffect(() => {
-  //   if (props.initialPrompt) {
-  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt })); 
-  //   }
-  // }, [props.initialPrompt]); 
-
 
 
   useEffect(() => {
@@ -506,10 +500,13 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
             configuration={props.configuration}
             setConfiguration={props.setConfiguration}
           />
+          <div className={styles.non_editable_prompt}>
+          {props.initialPrompt}
+          </div>
           <TextareaAutosize
             className={styles.input_textarea}
             value={state.value} // added here so the value in the  component is bound to state 
-            readOnly={isReadOnly}
+            // readOnly={isReadOnly}
             maxRows={6}
             minRows={1}
             spellCheck={true}

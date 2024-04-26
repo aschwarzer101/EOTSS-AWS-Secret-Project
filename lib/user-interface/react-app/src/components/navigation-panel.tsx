@@ -229,7 +229,7 @@ export default function NavigationPanel() {
         text: "Experiment With AI",
         items: [
           { type: "link", text: "Playground", href: "/chatbot/playground" },
-          { type: "link", text: "Compare Models", href: "/chatbot/multi-chat-playground" },
+          { type: "link", text: "Compare Models", href: "/chatbot/multi-chat" },
           { type: "link", text: "Sessions", href: "/chatbot/sessions" },
           { type: "link", text: "Models", href: "/chatbot/models" },
         ],

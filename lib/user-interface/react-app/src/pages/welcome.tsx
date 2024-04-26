@@ -107,7 +107,7 @@ export default function Welcome() {
                   name: "Multi-Chat Playground",
                   external: false,
                   type: " ",
-                  href: "/chatbot/playground/multi-chat-playground",
+                  href: "/chatbot/multichat",
                   img: "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=1878&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   description:
                     "Compare how models respond to the same prompt",
@@ -205,12 +205,16 @@ export default function Welcome() {
                 sections: [
                   {
                     content: (item) => (
-                    <div>
+                    <div style={{minHeight: '200px' }}>
                       <img
                         src={item.img}
                         alt="Placeholder"
-                        style={{width: "100%"}}
+                        style={{width: "100%",
+                                height: '180px', //setting fixed height
+                                objectFit: 'cover',
+                                borderRadius: '20px'}}
                       />
+                     
                     </div>
                     ),
                   },
@@ -252,7 +256,7 @@ export default function Welcome() {
                 {
                   name: "Cloud Computing Solutions",
                   external: true,
-                  type: "Search Engine",
+                  type: " ",
                   href: "https://aws.amazon.com/kendra/",
                   img: "/images/welcome/lambda.png", 
                   description:

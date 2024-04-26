@@ -363,7 +363,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     
     
     
-    const value = state.value.trim() + props.initialPrompt;
+    const value = state.value.trim() 
+    // props.initialPrompt;
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
       modelInterface:

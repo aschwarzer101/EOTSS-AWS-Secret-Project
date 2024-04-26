@@ -362,7 +362,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     
     
     
-    const value = state.value.trim();
+    const value = state.value.trim() + props.initialPrompt;
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
       modelInterface:
@@ -408,7 +408,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: value,
+        content: props.initialPrompt + value, // added in props.initialprompt here
         metadata: {
           ...props.configuration,
         },
@@ -454,6 +454,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
+      <div className={styles.non_editable_prompt}>
+          {props.initialPrompt}
+          </div>
       <Container>
         <div className={styles.input_textarea_container}>
           <SpaceBetween size="xxs" direction="horizontal" alignItems="center">
@@ -500,9 +503,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
             configuration={props.configuration}
             setConfiguration={props.setConfiguration}
           />
-          <div className={styles.non_editable_prompt}>
-          {props.initialPrompt}
-          </div>
+          
           <TextareaAutosize
             className={styles.input_textarea}
             value={state.value} // added here so the value in the  component is bound to state 

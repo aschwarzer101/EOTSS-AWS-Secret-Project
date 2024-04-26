@@ -96,7 +96,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   const [state, setState] = useState<ChatInputState>({
     // have it so the value of the input is either the primer or mt string 
-    value: props.initialPrompt + " ", 
+    value:  " ", 
+    // props.initialPrompt +
     initialPrompt: props.initialPrompt, 
     selectedModel: null,
     selectedModelMetadata: null,
@@ -454,9 +455,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      <div className={styles.non_editable_prompt}>
+      <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
           {props.initialPrompt}
-          </div>
+      </div>
       <Container>
         <div className={styles.input_textarea_container}>
           <SpaceBetween size="xxs" direction="horizontal" alignItems="center">

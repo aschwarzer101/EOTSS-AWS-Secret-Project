@@ -92,6 +92,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const navigate = useNavigate();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
+
   const [state, setState] = useState<ChatInputState>({
     // have it so the value of the input is either the primer or mt string 
     value: props.initialPrompt + " ", 
@@ -434,6 +436,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
         data: JSON.stringify(request),
       },
     });
+
+    // change here to set readonly to false after sending 
+    if (isReadOnly) {
+      setIsReadOnly(false);  // Allow editing after the first send
+  }
   };
 
   const connectionStatus = {
@@ -502,6 +509,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           <TextareaAutosize
             className={styles.input_textarea}
             value={state.value} // added here so the value in the  component is bound to state 
+            readOnly={isReadOnly}
             maxRows={6}
             minRows={1}
             spellCheck={true}
@@ -515,7 +523,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
                 handleSendMessage();
               }
             }}
-            // value={state.value}
+            
             placeholder={listening ? "Listening..." : "Send a message"}
           />
           <div style={{ marginLeft: "8px" }}>

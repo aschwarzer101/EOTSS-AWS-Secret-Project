@@ -222,23 +222,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     }
   }, [props.initialPrompt]);
 
-  // useEffect(() => {
-  //   if (props.initialPrompt) {
-  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt }));
-  //   }
-  // }, [props.initialPrompt]);
-// CHANGE HERE
-  // useEffect(() => {
-  //   if (props.initialPrompt) {
-  //     setState((prevState) => {
-  //       const newState: ChatInputState = {
-  //         ...prevState,
-  //         value: props.initialPrompt,
-  //       };
-  //       return newState;
-  //     });
-  //   }
-  // }, [props.initialPrompt]);
+  
 
   useEffect(() => {
     if (!appContext) return;
@@ -290,13 +274,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           modelsStatus: "error",
         }));
         
-        // // new place
-        // useEffect(() => {
-        //   if (props.initialPrompt) {
-        //     console.log("got to prompts use affect 296")
-        //     setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-        //   }
-        // }, [props.initialPrompt]);
       } 
     })();
   }, [appContext, state.modelsStatus]);
@@ -376,9 +353,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     );
   };
 
-  // const [state, setState ] = useState<ChatInputState>({
-  //   value: props.initialPrompt || "", 
-  // }); 
   const handleSendMessage = () => {
     if (!state.selectedModel) return;
     if (props.running) return;
@@ -390,10 +364,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     );
     
     
-      // if (props.initialPrompt) {
-      //   console.log("got to prompts handleSendMessage")
-      //   setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-      // }; 
+    
     
     const value = state.value.trim();
     const request: ChatBotRunRequest = {

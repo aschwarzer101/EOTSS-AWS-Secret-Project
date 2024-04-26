@@ -11,6 +11,7 @@ import { CHATBOT_NAME } from "../common/constants";
 
 export default function GlobalHeader() {
   const onFollow = useOnFollow();
+  // possibel change here
   const [userName, setUserName] = useState<string | null>(null);
   const [theme, setTheme] = useState<Mode>(StorageHelper.getTheme());
 
@@ -54,7 +55,7 @@ export default function GlobalHeader() {
       <TopNavigation
         identity={{
           href: "/",
-          title: "Welcome to the AI Sandbox!" ,
+          title: "Welcome to the AI Sandbox" ,
           logo: { src: "/images/stateseal-color.png", alt: { CHATBOT_NAME } + " Logo" },
         }}
         utilities={[
@@ -73,6 +74,11 @@ export default function GlobalHeader() {
                 id: "signout",
                 text: "Sign out",
               },
+              {
+                id: "username",
+                text: "email: "
+
+              }
             ],
             onItemFollow: onFollow,
           },

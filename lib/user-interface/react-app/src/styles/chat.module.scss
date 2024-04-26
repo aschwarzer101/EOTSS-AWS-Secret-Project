@@ -76,13 +76,13 @@
   $border: 5px;
  //  outline: rgb(from color 0 204 153); 
   // outline-style: outset; 
-  color: #FFF;
+  color: #000;
   background: #000;
   background-clip: padding-box;
   border: solid $border transparent; 
  // background-color: #f0f0f0;
-  border-radius: 10px;
-  background: linear-gradient(to right, rgb(76, 226, 166), rgb(88, 189, 226));
+  border-radius: 10px; 
+  background: linear-gradient(to right, rgb(88, 189, 226), rgb(76, 226, 166));
   
 }
 

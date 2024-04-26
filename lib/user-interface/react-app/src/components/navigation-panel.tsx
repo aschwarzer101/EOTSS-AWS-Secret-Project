@@ -229,7 +229,7 @@ export default function NavigationPanel() {
         text: "Experiment With AI",
         items: [
           { type: "link", text: "Playground", href: "/chatbot/playground" },
-          { type: "link", text: "Compare Models", href: "/chatbot/multi-chat" },
+          { type: "link", text: "Compare Models", href: "/chatbot/multichat" },
           { type: "link", text: "Sessions", href: "/chatbot/sessions" },
           { type: "link", text: "Models", href: "/chatbot/models" },
         ],
@@ -304,7 +304,7 @@ export default function NavigationPanel() {
       <Header>
         <RouterButton
           iconName="add-plus"
-          variant="inline-link"
+          variant="primary"
           href={`/chatbot/playground/${uuidv4()}`}
         >
           New session

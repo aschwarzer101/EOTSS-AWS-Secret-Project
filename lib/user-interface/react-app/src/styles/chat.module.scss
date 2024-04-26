@@ -68,11 +68,22 @@
 }
 
 .non_editable_prompt {
+  display: flex; 
+  position: relative; 
+  box-sizing: border-box; 
   padding: 10px;
   margin-bottom: 5px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  font-style: italic;
+  $border: 5px;
+ //  outline: rgb(from color 0 204 153); 
+  // outline-style: outset; 
+  color: #FFF;
+  background: #000;
+  background-clip: padding-box;
+  border: solid $border transparent; 
+ // background-color: #f0f0f0;
+  border-radius: 10px;
+  background: linear-gradient(to right, rgb(76, 226, 166), rgb(88, 189, 226));
+  
 }
 
 .input_controls {

@@ -212,12 +212,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       setState((state) => ({ ...state, value: transcript }));
     }
   }, [transcript]);
-  useEffect(() => {
-    if (props.initialPrompt) {
-      console.log("got to prompts use affect")
-      setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-    }
-  }, [props.initialPrompt]);
+  // useEffect(() => {
+  //   if (props.initialPrompt) {
+  //     console.log("got to prompts use affect")
+  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
+  //   }
+  // }, [props.initialPrompt]);
 
   
 

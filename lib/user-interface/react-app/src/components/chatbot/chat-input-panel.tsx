@@ -456,11 +456,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      if(props.initialPrompt) {
+      
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-         props.initialPrompt ? :  {props.initialPrompt}
+           {props.initialPrompt}
       </div>
-      }
+      
       <Container>
         <div className={styles.input_textarea_container}>
           <SpaceBetween size="xxs" direction="horizontal" alignItems="center">

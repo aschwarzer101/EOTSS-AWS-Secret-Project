@@ -17,6 +17,7 @@ export class SessionsClient {
     return result;
   }
 
+
   async getSession(
     sessionId: string
   ): Promise<GraphQLResult<GraphQLQuery<GetSessionQuery>>> {

@@ -5,3 +5,4 @@ from .cohere import *
 from .llama2_chat import *
 from .mistral import *
 from .metamodel import *
+from .llama3 import *

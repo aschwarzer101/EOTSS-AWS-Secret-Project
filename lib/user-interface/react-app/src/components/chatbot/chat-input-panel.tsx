@@ -95,9 +95,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
 
   const [state, setState] = useState<ChatInputState>({
+    
     // have it so the value of the input is either the primer or mt string 
-    value:  " ", 
+    // value:  " ", CHANGE HERE IF YOU MESS IT UP
     // props.initialPrompt +
+    value: props.initialPrompt + " ",
     initialPrompt: props.initialPrompt, 
     selectedModel: null,
     selectedModelMetadata: null,
@@ -119,7 +121,13 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   }, [props.messageHistory]);
 
   
-
+  // ALAYNA U PUT IT HERE
+  useEffect(() => {
+    //  send the initial prompt if it's not empty and the model is selected
+    if (props.initialPrompt && state.selectedModel) {
+        handleSendMessage(); 
+    }
+}, [props.initialPrompt, state.selectedModel]);
 
 
   useEffect(() => {
@@ -363,7 +371,42 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     
     
     
-    const value = state.value.trim() 
+    const value = state.value.trim()
+    if (!value) return; 
+    if (props.initialPrompt) {
+      props.setRunning(true); 
+      const request = {
+        action: ChatBotAction.Run,
+        modelInterface: state.selectedModelMetadata!.interface as ModelInterface, 
+        data: {
+            mode: ChatBotMode.Chain, 
+            text: props.initialPrompt,
+            modelName: name,
+            modelId: "anthropic.claude-3-haiku-20240307-v1:0",
+            provider: "anthropic",
+            sessionId: props.session.id,
+            workspaceId: state.selectedWorkspace?.value, 
+            modelKwargs: {
+              streaming: props.configuration.streaming,
+              maxTokens: props.configuration.maxTokens,
+              temperature: props.configuration.temperature,
+              topP: props.configuration.topP,
+            },
+        },
+      };
+
+      // setState((prevState) => ({ ...prevState, value: ""}));
+
+      
+      API.graphql({
+        query: sendQuery,
+        variables: {
+          data: JSON.stringify(request),
+        },
+      });
+
+      setState((prevState) => ({ ...prevState, value: ""}));
+    }; 
     // props.initialPrompt;
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
@@ -436,7 +479,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     // change here to set readonly to false after sending 
     if (isReadOnly) {
       setIsReadOnly(false);  // Allow editing after the first send
-  }
+   }
   };
 
   const connectionStatus = {

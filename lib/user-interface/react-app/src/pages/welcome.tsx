@@ -12,6 +12,8 @@ import RouterButton from "../components/wrappers/router-button";
 import useOnFollow from "../common/hooks/use-on-follow";
 import { CHATBOT_NAME, languageList } from "../common/constants";
 import { useHref } from "react-router-dom";
+import { TaskOptions } from "../common/constants";
+import TaskPriming from "../components/chatbot/task";
 
 export default function Welcome() {
   const onFollow = useOnFollow();
@@ -157,8 +159,8 @@ export default function Welcome() {
                   name: "Summarize Text",
                   external: false,
                   type: "Summarize the following meeting notes for me",
-                  href: `/chatbot/playground?prompt=${encodeURIComponent("Summarize the following meeting notes for me:")}`,
-                    // sending to URL parser ^^ 
+                  href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`,
+                    // sending to URL parser ^^ do taskPromptMap look up 
                   // onFollow: useHref, 
                   description:
                     "Summarize meeting notes, articles, transcripts to create concise notes.",
@@ -167,14 +169,14 @@ export default function Welcome() {
                   name: "Draft A Memo",
                   external: false,
                   type: "Draft a concise, professional memo based on the following text: ",
-                  href: `/chatbot/playground?prompt=${encodeURIComponent("Draft a concise, professional memo based on the following text:")}`,
+                  href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
                   description:
                     "Compose concise memos through automated drafting",
                 },
                 {
                   name: "Translate",
-                  type: "Translate the following text into" + languageList,
-                  href: `/chatbot/playground?prompt=${encodeURIComponent("Translate the following text into: " + languageList.join(", "))}`,
+                  type: "Translate the following text into" ,
+                  href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("translate").prompt)}`,
                   description:
                     "Translate and generate text in 25+ languages ",
                 },

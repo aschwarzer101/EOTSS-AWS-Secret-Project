@@ -86,6 +86,10 @@
   
 }
 
+.non_editable_prompt:empty {
+  display: none; 
+}
+
 .input_controls {
   display: grid;
   grid-template-rows: 1fr;

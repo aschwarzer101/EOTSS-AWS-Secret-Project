@@ -410,7 +410,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: props.initialPrompt + value, // added in props.initialprompt here
+        content: props.initialPrompt + value, 
         metadata: {
           ...props.configuration,
         },
@@ -456,7 +456,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      {props.initialPrompt ? (
+      {props.initialPrompt.trim() ? (
          <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
          {props.initialPrompt}
         </div>

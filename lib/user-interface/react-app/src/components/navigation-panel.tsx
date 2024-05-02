@@ -114,7 +114,7 @@ export default function NavigationPanel() {
 
   return (
     <div>
-      <Header>
+      {/* <Header>
         <RouterButton
           iconName="add-plus"
           variant="primary"
@@ -122,7 +122,7 @@ export default function NavigationPanel() {
         >
           New session
         </RouterButton>
-      </Header>
+      </Header> */}
     <SideNavigation
       onFollow={onFollow}
       onChange={onChange}

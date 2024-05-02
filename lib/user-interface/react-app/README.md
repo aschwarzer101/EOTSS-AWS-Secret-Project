@@ -18,7 +18,7 @@ For example:
 
 ```bash
 cd lib/user-interface/react-app/public
-curl -O https://dxxxxxxxxxxxx.cloudfront.net/aws-exports.json
+curl -O https://dhusitpbrgxtd.cloudfront.net/aws-exports.json
 cd ..
 npm run dev
 ```

@@ -13,6 +13,7 @@ import { ApiClient } from "../common/api-client/api-client";
 import RouterButton from "../components/wrappers/router-button";
 import { Auth } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
+import TaskPriming from "./chatbot/task";
 
 export default function NavigationPanel() {
   const appContext = useContext(AppContext);
@@ -45,11 +46,11 @@ export default function NavigationPanel() {
   }, [apiClient]);
 
   const updateItems = (sessions: any[]) => {
-    const sessionItems = sessions.map(session => ({
-      type: "link", 
-      text: "Session ${session.title || 'Untitled Session'}", 
-      href: '/chatbot/playground/${session.id}', 
-    }) as SideNavigationProps.Item); 
+    // const sessionItems = sessions.map(session => ({
+    //   type: "link", 
+    //   text: '${session.title}' , 
+    //   href: '/chatbot/playground/${session.id}', 
+    // }) as SideNavigationProps.Item); 
 
     const baseItems: SideNavigationProps.Item[] = [
       { type: "link", text: "Home", href: "/" },
@@ -66,50 +67,25 @@ export default function NavigationPanel() {
       {
         type: "section",
         text: "Session History",
-        items: sessionItems
-        // sessionItems.map(session => ({
-        //   type: "link", 
-        //   text: `Session ${session.title}`,
-        //   href: `/chatbot/playground/${session.id}`,
-        // })),
+        items: sessions.map(session => ({
+          type: "link", 
+          text: `Session ${session.title}`,
+          href: `/chatbot/playground/${session.id}`,
+        })),
       },
       {
         type: "section",
         text: "Explore AI Solutions",
         items: [
-          { type: "link", text: "Draft A Memo", href: "/chatbot/playground" },
-          { type: "link", text: "Summarize Text", href: "/chatbot/playground" },
-          { type: "link", text: "Translate", href: "/chatbot/playground" },
+          { type: "link", text: "Draft A Memo", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("memo").instructions)}`},
+          { type: "link", text: "Summarize Text", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("summarize").instructions)}`},
+          { type: "link", text: "Translate", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("translate").instructions)}` },
         ],
       },
-      // {
-      //   type: "section",
-      //   text: "Create",
-      //   items: [
-      //     { type: "link", text: "Workspaces", href: "/chatbot/playground" },
-      //     { type: "link", text: "Storage", href: "/chatbot/playground" },
-      //     { type: "link", text: "Embeddings", href: "/chatbot/playground" },
-      //   ],
-      // },
     ];
 
     if (appContext?.config.rag_enabled) {
-      // const crossEncodersItems : SideNavigationProps.Item[] = appContext.config.cross_encoders_enabled ? [
-      //   { type: "link", text: "Cross-encoders", href: "/rag/cross-encoders" },
-      // ] : [];
-
-      // baseItems.push({
-      //   type: "section",
-      //   text: "Retrieval-Augmented Generation (RAG)",
-      //   items: [
-      //     { type: "link", text: "Dashboard", href: "/rag" },
-      //     { type: "link", text: "Semantic search", href: "/rag/semantic-search" },
-      //     { type: "link", text: "Workspaces", href: "/rag/workspaces" },
-      //     { type: "link", text: "Embeddings", href: "/rag/embeddings" },
-      //     ...crossEncodersItems,
-      //     { type: "link", text: "Engines", href: "/rag/engines" },
-      //   ],
-      // });
+ 
     }
     setItems(baseItems);
   };

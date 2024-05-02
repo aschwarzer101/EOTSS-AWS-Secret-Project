@@ -13,6 +13,7 @@ import ChatMessage from "./chat-message";
 import ChatInputPanel, { ChatScrollState } from "./chat-input-panel";
 import styles from "../../styles/chat.module.scss";
 import { CHATBOT_NAME } from "../../common/constants";
+import TaskPriming from "./task";
 
 export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const appContext = useContext(AppContext);
@@ -35,7 +36,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const [messageHistory, setMessageHistory] = useState<ChatBotHistoryItem[]>(
     []
   );
-  const [initialPrompt, setInitialPrompt] = useState( ' ');
+  const [initialPrompt, setInitialPrompt] = useState(' ');
 
   useEffect(() => {
 
@@ -47,9 +48,14 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     // THIS WORKED REINTRO PT1
     const queryParams = new URLSearchParams(window.location.search); 
     const urlPrompt = queryParams.get('prompt') || " "; 
+    const decodedPrompt = decodeURIComponent(urlPrompt); 
+    const taskPrimer = TaskPriming(decodedPrompt); 
+    const instructions = taskPrimer.instructions; 
+    const modelPrompt = taskPrimer.prompt; 
 
     setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
-     
+    setInitialPrompt(modelPrompt); 
+    
     (async () => {
       if (!props.sessionId) {
         setSession({ id: uuidv4(), loading: false });

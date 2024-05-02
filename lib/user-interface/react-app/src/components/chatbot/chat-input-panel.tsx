@@ -34,6 +34,7 @@ import { LoadingStatus, ModelInterface } from "../../common/types";
 import styles from "../../styles/chat.module.scss";
 import ConfigDialog from "./config-dialog";
 import ImageDialog from "./image-dialog";
+import TaskPriming from "./task";
 import {
   ChabotInputModality,
   ChatBotHeartbeatRequest,
@@ -93,7 +94,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
-
+  const 
   const [state, setState] = useState<ChatInputState>({
     
     // have it so the value of the input is either the primer or mt string 
@@ -115,6 +116,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   );
 
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
+  
+    const taskRouter = TaskPriming(props.initialPrompt); 
+    const apiPrompt = taskRouter.prompt;
+    const userInstrucions = taskRouter.instructions; 
+  
 
   useEffect(() => {
     messageHistoryRef.current = props.messageHistory;
@@ -420,7 +426,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           : (state.selectedModelMetadata!.interface as ModelInterface),
       data: {
         mode: ChatBotMode.Chain,
-        text: value,
+        text: value + apiPrompt,
         files: props.configuration.files ?? [],
         modelName: name,
         modelId: state?.models?.find((obj: any) => obj.name === name)?.modelId || null,
@@ -501,7 +507,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     <SpaceBetween direction="vertical" size="l">
       {props.initialPrompt.trim() ? (
          <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-         {props.initialPrompt}
+         {userInstrucions}
         </div>
       ) : null}
        

@@ -53,7 +53,14 @@ export default function NavigationPanel() {
     // }) as SideNavigationProps.Item); 
 
     const baseItems: SideNavigationProps.Item[] = [
-      { type: "link", text: "Home", href: "/" },
+      // { type: "link", text: "Home", href: "/" },
+      { type: "link", text: "", href: "/", info: <RouterButton
+          iconName="add-plus"
+          variant="primary"
+          href={`/chatbot/playground/${uuidv4()}`}
+        >
+          New session
+        </RouterButton> },
       {
         type: "section",
         text: "Experiment With AI",
@@ -69,7 +76,7 @@ export default function NavigationPanel() {
         text: "Session History",
         items: sessions.map(session => ({
           type: "link", 
-          text: `Session ${session.title}`,
+          text: `Session ${session.title.summarize}`,
           href: `/chatbot/playground/${session.id}`,
         })),
       },

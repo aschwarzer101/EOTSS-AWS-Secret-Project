@@ -49,12 +49,12 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     const queryParams = new URLSearchParams(window.location.search); 
     const urlPrompt = queryParams.get('prompt') || " "; 
     const decodedPrompt = decodeURIComponent(urlPrompt); 
-    const taskPrimer = TaskPriming(decodedPrompt); 
-    const instructions = taskPrimer.instructions; 
-    const modelPrompt = taskPrimer.prompt; 
+    // const taskPrimer = TaskPriming(decodedPrompt); 
+    // const instructions = taskPrimer.instructions; 
+    // const modelPrompt = taskPrimer.prompt; 
 
     setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
-    setInitialPrompt(modelPrompt); 
+    // setInitialPrompt(modelPrompt); 
 
     (async () => {
       if (!props.sessionId) {
@@ -175,7 +175,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
           setRunning={setRunning}
           initialPrompt={initialPrompt}
           // CHECK HERE
-          taskPrompt={TaskOptions}
+         // taskPrompt={TaskOptions}
           messageHistory={messageHistory}
           setMessageHistory={(history) => setMessageHistory(history)}
           configuration={configuration}

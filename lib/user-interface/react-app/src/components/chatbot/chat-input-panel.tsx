@@ -119,9 +119,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
   
-    const taskRouter = TaskPriming(props.initialPrompt); 
-    const apiPrompt = taskRouter.prompt;
-    const userInstrucions = taskRouter.instructions; 
+    // const taskRouter = TaskPriming(props.initialPrompt); 
+    // const apiPrompt = taskRouter.prompt;
+    // const userInstrucions = taskRouter.instructions; 
   
 
   useEffect(() => {
@@ -428,7 +428,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           : (state.selectedModelMetadata!.interface as ModelInterface),
       data: {
         mode: ChatBotMode.Chain,
-        text: value + apiPrompt,
+        text: value,
         files: props.configuration.files ?? [],
         modelName: name,
         modelId: state?.models?.find((obj: any) => obj.name === name)?.modelId || null,
@@ -509,7 +509,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     <SpaceBetween direction="vertical" size="l">
       {props.initialPrompt.trim() ? (
          <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-         {userInstrucions}
+         {props.initialPrompt}
         </div>
       ) : null}
        

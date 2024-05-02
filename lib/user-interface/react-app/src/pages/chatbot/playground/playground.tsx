@@ -7,7 +7,7 @@ import { Alert } from "@cloudscape-design/components";
 
 export default function Playground() {
   const { sessionId } = useParams();
-  const { initialPrompt } = useParams(); 
+  // const { initialPrompt } = useParams(); 
   // console.log(prompt + "testing #85")
   return (
     <BaseAppLayout
@@ -56,10 +56,10 @@ export default function Playground() {
           header="">
           AI Models can make mistakes. Be mindful in validating important information.
         </Alert>
-        <Chat sessionId={sessionId} prompt = {initialPrompt}/>
+        <Chat sessionId={sessionId} prompt = {}/>
         </div>
-      
-    
+      // initialPrompt
+    // prompt = {initialPrompt}
     }
     />
   ); //send prompt here : prompt = {}

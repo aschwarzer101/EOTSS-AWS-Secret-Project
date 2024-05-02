@@ -57,12 +57,14 @@ import {
 } from "./utils";
 import { receiveMessages } from "../../graphql/subscriptions";
 import { Utils } from "../../common/utils";
+import { TaskOptions } from "../../common/constants";
 
 export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
-  initialPrompt: string; 
+  initialPrompt: string;
+  taskPrompt: TaskOptions; 
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;
@@ -94,7 +96,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
-  const 
+  
   const [state, setState] = useState<ChatInputState>({
     
     // have it so the value of the input is either the primer or mt string 

@@ -7,7 +7,7 @@ import { Alert } from "@cloudscape-design/components";
 
 export default function Playground() {
   const { sessionId } = useParams();
-  // const { initialPrompt } = useParams(); 
+  const { initialPrompt } = useParams(); 
   // console.log(prompt + "testing #85")
   return (
     <BaseAppLayout

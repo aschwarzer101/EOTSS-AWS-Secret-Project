@@ -12,7 +12,7 @@ import { ApiClient } from "../../common/api-client/api-client";
 import ChatMessage from "./chat-message";
 import ChatInputPanel, { ChatScrollState } from "./chat-input-panel";
 import styles from "../../styles/chat.module.scss";
-import { CHATBOT_NAME } from "../../common/constants";
+import { CHATBOT_NAME, TaskOptions } from "../../common/constants";
 import TaskPriming from "./task";
 
 export default function Chat(props: { sessionId?: string, prompt?: string}) {
@@ -55,7 +55,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
 
     setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
     setInitialPrompt(modelPrompt); 
-    
+
     (async () => {
       if (!props.sessionId) {
         setSession({ id: uuidv4(), loading: false });
@@ -175,6 +175,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
           setRunning={setRunning}
           initialPrompt={initialPrompt}
           // CHECK HERE
+          taskPrompt={TaskOptions}
           messageHistory={messageHistory}
           setMessageHistory={(history) => setMessageHistory(history)}
           configuration={configuration}

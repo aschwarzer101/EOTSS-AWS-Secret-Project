@@ -84,7 +84,7 @@ export default function NavigationPanel() {
         text: "Session History",
         items: sessions.map(session => ({
           type: "link", 
-          text: `Session ${truncateText(session.title || 'Untitled Session', 25)}`,
+          text: `Session ${truncateText(session.title || 'Untitled Session', 10)}`,
           href: `/chatbot/playground/${session.id}`,
         })),
       },

@@ -45,6 +45,14 @@ export default function NavigationPanel() {
      loadSessions(); 
   }, [apiClient]);
 
+  function truncateText(text, limit) {
+    const words = text.split(' ');
+    if (words.length > limit) {
+      return words.slice(0, limit).join(' ') + '...';
+    }
+    return text;
+  }
+
   const updateItems = (sessions: any[]) => {
     // const sessionItems = sessions.map(session => ({
     //   type: "link", 
@@ -76,7 +84,7 @@ export default function NavigationPanel() {
         text: "Session History",
         items: sessions.map(session => ({
           type: "link", 
-          text: `Session ${session.title.summarize}`,
+          text: `Session ${truncateText(session.title || 'Untitled Session', 25)}`,
           href: `/chatbot/playground/${session.id}`,
         })),
       },

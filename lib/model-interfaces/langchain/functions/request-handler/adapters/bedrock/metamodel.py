@@ -65,6 +65,8 @@ class BedrockMetaModelAdapter(ModelAdapter):
         "Command Light": "cohere.command-light-text-v14",
         "Llama 2 Chat 13B": "meta.llama2-13b-chat-v1",
         "Llama 2 Chat 70B": "meta.llama2-70b-chat-v1",
+        "Llama 3 8B Instruct": "meta.llama3-8b-instruct-v1:0",
+        "Llama 3 70B Instruct": "meta.llama3-70b-instruct-v1:0",
         "Mistral 7B Instruct": "mistral.mistral-7b-instruct-v0:2",
         "Mixtral 8X7B Instruct": "mistral.mixtral-8x7b-instruct-v0:1",
     }
@@ -99,6 +101,8 @@ class BedrockMetaModelAdapter(ModelAdapter):
         Command Light
         Llama 2 Chat 13B
         Llama 2 Chat 70B
+        Llama 3 8B Instruct
+        Llama 3 70B Instruct
         Mistral 7B Instruct
         Mixtral 8x7B Instruct
 
@@ -133,7 +137,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         valid_models = [
             "Titan Text G1 - Lite", "Titan Text G1 - Express", "Jurassic-2 Mid", "Jurassic-2 Ultra",
             "Claude Instant", "Claude", "Claude 3 Sonnet", "Claude 3 Haiku",
-            "Command", "Command Light", "Llama 2 Chat 13B", "Llama 2 Chat 70B",
+            "Command", "Command Light", "Llama 2 Chat 13B", "Llama 2 Chat 70B", "Llama 3 8B Instruct", "Llama 3 70B Instruct",
             "Mistral 7B Instruct", "Mixtral 8x7B Instruct"
         ]
         return model_name if model_name in valid_models else "Claude 3 Sonnet"

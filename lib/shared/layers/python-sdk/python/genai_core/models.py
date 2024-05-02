@@ -40,13 +40,32 @@ def list_new_bedrock_models():
             byOutputModality=genai_core.types.Modality.TEXT.value,
         )
 
-        skip_model_ids = [
-            'amazon.titan-tg1-large',
-            'ai21.j2-grande-instruct',
-            'ai21.j2-jumbo-instruct',
-            'ai21.j2-mid',
-            'ai21.j2-ultra',
-            'anthropic.claude-v2'
+        # skip_model_ids = [
+        #     'amazon.titan-tg1-large',
+        #     'ai21.j2-grande-instruct',
+        #     'ai21.j2-jumbo-instruct',
+        #     'ai21.j2-mid',
+        #     'ai21.j2-ultra',
+        #     'anthropic.claude-v2'
+        # ]
+
+        model_id = [
+             "amazon.titan-text-express-v1",
+             "amazon.titan-text-lite-v1",
+             "anthropic.claude-v2:1",
+             "anthropic.claude-3-sonnet-20240229-v1:0",
+             "anthropic.claude-3-haiku-20240307-v1:0",
+             "anthropic.claude-instant-v1",
+             "ai21.j2-mid-v1",
+             "ai21.j2-ultra-v1",
+             "cohere.command-text-v14",
+             "cohere.command-light-text-v14",
+             "meta.llama2-13b-chat-v1",
+             "meta.llama2-70b-chat-v1",
+             "meta.llama3-8b-instruct-v1:0",
+             "meta.llama3-70b-instruct-v1:0",
+             "mistral.mistral-7b-instruct-v0:2",
+             "mistral.mixtral-8x7b-instruct-v0:1",
         ]
 
         models = [{
@@ -58,7 +77,7 @@ def list_new_bedrock_models():
             "outputModalities": model.get("outputModalities", []),
             "interface": ModelInterface.LANGCHIAN.value,
             "ragSupported": True,
-        } for model in response.get('modelSummaries', []) if model.get('modelId') not in skip_model_ids and model.get('modelLifecycle', {}).get('status') == genai_core.types.ModelStatus.ACTIVE.value]
+        } for model in response.get('modelSummaries', []) if model.get('modelId') in model_id and model.get('modelLifecycle', {}).get('status') == genai_core.types.ModelStatus.ACTIVE.value]
 
         return models
     except Exception as e:

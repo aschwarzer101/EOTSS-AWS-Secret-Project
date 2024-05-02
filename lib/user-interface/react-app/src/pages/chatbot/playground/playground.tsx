@@ -56,7 +56,7 @@ export default function Playground() {
           header="">
           AI Models can make mistakes. Be mindful in validating important information.
         </Alert>
-        <Chat sessionId={sessionId} prompt = {}/>
+        <Chat sessionId={sessionId} prompt = {initialPrompt}/>
         </div>
       // initialPrompt
     // prompt = {initialPrompt}

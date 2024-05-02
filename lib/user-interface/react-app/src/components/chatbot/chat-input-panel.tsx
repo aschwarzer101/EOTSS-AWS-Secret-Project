@@ -64,7 +64,7 @@ export interface ChatInputPanelProps {
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
   initialPrompt: string;
-  taskPrompt: TaskOptions; 
+  // taskPrompt: TaskOptions; 
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;

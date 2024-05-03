@@ -93,8 +93,8 @@ export default function NavigationPanel() {
         text: "Explore AI Solutions",
         items: [
           { type: "link", text: "Draft A Memo", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`},
-          { type: "link", text: "Summarize Text", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}/${uuidv4()}`},
-          { type: "link", text: "Translate", href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("translate").prompt)}/${uuidv4()}` },
+          { type: "link", text: "Summarize Text", href: `/chatbot/playground/${uuidv4()}?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`},
+          { type: "link", text: "Translate", href: `/chatbot/playground/${uuidv4()}?prompt=${encodeURIComponent(TaskPriming("translate").prompt)}` },
         ],
       },
     ];

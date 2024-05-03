@@ -144,6 +144,12 @@ export enum ChabotInputModality {
   Image = "IMAGE",
 }
 
+// MANIAC IDEA 
+// export enum ChatbotTaskMode {
+//   Task = "TASK", 
+//   Regular = "REGULAR", 
+// }
+
 export enum ChabotOutputModality {
   Text = "TEXT",
   Image = "IMAGE",

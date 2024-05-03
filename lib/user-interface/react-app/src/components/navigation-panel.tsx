@@ -88,7 +88,7 @@ export default function NavigationPanel() {
           href: `/chatbot/playground/${session.id}`,
         })),
       },
-      {
+      { // need to learn how to refresh with side-bar navigation 
         type: "section",
         text: "Explore AI Solutions",
         items: [

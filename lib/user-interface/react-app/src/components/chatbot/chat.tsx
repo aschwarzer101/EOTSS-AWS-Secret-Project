@@ -48,7 +48,14 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     // THIS WORKED REINTRO PT1
     const queryParams = new URLSearchParams(window.location.search); 
     const urlPrompt = queryParams.get('prompt') || " "; 
-    const decodedPrompt = decodeURIComponent(urlPrompt); 
+    const decodedPrompt = decodeURIComponent(urlPrompt);
+    // MANIAC IDEA
+    // (async () => { 
+    //   if (!decodedPrompt) {
+    //     return 
+    //   }
+      
+    // }) 
     // const taskPrimer = TaskPriming(decodedPrompt); 
     // const instructions = taskPrimer.instructions; 
     // const modelPrompt = taskPrimer.prompt; 

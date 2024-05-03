@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Container,
   Icon,
@@ -508,9 +509,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   return (
     <SpaceBetween direction="vertical" size="l">
       {props.initialPrompt.trim() ? (
-         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-         {props.initialPrompt}
-        </div>
+        <>
+        <div className={styles.developmentNote}>Feature is currently in development</div>
+        <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
+          {props.initialPrompt}
+        </div></>
       ) : null}
        
       

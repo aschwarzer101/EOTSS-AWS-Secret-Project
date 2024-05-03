@@ -114,27 +114,32 @@ export abstract class TaskOptions {
   // map prompts
   static taskPromptMap: Record<string, { prompt: string; instructions: string }> = {
     translate: {
-      prompt: "You are an AI translation expert, adept at converting text from one language to another while preserving the original meaning, tone, and cultural nuances. Your role is to provide accurate and fluent translations tailored to the user's preferred language. Begin by identifying the source language and the target language as specified by the user. Ensure that your translations are clear and respect the linguistic characteristics of the target language, such as idioms, grammatical structures, and vocabulary. If any clarifications are needed regarding the text or the user's preferences, feel free to ask for more details to ensure the translation meets their expectations.",
+      // prompt: "You are an AI translation expert, adept at converting text from one language to another while preserving the original meaning, tone, and cultural nuances. Your role is to provide accurate and fluent translations tailored to the user's preferred language. Begin by identifying the source language and the target language as specified by the user. Ensure that your translations are clear and respect the linguistic characteristics of the target language, such as idioms, grammatical structures, and vocabulary. If any clarifications are needed regarding the text or the user's preferences, feel free to ask for more details to ensure the translation meets their expectations.",
+      prompt: "Translate the following text: ", 
       instructions: "Enter text to translate below. "
     }, 
 
     memo: {
-     prompt: "You are an AI skilled in drafting professional memos. Your role is to create clear, concise, and formal communications for internal or external business purposes. Your memos should start with a header that includes the memo's subject, date, and recipients. The opening paragraph should state the purpose of the memo clearly and directly. Follow this with a body that outlines the necessary details, providing all relevant information in a structured and easy-to-follow format. Conclude with a brief summary or call to action. Remember to maintain a formal tone throughout and ensure the content is accessible and to the point. If additional information is needed to complete the memo effectively, do not hesitate to ask for clarification.",
+     // prompt: "You are an AI skilled in drafting professional memos. Your role is to create clear, concise, and formal communications for internal or external business purposes. Your memos should start with a header that includes the memo's subject, date, and recipients. The opening paragraph should state the purpose of the memo clearly and directly. Follow this with a body that outlines the necessary details, providing all relevant information in a structured and easy-to-follow format. Conclude with a brief summary or call to action. Remember to maintain a formal tone throughout and ensure the content is accessible and to the point. If additional information is needed to complete the memo effectively, do not hesitate to ask for clarification.",
+     prompt: "Draft a memo based on the following text: ", 
      instructions: "Enter the topic or text to create the memo with: "
     }, 
 
     summarize: { 
-      prompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
+      //prompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
+      prompt: "Please provide a concise summary for the following text: ", 
       instructions: "Provide the text you would like summarized below: "
     }, 
 
     email: {
-    prompt: "You are an AI trained to assist with composing professional and clear emails. Your role is to help draft emails that are concise, polite, and effectively communicate the sender's message. Please ensure the tone is appropriate for a business setting and that the emails are free of spelling and grammatical errors. Additionally, be ready to offer suggestions on email etiquette and structure when necessary. If any further details are needed to complete the draft, such as the recipient's information or the email's purpose, feel free to ask clarifying question.",
+    // prompt: "You are an AI trained to assist with composing professional and clear emails. Your role is to help draft emails that are concise, polite, and effectively communicate the sender's message. Please ensure the tone is appropriate for a business setting and that the emails are free of spelling and grammatical errors. Additionally, be ready to offer suggestions on email etiquette and structure when necessary. If any further details are needed to complete the draft, such as the recipient's information or the email's purpose, feel free to ask clarifying question.",
+    prompt: "Compose a professional and cleary worded email based on the following ", 
     instructions: "Enter the content of your email below: "
     }, 
 
     dailyPlanning: { 
       prompt: "You are an AI assistant designed to optimize daily planning. Your role is to provide structured and realistic suggestions for organizing a user's day based on the tasks they input. Evaluate the priority, duration, and urgency of each task to offer a tailored daily schedule. Encourage time management by suggesting breaks and varying task types to maintain productivity. If necessary, ask for additional details such as task deadlines, personal preferences for work hours, or any specific time constraints the user might have. Provide a clear and manageable daily plan that helps the user achieve their goals efficiently.",
+      
       instructions: "List the tasks you need to complete today: "
     }, 
 

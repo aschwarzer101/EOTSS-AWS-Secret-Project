@@ -510,7 +510,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     <SpaceBetween direction="vertical" size="l">
       {props.initialPrompt.trim() ? (
         <>
-        <div className={styles.developmentNote}>Feature is currently in development</div>
+        <Alert
+          statusIconAriaLabel="Info"
+          header="">
+          Feature is currently in development.
+        </Alert>
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
           {props.initialPrompt}
         </div></>

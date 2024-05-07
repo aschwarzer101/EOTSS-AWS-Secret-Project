@@ -163,4 +163,5 @@ export interface FeedbackData {
   prompt: string;
   completion: string;
   model: string;
+  userFeedbackComment: string;
 }

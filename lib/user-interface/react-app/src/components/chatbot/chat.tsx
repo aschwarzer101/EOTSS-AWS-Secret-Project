@@ -122,7 +122,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   // THIS WORKED MAYBE || REINTRO PT 1 move to first use affec
   
 
-  const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
+  const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem, userFeedbackComment: string) => {
     if (message.metadata.sessionId) {
       
       let prompt = " ";
@@ -137,6 +137,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
         feedback: feedbackType,
         prompt: prompt,
         completion: completion,
+        userFeedbackComment: userFeedbackComment,
         model: model as string
       };
       addUserFeedback(feedbackData);
@@ -160,8 +161,8 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
             key={idx}
             message={message}
             showMetadata={configuration.showMetadata}
-            onThumbsUp={() => handleFeedback(1, idx, message)}
-            onThumbsDown={() => handleFeedback(0, idx, message)}
+            onThumbsUp={(userFeedbackComment : string) => handleFeedback(1, idx, message, userFeedbackComment)}
+            onThumbsDown={(userFeedbackComment : string) => handleFeedback(0, idx, message, userFeedbackComment)}
           />
         ))}
       </SpaceBetween>

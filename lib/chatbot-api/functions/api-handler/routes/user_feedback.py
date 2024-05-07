@@ -17,6 +17,7 @@ class CreateUserFeedbackRequest(BaseModel):
     prompt: str
     completion: str
     model: str
+    userFeedbackComment: str
     
 
 @router.resolver(field_name="addUserFeedback")
@@ -30,7 +31,7 @@ def user_feedback(input: dict):
         raise genai_core.types.CommonError("User not found")
     
     result = genai_core.user_feedback.add_user_feedback(
-        request.sessionId, request.key, request.feedback, request.prompt, request.completion, request.model, userId)
+        request.sessionId, request.key, request.feedback, request.prompt, request.completion, request.model, request.userFeedbackComment, userId)
 
     return {
         "feedback_id": result["feedback_id"],

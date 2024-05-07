@@ -248,6 +248,7 @@ input UserFeedbackInput {
   prompt: String!
   completion: String!
   model: String!
+  userFeedbackComment: String!
 }
 
 input TextDocumentInput {

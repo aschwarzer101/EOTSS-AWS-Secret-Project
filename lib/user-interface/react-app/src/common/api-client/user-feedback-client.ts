@@ -21,6 +21,7 @@ export class UserFeedbackClient {
           feedback: params.feedbackData.feedback,
           prompt: params.feedbackData.prompt,
           completion: params.feedbackData.completion,
+          userFeedbackComment: params.feedbackData.userFeedbackComment,
           model: params.feedbackData.model,
         },
       },

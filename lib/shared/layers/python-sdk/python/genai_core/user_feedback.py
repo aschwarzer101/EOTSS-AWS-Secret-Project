@@ -18,6 +18,7 @@ def add_user_feedback(
     prompt: str,
     completion: str,
     model: str,
+    userFeedbackComment: str,
     userId: str
 ):
     feedbackId = str(uuid.uuid4())
@@ -33,6 +34,7 @@ def add_user_feedback(
         "completion": completion,
         "model": model,
         "feedback": feedback,
+        "userFeedbackComment": userFeedbackComment,
         "createdAt": timestamp
     }
     

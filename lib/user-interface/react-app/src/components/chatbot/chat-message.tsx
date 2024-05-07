@@ -309,7 +309,10 @@ export default function ChatMessage(props: ChatMessageProps) {
                         {showFeedbackBox && <SpaceBetween>
                             <Input
                                 onChange={({detail}) => setWrittenFeedback(detail.value)}
-                                onKeyDown={({detail}) => detail.key === "Enter" && props.onThumbsDown(writtenFeedback)}
+                                onKeyDown={({detail}) => {
+                                    detail.key === "Enter" && props.onThumbsDown(writtenFeedback);
+                                    setShowFeedbackBox(false);
+                                }}
                             ></Input>
                             <Button onClick={() => {
                                     props.onThumbsDown(writtenFeedback);

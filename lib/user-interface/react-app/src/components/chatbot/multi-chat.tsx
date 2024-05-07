@@ -332,7 +332,7 @@ export default function MultiChat() {
     [ReadyState.UNINSTANTIATED]: "Uninstantiated",
   }[readyState];
 
-  const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem, messageHistory: ChatBotHistoryItem[]) => {
+  const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem, messageHistory: ChatBotHistoryItem[],  userFeedbackComment: string) => {
     console.log("Message history: ", messageHistory);
     // metadata.prompts[0][0]
     if (message.metadata.sessionId) {
@@ -348,7 +348,8 @@ export default function MultiChat() {
         feedback: feedbackType,
         prompt: prompt,
         completion: completion,
-        model: model as string
+        userFeedbackComment: userFeedbackComment,
+        model: model as string,
       };
       addUserFeedback(feedbackData);
     }
@@ -516,8 +517,8 @@ export default function MultiChat() {
                   key={idx}
                   message={message}
                   showMetadata={showMetadata}
-                  onThumbsUp={() => handleFeedback(1, idx, message, val)}
-                  onThumbsDown={() => handleFeedback(0, idx, message, val)}
+                  onThumbsUp={(userFeedbackComment : string) => handleFeedback(1, idx, message, val, userFeedbackComment )}
+                  onThumbsDown={(userFeedbackComment : string) => handleFeedback(0, idx, message, val, userFeedbackComment)}
                 />
               ))}
             </ColumnLayout>

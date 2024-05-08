@@ -86,18 +86,18 @@ export default function NavigationPanel() {
             },
             {
                 type: "section",
-                text: "Session History",
+                text: "Chat History",
                 items: sessions.map((session, index) => ({
                     type: "link",
-                    text: `Session ${index + 1} -> ${truncateText(session.title || 'Untitled Session', 8)} - ${new Intl.DateTimeFormat('en-US', {
+                    text: `${truncateText(session.title || 'Untitled Session', 8)}<br><span style='color:grey;'>${new Intl.DateTimeFormat('en-US', {
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit',
                         hour12: true
-                    }).format(new Date(session.startTime))}"`,
+                    }).format(new Date(session.startTime))}</span>"`,
                     href: `/chatbot/playground/${session.id}`,
-                    tooltip: `Start Time: ${new Intl.DateTimeFormat('en-US', {
+                    tooltip: `Time Created: ${new Intl.DateTimeFormat('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: '2-digit',

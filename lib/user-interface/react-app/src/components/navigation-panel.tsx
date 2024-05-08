@@ -30,7 +30,7 @@ export default function NavigationPanel() {
                 const fetchedSessions = await apiClient.sessions.getSessions();
                 if (fetchedSessions.data && fetchedSessions.data.listSessions) {
                     const sortedSessions = fetchedSessions.data.listSessions.sort((a, b) =>
-                        new Date(b.startTime) - new Date(a.startTime)
+                        new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
                     );
                     const listedSessions = sortedSessions.slice(0, 5);
                     setSessions(listedSessions);

@@ -34,23 +34,27 @@ class BedrockClaudeAdapter(ModelAdapter):
         )
 
     def get_qa_prompt(self):
-        template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+        template = """Please utilize the context provided below to answer the subsequent question. If the answer is unknown to you, simply state 'I don't know' rather than attempting to fabricate a response.
 
-{context}
+        Context provided:
+        {context}
 
-Question: {question}"""
+        Question to answer:
+        {question}
+        """
 
         return PromptTemplate(
             template=template, input_variables=["context", "question"]
         )
 
     def get_prompt(self):
-        template = """The following is a friendly conversation between a human and an AI. If the AI does not know the answer to a question, it truthfully says it does not know.
+        template = """This is a friendly conversation between a human and an AI. If the AI is unsure about an answer, it will honestly state that it does not know.
 
-Current conversation:
-{chat_history}
+    Current conversation:
+    {chat_history}
 
-Question: {input}"""
+    Question:
+    {input}"""
 
         input_variables = ["input", "chat_history"]
         prompt_template_args = {
@@ -64,15 +68,15 @@ Question: {input}"""
 
     def get_condense_question_prompt(self):
         template = """<conv>
-{chat_history}
-</conv>
+    {chat_history}
+    </conv>
 
-<followup>
-{question}
-</followup>
+    <followup>
+    {question}
+    </followup>
 
-Given the conversation inside the tags <conv></conv>, rephrase the follow up question you find inside <followup></followup> to be a standalone question, in the same language as the follow up question.
-"""
+    Considering the dialogue provided within the <conv></conv> tags, please reformulate the follow-up question located in the <followup></followup> tags into a clear, standalone question. Ensure the language style of the follow-up question is retained.
+    """
 
         return PromptTemplate(
             input_variables=["chat_history", "question"],

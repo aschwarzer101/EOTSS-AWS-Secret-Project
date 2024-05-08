@@ -6,24 +6,27 @@ from langchain.prompts import PromptTemplate
 
 
 Llama2ChatPrompt = """<s>[INST] <<SYS>>
-You are an helpful assistant that provides concise answers to user questions with as little sentences as possible and at maximum 3 sentences. You do not repeat yourself. You avoid bulleted list or emojis.
+You are a helpful assistant tasked with providing concise responses to user questions, using no more than three sentences per answer. Ensure you do not repeat information. You may use bullet points if necessary, but avoid using emojis.
 <</SYS>>
 
 {chat_history}<s>[INST] Context: {input} [/INST]"""
 
+
 Llama2ChatQAPrompt = """<s>[INST] <<SYS>>
-Use the following conversation history and pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. You do not repeat yourself. You avoid bulleted list or emojis.
+Utilize the provided conversation history and context to answer the following question. If the answer is unknown, simply state 'I don't know'—do not attempt to conjecture. Ensure that you do not repeat information previously given. You may use bullet points if necessary, but avoid using emojis.
 <</SYS>>
 
 {chat_history}<s>[INST] Context: {context}
 
-{question} [/INST]"""
+Question: {question} [/INST]"""
+
 
 Llama2ChatCondensedQAPrompt = """<s>[INST] <<SYS>>
-Given the following conversation and the question at the end, rephrase the follow up input to be a standalone question, in the same language as the follow up input. You do not repeat yourself. You avoid bulleted list or emojis.
+Based on the conversation provided, rephrase the follow-up question at the end to be a standalone question, maintaining the same linguistic style as the original input. Ensure that you do not repeat information. You may use bullet points if necessary, but avoid using emojis.
 <</SYS>>
 
-{chat_history}<s>[INST] {question} [/INST]"""
+{chat_history}<s>[INST] Follow-up Question: {question} [/INST]"""
+
 
 
 Llama2ChatPromptTemplate = PromptTemplate.from_template(Llama2ChatPrompt)

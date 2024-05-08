@@ -33,14 +33,17 @@ class BedrockTitanAdapter(ModelAdapter):
         )
 
     def get_prompt(self):
-        template = """Human: The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.
+        template = """
+    Human: Engage in a friendly conversation with an AI. The AI is designed to be talkative and provide extensive details from its knowledge base. If unsure about any question, the AI will honestly indicate its lack of knowledge.
 
-Current conversation:
-{chat_history}
+    Current conversation:
+    {chat_history}
 
-Question: {input}
+    Upcoming question:
+    {input}
 
-Assistant:"""
+    Assistant:
+    """
 
         input_variables = ["input", "chat_history"]
         prompt_template_args = {

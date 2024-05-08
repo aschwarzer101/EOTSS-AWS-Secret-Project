@@ -33,15 +33,16 @@ class BedrockCohereCommandAdapter(ModelAdapter):
 
     def get_prompt(self):
         template = """
+    Human: This is a friendly dialogue between a human and an AI. If the AI is unsure of an answer, it will clearly state that it does not know.
 
-Human: The following is a friendly conversation between a human and an AI. If the AI does not know the answer to a question, it truthfully says it does not know.
+    Current conversation:
+    {chat_history}
 
-Current conversation:
-{chat_history}
+    New question:
+    {input}
 
-Question: {input}
-
-Assistant:"""
+    Assistant:
+    """
 
         input_variables = ["input", "chat_history"]
         prompt_template_args = {

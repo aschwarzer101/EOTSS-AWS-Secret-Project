@@ -87,10 +87,25 @@ export default function NavigationPanel() {
             {
                 type: "section",
                 text: "Session History",
-                items: sessions.map(session => ({
+                items: sessions.map((session, index) => ({
                     type: "link",
-                    text: `Session ${truncateText(session.title || 'Untitled Session', 8)}`,
+                    text: `Session ${index + 1} -> ${truncateText(session.title || 'Untitled Session', 8)} - ${new Intl.DateTimeFormat('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    }).format(new Date(session.startTime))}"`,
                     href: `/chatbot/playground/${session.id}`,
+                    tooltip: `Start Time: ${new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    }).format(new Date(session.startTime))}`
                 })),
             },
             { // need to learn how to refresh with side-bar navigation

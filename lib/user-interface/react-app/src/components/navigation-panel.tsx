@@ -96,13 +96,13 @@ export default function NavigationPanel() {
                 text: "Chat History",
                 items: sessions.map((session, index) => ({
                     type: "link",
-                    text: `${truncateText(session.title || 'Untitled Session', 20)}\n${new Intl.DateTimeFormat('en-US', {
+                    text: `${truncateText(session.title || 'Untitled Session', 30)} - ${new Intl.DateTimeFormat('en-US', {
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit',
                         hour12: true
-                    }).format(new Date(session.startTime))}"`,
+                    }).format(new Date(session.startTime))}`,
                     href: `/chatbot/playground/${session.id}`,
                     tooltip: `Time Created: ${new Intl.DateTimeFormat('en-US', {
                         year: 'numeric',

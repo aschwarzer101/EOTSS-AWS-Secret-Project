@@ -69,6 +69,7 @@ export interface ChatBotHeartbeatRequest {
   modelInterface: ModelInterface;
   data: {
     sessionId: string;
+    initialPrompt?: string; 
   };
 }
 

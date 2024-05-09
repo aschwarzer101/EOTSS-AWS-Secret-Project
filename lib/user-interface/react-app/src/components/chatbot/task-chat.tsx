@@ -127,7 +127,7 @@ useEffect(() => {
 
 
 
-const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem) => {
+const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistoryItem, userFeedbackComment: string) => {
   if (message.metadata.sessionId) {
     
     let prompt = " ";
@@ -142,11 +142,13 @@ const handleFeedback = (feedbackType: 1 | 0, idx: number, message: ChatBotHistor
       feedback: feedbackType,
       prompt: prompt,
       completion: completion,
+      userFeedbackComment: userFeedbackComment,
       model: model as string
     };
     addUserFeedback(feedbackData);
   }
 };
+
 
 const addUserFeedback = async (feedbackData: FeedbackData) => {
   if (!appContext) return;
@@ -165,8 +167,8 @@ return (
           key={idx}
           message={message}
           showMetadata={configuration.showMetadata}
-          onThumbsUp={() => handleFeedback(1, idx, message)}
-          onThumbsDown={() => handleFeedback(0, idx, message)}
+          onThumbsUp={(userFeedbackComment : string) => handleFeedback(1, idx, message, userFeedbackComment)}
+            onThumbsDown={(userFeedbackComment : string) => handleFeedback(0, idx, message, userFeedbackComment)}
         />
       ))}
     </SpaceBetween>

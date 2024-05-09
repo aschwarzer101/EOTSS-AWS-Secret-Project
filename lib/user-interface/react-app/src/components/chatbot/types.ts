@@ -22,6 +22,12 @@ export interface ChatInputState {
   modelsStatus: LoadingStatus;
   workspacesStatus: LoadingStatus;
 }
+export interface ChatBotTask {
+  name: string; 
+  instructions: string; 
+  apiPrompt: string; 
+
+}
 
 export enum ChatBotMessageType {
   AI = "ai",

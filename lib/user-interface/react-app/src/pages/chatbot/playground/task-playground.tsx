@@ -3,11 +3,33 @@ import Chat from "../../../components/chatbot/chat";
 
 import { Link, useParams } from "react-router-dom";
 import { Header, HelpPanel } from "@cloudscape-design/components";
+import TaskChat from "../../../components/chatbot/task-chat";
+import TaskPriming from "../../../components/chatbot/task";
+import { ChatBotTask } from "../../../components/chatbot/types";
+import { TaskOptions } from "../../../common/constants";
 
-export default function Playground() {
+export default function TaskPlayground() {
   const { sessionId } = useParams();
-  const { initialPrompt } = useParams(); 
-  // const { prompt } = useParams(); 
+  const { prompt } = useParams(); 
+  
+  
+  
+
+  // const { task } = useParams();
+
+  // const findTask = TaskPriming(prompt); THIS WAS CAUSING AN ERROR FOR SOME REASON
+
+  // NEXT STEP IS IMPORT THE CONSTANTS IN HERE TO FIND THE MAP
+  const promptOptions = TaskOptions.taskPromptMap; 
+
+  // HARDCODED
+  const cbTask: ChatBotTask = {
+    name: "Summarize",
+    instructions: "Enter the text to be summarized below", 
+    apiPrompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
+  }
+  
+
   // console.log(prompt + "testing #85")
   return (
     <BaseAppLayout
@@ -43,7 +65,7 @@ export default function Playground() {
       }
       toolsWidth={300}
       // 
-      content={<Chat sessionId={sessionId} prompt={initialPrompt}/>}
+      content={<TaskChat sessionId={sessionId} prompt={prompt} taskOb={cbTask} />}
     />
   ); //send prompt here : prompt = {}
 }

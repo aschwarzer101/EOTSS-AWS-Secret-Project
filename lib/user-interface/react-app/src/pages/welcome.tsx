@@ -159,7 +159,7 @@ export default function Welcome() {
                   name: "Summarize Text",
                   external: false,
                   type: "Summarize the following meeting notes for me",
-                  href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`,
+                  href: '/chatbot/task-playground?prompt=summarize', 
                     // sending to URL parser ^^ do taskPromptMap look up 
                   // onFollow: useHref, 
                   description:

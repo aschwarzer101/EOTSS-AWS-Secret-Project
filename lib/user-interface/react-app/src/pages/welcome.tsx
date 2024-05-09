@@ -159,7 +159,7 @@ export default function Welcome() {
                   name: "Summarize Text",
                   external: false,
                   type: "Summarize the following meeting notes for me",
-                  href: '/chatbot/task-playground?prompt=summarize', 
+                  href: `/chatbot/task-playground?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`,
                     // sending to URL parser ^^ do taskPromptMap look up 
                   // onFollow: useHref, 
                   description:
@@ -169,7 +169,7 @@ export default function Welcome() {
                   name: "Draft A Memo",
                   external: false,
                   type: "Draft a concise, professional memo based on the following text: ",
-                  href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
+                  href: `/chatbot/task-playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
                   description:
                     "Compose concise memos through automated drafting",
                 },

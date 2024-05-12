@@ -48,19 +48,13 @@ export default function NavigationPanel() {
     }, [apiClient]);
 
 
-    // function truncateText(text, limit) {
-    //     const words = text.split(' ');
-    //     if (words.length > limit) {
-    //         return words.slice(0, limit).join(' ') + '...';
-    //     }
-    //     return text;
-    // }
-
     function truncateText(text, charLimit) {
-    if (text.length > charLimit) {
-        return text.substring(0, charLimit) + '...';
+    let cleanText = text.replace(/[^a-zA-Z0-9\s]/g, '');
+    cleanText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1);
+    if (cleanText.length > charLimit) {
+        return cleanText.substring(0, charLimit) + ' [...]';
     }
-    return text;
+    return cleanText;
 }
 
     const updateItems = (sessions: any[]) => {
@@ -96,7 +90,7 @@ export default function NavigationPanel() {
                 text: "Chat History",
                 items: sessions.map((session, index) => ({
                     type: "link",
-                    text: `${truncateText(session.title || 'Untitled Session', 30)} - ${new Intl.DateTimeFormat('en-US', {
+                    text: `${truncateText(session.title || 'Untitled Session', 35)} - ${new Intl.DateTimeFormat('en-US', {
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',

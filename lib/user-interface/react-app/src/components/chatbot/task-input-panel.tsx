@@ -104,6 +104,7 @@ import {
     const [state, setState] = useState<ChatInputState>({
       // have it so the value of the input is either the primer or mt string 
       value:  " ", 
+      // + "For the above text" + props.apiPrompt, 
       // props.initialPrompt +
      // initialPrompt: props.initialPrompt, 
       initialPrompt: props.task.apiPrompt, 
@@ -374,7 +375,7 @@ import {
       
       
       
-      const value = state.value.trim() 
+      const value = state.value.trim() + "For the above text" + props.apiPrompt
       // props.initialPrompt;
       const request: ChatBotRunRequest = {
         action: ChatBotAction.Run,

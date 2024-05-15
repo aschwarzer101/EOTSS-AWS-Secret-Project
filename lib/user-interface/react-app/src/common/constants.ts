@@ -4,29 +4,29 @@ import { SemanticSearchResult } from "../API";
 export const languageList = [
   { value: "simple", label: "Simple" },
   { value: "arabic", label: "Arabic" },
-  { value: "armenian", label: "Armenian" },
-  { value: "basque", label: "Basque" },
-  { value: "catalan", label: "Catalan" },
+  { value: "armenian", label: "Armenian" }, //T
+  { value: "basque", label: "Basque" }, //T
+  { value: "catalan", label: "Catalan" }, //T
   { value: "danish", label: "Danish" },
   { value: "dutch", label: "Dutch" },
-  { value: "english", label: "English" },
+  { value: "english", label: "English" }, //T
   { value: "finnish", label: "Finnish" },
-  { value: "french", label: "French" },
-  { value: "german", label: "German" },
+  { value: "french", label: "French" }, //T
+  { value: "german", label: "German" }, //T
   { value: "greek", label: "Greek" },
-  { value: "hindi", label: "Hindi" },
+  { value: "hindi", label: "Hindi" }, //T
   { value: "hungarian", label: "Hungarian" },
   { value: "indonesian", label: "Indonesian" },
   { value: "irish", label: "Irish" },
-  { value: "italian", label: "Italian" },
+  { value: "italian", label: "Italian" }, //T
   { value: "lithuanian", label: "Lithuanian" },
   { value: "nepali", label: "Nepali" },
   { value: "norwegian", label: "Norwegian" },
   { value: "portuguese", label: "Portuguese" },
   { value: "romanian", label: "Romanian" },
-  { value: "russian", label: "Russian" },
+  { value: "russian", label: "Russian" }, //T
   { value: "serbian", label: "Serbian" },
-  { value: "spanish", label: "Spanish" },
+  { value: "spanish", label: "Spanish" }, //T
   { value: "swedish", label: "Swedish" },
 ];
 

@@ -57,6 +57,7 @@ import {
   } from "./utils";
   import { receiveMessages } from "../../graphql/subscriptions";
   import { Utils } from "../../common/utils";
+import { languageList } from "../../common/constants";
   
 
   
@@ -465,12 +466,27 @@ import {
       ...workspaceDefaultOptions,
       ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
     ];
-  
+
+    // State to keep track of the selected language
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+    
+    const shouldDisplaySelect = props.instructions.toLowerCase().includes('translate');
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
             {props.initialPrompt}
         </div>
+        {shouldDisplaySelect && (
+          <Select
+          placeholder="Select a language"
+          options={languageList}
+          selectedOption={selectedLanguage}
+          onChange={({ detail }) => {
+            console.log("Selected Language:" , detail.selectedOption.label); 
+          }}
+          empty="No languages available"
+          />
+        )}
         <Container>
           <div className={styles.input_textarea_container}>
             <SpaceBetween size="xxs" direction="horizontal" alignItems="center">
@@ -620,6 +636,7 @@ import {
               }}
               options={modelsOptions}
             />
+
             {appContext?.config.rag_enabled && (
               <Select
                 disabled={
@@ -725,6 +742,8 @@ import {
         ])[0].options[0];
       }
     }
+
+  
   
     let candidate: Model | undefined = undefined;
     if (!selectedModelOption) {

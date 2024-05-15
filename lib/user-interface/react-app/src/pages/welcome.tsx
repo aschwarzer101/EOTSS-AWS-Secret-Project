@@ -256,13 +256,13 @@ export default function Welcome() {
                     "Transform data into actionable insights, driving strategic decisions for your organization.",
                 },
                 {
-                  name: "Cloud Computing Solutions",
+                  name: "Prompt Engineering Guide",
                   external: true,
                   type: " ",
-                  href: "https://aws.amazon.com/kendra/",
-                  img: "/images/welcome/lambda.png", 
+                  href: "https://www.promptingguide.ai/",
+                  img: "/images/welcome/lambda.png",
                   description:
-                    "Use AWS resources to create secure and adaptable solutions for your operational demands.",
+                    "Prompt engineering is the skill of crafting clear and specific questions to get the best answers from an AI system.",
                 },
               ]}
             />

@@ -109,7 +109,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         Procedure:
 
         Understand the User Prompt: Analyze the details of the user's request, including task requirements and any specific constraints.
-        Evaluate Based on Criteria: Use the dataset to assess which model best aligns with the user's needs, considering factors like task complexity, language support, performance metrics, and cost.
+        Evaluate Based on Criteria: Use the dataset to assess which model best aligns with the user's needs, considering factors like task complexity, language support, performance metrics, and cost. (for any language other than English, please use the Claude 3 Sonnet model)
         Make Your Decision: Identify the most appropriate model from the list above to handle the user's request, based on your analysis.
         Expected Output: Provide the selected model's name exactly as it appears in the list above. This ensures clarity and uniformity in the response, facilitating seamless further processing.
 

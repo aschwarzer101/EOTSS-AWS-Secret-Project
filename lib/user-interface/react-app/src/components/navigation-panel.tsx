@@ -10,6 +10,7 @@ import {useContext, useState, useEffect} from "react";
 import {CHATBOT_NAME} from "../common/constants";
 import {ApiClient} from "../common/api-client/api-client";
 import RouterButton from "../components/wrappers/router-button";
+import {SessionRefreshContext} from "../common/session-refresh-context"
 import {Auth} from "aws-amplify";
 import {v4 as uuidv4} from "uuid";
 import TaskPriming from "./chatbot/task";
@@ -19,6 +20,7 @@ export default function NavigationPanel() {
     const onFollow = useOnFollow();
     const apiClient = new ApiClient(appContext);
     const [navigationPanelState, setNavigationPanelState] = useNavigationPanelState();
+    const {needsRefresh, setNeedsRefresh} = useContext(SessionRefreshContext);
     const [sessions, setSessions] = useState<any[]>([]);
     const [items, setItems] = useState<SideNavigationProps.Item[]>([]);
 
@@ -26,7 +28,7 @@ export default function NavigationPanel() {
         async function loadSessions() {
             let username;
             await Auth.currentAuthenticatedUser().then((value) => username = value.username);
-            if (username) {
+            if (username && needsRefresh) {
                 const fetchedSessions = await apiClient.sessions.getSessions();
                 if (fetchedSessions.data && fetchedSessions.data.listSessions) {
                     const sortedSessions = fetchedSessions.data.listSessions.sort((a, b) =>
@@ -35,6 +37,8 @@ export default function NavigationPanel() {
                     const listedSessions = sortedSessions.slice(0, 5);
                     setSessions(listedSessions);
                     updateItems(listedSessions);
+                    setNeedsRefresh(false);
+
                 }
             }
             // note from rudra - I commented this out bc the types don't match and I just really
@@ -45,7 +49,7 @@ export default function NavigationPanel() {
         }
 
         loadSessions();
-    }, [apiClient]);
+    }, [needsRefresh]);
 
 
     function truncateText(text, charLimit) {

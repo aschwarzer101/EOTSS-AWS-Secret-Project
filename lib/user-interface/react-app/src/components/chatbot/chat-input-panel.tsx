@@ -59,13 +59,14 @@ import {
 import { receiveMessages } from "../../graphql/subscriptions";
 import { Utils } from "../../common/utils";
 import { TaskOptions } from "../../common/constants";
+import {SessionRefreshContext} from "../../common/session-refresh-context"
 
 export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
   initialPrompt: string;
-  // taskPrompt: TaskOptions; 
+  // taskPrompt: TaskOptions;
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;
@@ -94,17 +95,18 @@ const workspaceDefaultOptions: SelectProps.Option[] = [
 export default function ChatInputPanel(props: ChatInputPanelProps) {
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
+  const {needsRefresh, setNeedsRefresh} = useContext(SessionRefreshContext);
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
-  
+
   const [state, setState] = useState<ChatInputState>({
-    
-    // have it so the value of the input is either the primer or mt string 
+
+    // have it so the value of the input is either the primer or mt string
     // value:  " ", CHANGE HERE IF YOU MESS IT UP
     // props.initialPrompt +
     value: " ",
-    initialPrompt: props.initialPrompt, 
+    initialPrompt: props.initialPrompt,
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],
@@ -117,24 +119,24 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const [readyState, setReadyState] = useState<ReadyState>(
     ReadyState.UNINSTANTIATED
   );
-
+  const firstTimeRef = useRef<boolean>(false);
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
-  
-    // const taskRouter = TaskPriming(props.initialPrompt); 
+
+    // const taskRouter = TaskPriming(props.initialPrompt);
     // const apiPrompt = taskRouter.prompt;
-    // const userInstrucions = taskRouter.instructions; 
-  
+    // const userInstrucions = taskRouter.instructions;
+
 
   useEffect(() => {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
 
-  
+
   // ALAYNA U PUT IT HERE
 //   useEffect(() => {
 //     //  send the initial prompt if it's not empty and the model is selected
 //     if (props.initialPrompt && state.selectedModel) {
-//         handleSendMessage(); 
+//         handleSendMessage();
 //     }
 // }, [props.initialPrompt, state.selectedModel]);
 
@@ -171,9 +173,13 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
             if (
               response.action === ChatBotAction.FinalResponse ||
               response.action === ChatBotAction.Error
+
             ) {
               console.log("Final message received");
               props.setRunning(false);
+              if (firstTimeRef.current) {
+                Utils.delay(1500).then(() => setNeedsRefresh(true));
+              }
             }
             props.setMessageHistory([...messageHistoryRef.current]);
           }
@@ -183,7 +189,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       return sub;
     }
 
-    
+
 
     const sub = subscribe();
     sub
@@ -236,7 +242,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   //   }
   // }, [props.initialPrompt]);
 
-  
+
 
   useEffect(() => {
     if (!appContext) return;
@@ -287,8 +293,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
           ...state,
           modelsStatus: "error",
         }));
-        
-      } 
+
+      }
     })();
   }, [appContext, state.modelsStatus]);
 
@@ -376,25 +382,25 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     const { name, provider } = OptionsHelper.parseValue(
       state.selectedModel.value
     );
-    
-    
-    
-    
+
+
+
+
     const value = state.value.trim()
-    if (!value) return; 
+    if (!value) return;
     // if (props.initialPrompt) {
-    //   props.setRunning(true); 
+    //   props.setRunning(true);
     //   const request = {
     //     action: ChatBotAction.Run,
-    //     modelInterface: state.selectedModelMetadata!.interface as ModelInterface, 
+    //     modelInterface: state.selectedModelMetadata!.interface as ModelInterface,
     //     data: {
-    //         mode: ChatBotMode.Chain, 
+    //         mode: ChatBotMode.Chain,
     //         text: props.initialPrompt,
     //         modelName: name,
     //         modelId: "anthropic.claude-3-haiku-20240307-v1:0",
     //         provider: "anthropic",
     //         sessionId: props.session.id,
-    //         workspaceId: state.selectedWorkspace?.value, 
+    //         workspaceId: state.selectedWorkspace?.value,
     //         modelKwargs: {
     //           streaming: props.configuration.streaming,
     //           maxTokens: props.configuration.maxTokens,
@@ -406,7 +412,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
     //   // setState((prevState) => ({ ...prevState, value: ""}));
 
-      
+
     //   API.graphql({
     //     query: sendQuery,
     //     variables: {
@@ -415,7 +421,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     //   });
 
     //   setState((prevState) => ({ ...prevState, value: ""}));
-    // }; 
+    // };
     // props.initialPrompt;
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
@@ -462,7 +468,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: props.initialPrompt + value, 
+        content: props.initialPrompt + value,
         metadata: {
           ...props.configuration,
         },
@@ -477,7 +483,10 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     ];
 
     props.setMessageHistory(messageHistoryRef.current);
-
+    firstTimeRef.current = false;
+    if (messageHistoryRef.current.length < 3) {
+      firstTimeRef.current = true;
+    }
     API.graphql({
       query: sendQuery,
       variables: {

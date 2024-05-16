@@ -14,6 +14,7 @@ import { CHATBOT_NAME, languageList } from "../common/constants";
 import { useHref } from "react-router-dom";
 import { TaskOptions } from "../common/constants";
 import TaskPriming from "../components/chatbot/task";
+import {v4 as uuidv4} from "uuid";
 
 export default function Welcome() {
   const onFollow = useOnFollow();
@@ -160,8 +161,8 @@ export default function Welcome() {
                   external: false,
                   type: "Summarize the following meeting notes for me",
                   // href: `/chatbot/playground/task-playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
-                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("summarize")}`,
-  
+                  href: `/chatbot/task-playground/${uuidv4()}/${"summarize"}`, 
+                
                   // sending to URL parser ^^ do taskPromptMap look up 
                   // onFollow: useHref, 
                   description:
@@ -171,14 +172,14 @@ export default function Welcome() {
                   name: "Draft A Memo",
                   external: false,
                   type: "Draft a concise, professional memo based on the following text: ",
-                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("memo")}`,
+                  href: `/chatbot/task-playground/${uuidv4()}/${"memo"}`,
                   description:
                     "Compose concise memos through automated drafting",
                 },
                 {
                   name: "Translate",
                   type: "Translate the following text into" ,
-                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("translate")}`,
+                  href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`, 
                   description:
                     "Translate and generate text in 25+ languages ",
                 },

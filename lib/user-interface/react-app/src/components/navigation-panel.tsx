@@ -128,12 +128,12 @@ export default function NavigationPanel() {
                     {
                         type: "link",
                         text: "Summarize Text",
-                        href: `/chatbot/task-playground/${uuidv4()}prompt=${encodeURIComponent("summarize")}`
+                        href: `/chatbot/task-playground/${uuidv4()}/${"summarize"}`
                     },
                     {
                         type: "link",
                         text: "Translate",
-                        href: `/chatbot/task-playground/${uuidv4()}prompt=${encodeURIComponent("translate")}`
+                        href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`
                     },
                 ],
             },

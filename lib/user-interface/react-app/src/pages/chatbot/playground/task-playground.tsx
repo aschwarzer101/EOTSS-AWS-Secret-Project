@@ -38,16 +38,17 @@ export default function TaskPlayground() {
   // }
 
   // HARDCODED
-  const cbTask: ChatBotTask = {
-    name: "Summarize",
-    instructions: "Enter the text to be summarized below", 
-    apiPrompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
-  }
+  // const cbTask: ChatBotTask = {
+  //   name: "Summarize",
+  //   instructions: "Enter the text to be summarized below", 
+  //   apiPrompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
+  // }
 
   // does the look up, 
   const taskName = promptOptions[prompt];
   if (!taskName) {
     console.log("Task not found")
+    
   }
   console.log("task found in playground :)" + prompt)
   const instructions = taskName.instructions; 

@@ -378,7 +378,9 @@ import { Auth } from "aws-amplify";
       
       
       
-      const value = state.value.trim() + "For the above text" + props.apiPrompt
+      // const value = state.value.trim() + "For the above text" + props.apiPrompt
+      const value = props.apiPrompt + " For the following text: " + state.value.trim()  
+
       console.log(value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;
@@ -427,7 +429,7 @@ import { Auth } from "aws-amplify";
   
         {
           type: ChatBotMessageType.Human,
-          content: value + "For the above text" + props.apiPrompt, // added in props.initialprompt here
+          content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
           metadata: {
             ...props.configuration,
           },
@@ -475,7 +477,7 @@ import { Auth } from "aws-amplify";
   const [selectedLanguage, setSelectedLanguage] = useState();
     
     const shouldDisplaySelect = props.task.name.includes('translate');
-    console.log(shouldDisplaySelect + "input panel, translate detected"); 
+    console.log(shouldDisplaySelect + " that translate was detected in input panel"); 
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
@@ -557,7 +559,8 @@ import { Auth } from "aws-amplify";
                 }
               }}
               
-              placeholder={listening ? "Listening..." : "Send a message"}
+              placeholder={listening ? "Listening..." : props.instructions }
+              // "Send a message"
             />
             <div style={{ marginLeft: "8px" }}>
               {state.selectedModelMetadata?.inputModalities.includes(

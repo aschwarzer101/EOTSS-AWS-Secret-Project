@@ -43,7 +43,7 @@ def list_workspaces(username: str):
                 KeyConditionExpression=boto3.dynamodb.conditions.Key("object_type").eq(
                     WORKSPACE_OBJECT_TYPE
                 ),
-                FilterExpression=boto3.dynamodb.conditions.Attr("createdBy").eq(username),
+                FilterExpression=boto3.dynamodb.conditions.Attr("created_by").eq(username),
                 ExclusiveStartKey=last_evaluated_key,
                 ScanIndexForward=False,
             )
@@ -53,7 +53,7 @@ def list_workspaces(username: str):
                 KeyConditionExpression=boto3.dynamodb.conditions.Key("object_type").eq(
                     WORKSPACE_OBJECT_TYPE
                 ),
-                FilterExpression=boto3.dynamodb.conditions.Attr("createdBy").eq(username),
+                FilterExpression=boto3.dynamodb.conditions.Attr("created_by").eq(username),
                 ScanIndexForward=False,
             )
 

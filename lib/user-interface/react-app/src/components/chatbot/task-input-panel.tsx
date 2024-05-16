@@ -167,7 +167,7 @@ import { Auth } from "aws-amplify";
                 response.action === ChatBotAction.FinalResponse ||
                 response.action === ChatBotAction.Error
               ) {
-                console.log("Final message received");
+                // console.log("Final message received");
                 props.setRunning(false);
               }
               props.setMessageHistory([...messageHistoryRef.current]);
@@ -379,6 +379,8 @@ import { Auth } from "aws-amplify";
       
       
       const value = state.value.trim() + "For the above text" + props.apiPrompt
+      console.log(value)
+      // if the selected lanuage is not null then append it here
       // props.initialPrompt;
       const request: ChatBotRunRequest = {
         action: ChatBotAction.Run,
@@ -470,9 +472,10 @@ import { Auth } from "aws-amplify";
     ];
 
     // State to keep track of the selected language
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState();
     
-    const shouldDisplaySelect = props.instructions.toLowerCase().includes('translate');
+    const shouldDisplaySelect = props.task.name.includes('translate');
+    console.log(shouldDisplaySelect + "input panel, translate detected"); 
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>

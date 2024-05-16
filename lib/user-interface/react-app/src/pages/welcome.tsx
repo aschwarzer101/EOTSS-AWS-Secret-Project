@@ -159,8 +159,10 @@ export default function Welcome() {
                   name: "Summarize Text",
                   external: false,
                   type: "Summarize the following meeting notes for me",
-                  href: `/chatbot/playground/task-playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
-                    // sending to URL parser ^^ do taskPromptMap look up 
+                  // href: `/chatbot/playground/task-playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`,
+                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("summarize")}`,
+  
+                  // sending to URL parser ^^ do taskPromptMap look up 
                   // onFollow: useHref, 
                   description:
                     "Summarize meeting notes, articles, transcripts to create concise notes.",
@@ -169,14 +171,14 @@ export default function Welcome() {
                   name: "Draft A Memo",
                   external: false,
                   type: "Draft a concise, professional memo based on the following text: ",
-                  href: `/chatbot/playground/task-playground?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`,
+                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("memo")}`,
                   description:
                     "Compose concise memos through automated drafting",
                 },
                 {
                   name: "Translate",
                   type: "Translate the following text into" ,
-                  href: `/chatbot/playground/task-playground?prompt=${encodeURIComponent(TaskPriming("translate").prompt)}`,
+                  href: `/chatbot/task-playground?prompt=${encodeURIComponent("translate")}`,
                   description:
                     "Translate and generate text in 25+ languages ",
                 },

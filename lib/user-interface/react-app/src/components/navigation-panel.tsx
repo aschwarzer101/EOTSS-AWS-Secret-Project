@@ -120,17 +120,20 @@ export default function NavigationPanel() {
                     {
                         type: "link",
                         text: "Draft A Memo",
-                        href: `/chatbot/playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`
+                        // href: `/chatbot/task-playground?prompt=${encodeURIComponent(TaskPriming("memo").prompt)}`
+                        // next thing to try
+                        // href:  `/chatbot/task-playground/${uuidv4()}${"memo"}`
+                        href: `/chatbot/task-playground/${uuidv4()}/${"memo"}`
                     },
                     {
                         type: "link",
                         text: "Summarize Text",
-                        href: `/chatbot/playground/${uuidv4()}?prompt=${encodeURIComponent(TaskPriming("summarize").prompt)}`
+                        href: `/chatbot/task-playground/${uuidv4()}prompt=${encodeURIComponent("summarize")}`
                     },
                     {
                         type: "link",
                         text: "Translate",
-                        href: `/chatbot/playground/${uuidv4()}?prompt=${encodeURIComponent(TaskPriming("translate").prompt)}`
+                        href: `/chatbot/task-playground/${uuidv4()}prompt=${encodeURIComponent("translate")}`
                     },
                 ],
             },

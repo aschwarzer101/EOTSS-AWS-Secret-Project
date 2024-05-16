@@ -23,6 +23,7 @@ import RssFeed from "./pages/rag/workspace/rss-feed";
 import WorkspacePane from "./pages/rag/workspace/workspace";
 import Workspaces from "./pages/rag/workspaces/workspaces";
 import Welcome from "./pages/welcome";
+import TaskPlayground from "./pages/chatbot/playground/task-playground";
 import "./styles/app.scss";
 import SessionPage from "./pages/chatbot/sessions/sessions";
 
@@ -41,6 +42,8 @@ function App() {
             <Route path="/chatbot" element={<Outlet />}>
               <Route path="playground" element={<Playground />} />
               <Route path="playground/:sessionId" element={<Playground />} />
+              <Route path="task-playground" element={<TaskPlayground/>} /> 
+              <Route path="task-playground/:sessionId/:prompt" element={<TaskPlayground/>} /> 
               <Route path="sessions" element={<SessionPage />} />
               <Route path="multichat" element={<MultiChatPlayground />} />
               <Route path="models" element={<Models />} />

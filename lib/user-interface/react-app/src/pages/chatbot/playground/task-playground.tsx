@@ -21,6 +21,21 @@ export default function TaskPlayground() {
 
   // NEXT STEP IS IMPORT THE CONSTANTS IN HERE TO FIND THE MAP
   const promptOptions = TaskOptions.taskPromptMap; 
+  // try {
+  //   const taskName = promptOptions[prompt];
+  //   console.log("task found in playground :)")
+  //   const instructions = taskName.instructions; 
+  //   const apiPrompt = taskName.prompt; 
+
+  //   const cbTask2: ChatBotTask = {
+  //     name: prompt,
+  //     instructions: instructions, 
+  //     apiPrompt: apiPrompt
+  //   }; 
+  // } catch (error) {
+    
+    
+  // }
 
   // HARDCODED
   const cbTask: ChatBotTask = {
@@ -28,6 +43,22 @@ export default function TaskPlayground() {
     instructions: "Enter the text to be summarized below", 
     apiPrompt: "You are an AI specialized in key-point text summarization. Your task is to read extensive texts and distill them into concise summaries that emphasize the most critical points and central ideas. Aim to highlight significant facts, conclusions, and insights, stripping away any extraneous details. This enables users to grasp the essence of the content swiftly and effectively. Handle various document types, from academic articles to business reports, with precision. If the input text is ambiguous or the instruction lacks specifics, seek further clarification to ensure your summary aligns perfectly with the user's expectations.",
   }
+
+  // does the look up, 
+  const taskName = promptOptions[prompt];
+  if (!taskName) {
+    console.log("Task not found")
+  }
+  console.log("task found in playground :)" + prompt)
+  const instructions = taskName.instructions; 
+  const apiPrompt = taskName.prompt; 
+
+  const cbTask3: ChatBotTask = {
+    name: prompt,
+    instructions: instructions, 
+    apiPrompt: apiPrompt
+  }; 
+  
   
 
   // console.log(prompt + "testing #85")
@@ -65,7 +96,7 @@ export default function TaskPlayground() {
       }
       toolsWidth={300}
       // 
-      content={<TaskChat sessionId={sessionId} prompt={prompt} taskOb={cbTask} />}
+      content={<TaskChat sessionId={sessionId} prompt={prompt} taskOb={cbTask3} />}
     />
   ); //send prompt here : prompt = {}
 }

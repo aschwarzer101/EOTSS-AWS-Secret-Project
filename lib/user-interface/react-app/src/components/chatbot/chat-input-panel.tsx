@@ -66,7 +66,7 @@ export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
-  initialPrompt: string;
+  // initialPrompt: string;
   // taskPrompt: TaskOptions;
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
@@ -99,7 +99,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const {needsRefresh, setNeedsRefresh} = useContext(SessionRefreshContext);
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
+  // const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
 
   const [state, setState] = useState<ChatInputState>({
 
@@ -107,7 +107,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     // value:  " ", CHANGE HERE IF YOU MESS IT UP
     // props.initialPrompt +
     value: " ",
-    initialPrompt: props.initialPrompt,
+    // initialPrompt: props.initialPrompt,
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],
@@ -471,7 +471,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: props.initialPrompt + value,
+        content: value,
+        //  props.initialPrompt +
         metadata: {
           ...props.configuration,
         },
@@ -498,9 +499,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     });
 
     // change here to set readonly to false after sending 
-    if (isReadOnly) {
-      setIsReadOnly(false);  // Allow editing after the first send
-   }
+  //   if (isReadOnly) {
+  //     setIsReadOnly(false);  // Allow editing after the first send
+  //  }
   };
 
   const connectionStatus = {
@@ -520,7 +521,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      {props.initialPrompt.trim() ? (
+      {/* {props.initialPrompt.trim() ? (
         <>
         <Alert
           statusIconAriaLabel="Info"
@@ -530,7 +531,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
           {props.initialPrompt}
         </div></>
-      ) : null}
+      ) : null} */}
        
       
       <Container>

@@ -22,7 +22,7 @@ import { ApiClient } from "../../common/api-client/api-client";
 export default function TaskChat(props: {sessionId?: string, prompt?: string, taskOb?: ChatBotTask}) {
   // constants for taskObject
   const taskName = props.taskOb.name;
-  console.log(taskName); 
+  console.log("made it to chat" + taskName); 
   const apiPrompt = props.taskOb.apiPrompt;
   console.log(apiPrompt); 
   const instructions = props.taskOb.instructions; 
@@ -35,7 +35,7 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
     id: props.sessionId ?? uuidv4(),
     loading: typeof props.sessionId !== "undefined",
   });
-  const [initialPrompt, setInitialPrompt] = useState(props.prompt);
+   const [initialPrompt, setInitialPrompt] = useState(props.prompt); // is called later and given apiPrompt to set prompt as
 
   // configuration could do the auto sending for me 
   const [configuration, setConfiguration] = useState<ChatBotConfiguration>(

@@ -36,7 +36,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const [messageHistory, setMessageHistory] = useState<ChatBotHistoryItem[]>(
     []
   );
-  const [initialPrompt, setInitialPrompt] = useState(' ');
+  
 
   useEffect(() => {
 
@@ -60,7 +60,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
     // const instructions = taskPrimer.instructions; 
     // const modelPrompt = taskPrimer.prompt; 
 
-    setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
+    // setInitialPrompt(decodeURIComponent(urlPrompt)); // if calling an use state no 
     // setInitialPrompt(modelPrompt); 
 
     (async () => {
@@ -181,7 +181,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
           session={session}
           running={running}
           setRunning={setRunning}
-          initialPrompt={initialPrompt}
+         //  initialPrompt={initialPrompt}
           // CHECK HERE
          // taskPrompt={TaskOptions}
           messageHistory={messageHistory}

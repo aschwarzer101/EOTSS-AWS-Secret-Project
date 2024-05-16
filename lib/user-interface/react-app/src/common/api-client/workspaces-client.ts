@@ -35,7 +35,7 @@ export class WorkspacesClient {
     const result = await API.graphql<GraphQLQuery<GetWorkspaceQuery>>({
       query: getWorkspace,
       variables: {
-        workspaceId: workspaceId,
+        workspaceId: workspaceId, //CHANGE HERE
       },
     });
     return result;

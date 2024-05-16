@@ -27,6 +27,7 @@ import DataFileUpload from "./data-file-upload";
 import { CHATBOT_NAME } from "../../../common/constants";
 import AddRssSubscription from "./add-rss-subscription";
 import { Workspace } from "../../../API";
+import { Auth } from "aws-amplify";
 
 export default function AddData() {
   const onFollow = useOnFollow();

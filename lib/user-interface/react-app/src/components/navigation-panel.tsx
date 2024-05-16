@@ -87,18 +87,6 @@ export default function NavigationPanel() {
 
                 ],
             },
-            // we should display a loading spinner here if the sessions are not loaded
-
-            (sessions.length === 0) ? {
-                type: "section",
-                text: "Recent Chat History",
-                items: [
-                    {
-                        type: "text",
-                        text: "No chat history available."
-                    }
-                ]
-                } :
             {
                 type: "section",
                 text: "Recent Chat History",

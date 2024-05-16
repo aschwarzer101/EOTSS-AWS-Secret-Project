@@ -103,6 +103,7 @@ def create_workspace_aurora(
     chunking_strategy: str,
     chunk_size: int,
     chunk_overlap: int,
+    created_by: str,
 ):
     workspace_id = str(uuid.uuid4())
     timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -139,6 +140,7 @@ def create_workspace_aurora(
         "size_in_bytes": 0,
         "created_at": timestamp,
         "updated_at": timestamp,
+        "created_by": created_by,
     }
 
     response = table.put_item(Item=item)
@@ -170,6 +172,7 @@ def create_workspace_open_search(
     chunking_strategy: str,
     chunk_size: int,
     chunk_overlap: int,
+    created_by: str,
 ):
     workspace_id = str(uuid.uuid4())
     timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -206,6 +209,7 @@ def create_workspace_open_search(
         "size_in_bytes": 0,
         "created_at": timestamp,
         "updated_at": timestamp,
+        "created_by": created_by,
     }
 
     response = table.put_item(Item=item)
@@ -226,7 +230,7 @@ def create_workspace_open_search(
 
 
 def create_workspace_kendra(
-    workspace_name: str, kendra_index: dict, use_all_data: bool
+    workspace_name: str, kendra_index: dict, use_all_data: bool, created_by: str
 ):
     workspace_id = str(uuid.uuid4())
     timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -249,6 +253,7 @@ def create_workspace_kendra(
         "size_in_bytes": 0,
         "created_at": timestamp,
         "updated_at": timestamp,
+        "created_by": created_by,
     }
 
     response = table.put_item(Item=item)

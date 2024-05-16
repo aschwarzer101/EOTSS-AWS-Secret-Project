@@ -117,6 +117,7 @@ export default function CreateWorkspaceOpenSearch() {
         chunkingStrategy: "recursive",
         chunkSize: data.chunkSize,
         chunkOverlap: data.chunkOverlap,
+        createdBy: appContext.user?.username ?? " ",
       });
 
       navigate("/rag/workspaces");

@@ -32,6 +32,7 @@ class CreateWorkspaceAuroraRequest(BaseModel):
     chunkingStrategy: str
     chunkSize: int
     chunkOverlap: int
+    createdBy: str
 
 
 class CreateWorkspaceOpenSearchRequest(BaseModel):
@@ -46,6 +47,7 @@ class CreateWorkspaceOpenSearchRequest(BaseModel):
     chunkingStrategy: str
     chunkSize: int
     chunkOverlap: int
+    createdBy: str
 
 
 class CreateWorkspaceKendraRequest(BaseModel):
@@ -53,6 +55,7 @@ class CreateWorkspaceKendraRequest(BaseModel):
     name: str
     kendraIndexId: str
     useAllData: bool
+    createdBy: str
 
 
 @router.resolver(field_name="listWorkspaces")
@@ -185,6 +188,7 @@ def _create_workspace_aurora(request: CreateWorkspaceAuroraRequest, config: dict
             chunking_strategy=request.chunkingStrategy,
             chunk_size=request.chunkSize,
             chunk_overlap=request.chunkOverlap,
+            created_by=request.createdBy,
         )
     )
 
@@ -256,6 +260,7 @@ def _create_workspace_open_search(
             chunking_strategy=request.chunkingStrategy,
             chunk_size=request.chunkSize,
             chunk_overlap=request.chunkOverlap,
+            created_by=request.createdBy,
         )
     )
 
@@ -287,6 +292,7 @@ def _create_workspace_kendra(request: CreateWorkspaceKendraRequest, config: dict
             workspace_name=workspace_name,
             kendra_index=kendra_index,
             use_all_data=request.useAllData,
+            created_by=request.createdBy,
         )
     )
 
@@ -322,4 +328,5 @@ def _convert_workspace(workspace: dict):
         "kendraUseAllData": workspace.get("kendra_use_all_data", kendra_index_external),
         "createdAt": workspace.get("created_at"),
         "updatedAt": workspace.get("updated_at"),
+        "createdBy": workspace.get("created_by"),
     }

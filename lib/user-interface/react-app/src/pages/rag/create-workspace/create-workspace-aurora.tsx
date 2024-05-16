@@ -147,6 +147,7 @@ export default function CreateWorkspaceAurora() {
         chunkingStrategy: "recursive",
         chunkSize: data.chunkSize,
         chunkOverlap: data.chunkOverlap,
+        createdBy: appContext.user?.username ?? " ",
       });
 
       navigate(`/rag/workspaces/${result.data?.createAuroraWorkspace.id}`);

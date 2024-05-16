@@ -63,6 +63,7 @@ export default function CreateWorkspaceKendra() {
         name: data.name.trim(),
         kendraIndexId: data.kendraIndex?.value ?? "",
         useAllData: data.useAllData,
+        createdBy: appContext.user?.username ?? " ",
       });
 
       navigate("/rag/workspaces");

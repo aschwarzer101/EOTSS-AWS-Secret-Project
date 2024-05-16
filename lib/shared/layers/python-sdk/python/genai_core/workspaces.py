@@ -34,6 +34,8 @@ def list_workspaces(username: str):
     all_items = []
     last_evaluated_key = None
 
+    print("Username: ", username)
+
     while True:
         if last_evaluated_key:
             response = table.query(
@@ -60,6 +62,8 @@ def list_workspaces(username: str):
         last_evaluated_key = response.get("LastEvaluatedKey")
         if not last_evaluated_key:
             break
+
+    print(len(all_items))
 
     return all_items
 

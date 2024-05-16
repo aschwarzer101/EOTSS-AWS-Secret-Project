@@ -47,6 +47,7 @@ import { useNavigate } from "react-router-dom";
 import { receiveMessages } from "../../graphql/subscriptions";
 import { sendQuery } from "../../graphql/mutations.ts";
 import { Utils } from "../../common/utils";
+import { Auth } from "aws-amplify";
 
 export interface ChatSession {
   configuration: ChatBotConfiguration;
@@ -122,10 +123,12 @@ export default function MultiChat() {
       let modelsResult: GraphQLResult<any>;
       let workspacesResult: GraphQLResult<any>;
       try {
+        let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
         if (appContext?.config.rag_enabled) {
           [modelsResult, workspacesResult] = await Promise.all([
             apiClient.models.getModels(),
-            apiClient.workspaces.getWorkspaces(),
+            apiClient.workspaces.getWorkspaces(username),
           ]);
           workspaces = workspacesResult.data?.listWorkspaces;
           setWorkspacesStatus(

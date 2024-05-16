@@ -58,7 +58,7 @@ import {
   import { receiveMessages } from "../../graphql/subscriptions";
   import { Utils } from "../../common/utils";
 import { languageList } from "../../common/constants";
-  
+import { Auth } from "aws-amplify";
 
   
   export interface TaskInputPanelProps {
@@ -243,10 +243,12 @@ import { languageList } from "../../common/constants";
         let modelsResult: GraphQLResult<any>;
         let workspacesResult: GraphQLResult<any>;
         try {
+          let username = "";
+          username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
           if (appContext?.config.rag_enabled) {
             [modelsResult, workspacesResult] = await Promise.all([
               apiClient.models.getModels(),
-              apiClient.workspaces.getWorkspaces(),
+              apiClient.workspaces.getWorkspaces(username),
             ]);
             workspaces = workspacesResult.data?.listWorkspaces;
             workspacesStatus =

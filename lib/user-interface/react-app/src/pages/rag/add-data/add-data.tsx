@@ -66,7 +66,9 @@ export default function AddData() {
     (async () => {
       const apiClient = new ApiClient(appContext);
       try {
-        const result = await apiClient.workspaces.getWorkspaces();
+        let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+        const result = await apiClient.workspaces.getWorkspaces(username);
 
         const workspaceId = searchParams.get("workspaceId");
         if (workspaceId) {

@@ -30,7 +30,7 @@ if WORKSPACES_TABLE_NAME:
     table = dynamodb.Table(WORKSPACES_TABLE_NAME)
 
 
-def list_workspaces():
+def list_workspaces(username: str):
     all_items = []
     last_evaluated_key = None
 
@@ -41,6 +41,7 @@ def list_workspaces():
                 KeyConditionExpression=boto3.dynamodb.conditions.Key("object_type").eq(
                     WORKSPACE_OBJECT_TYPE
                 ),
+                FilterExpression=boto3.dynamodb.conditions.Attr("createdBy").eq(username),
                 ExclusiveStartKey=last_evaluated_key,
                 ScanIndexForward=False,
             )
@@ -50,6 +51,7 @@ def list_workspaces():
                 KeyConditionExpression=boto3.dynamodb.conditions.Key("object_type").eq(
                     WORKSPACE_OBJECT_TYPE
                 ),
+                FilterExpression=boto3.dynamodb.conditions.Attr("createdBy").eq(username),
                 ScanIndexForward=False,
             )
 

@@ -10,6 +10,7 @@ import BaseAppLayout from "../../../components/base-app-layout";
 import GeneralConfig, { WorkspacesStatistics } from "./general-config";
 import { CHATBOT_NAME } from "../../../common/constants";
 import { Workspace } from "../../../API";
+import { Auth } from "aws-amplify";
 
 export default function Dashboard() {
   const onFollow = useOnFollow();
@@ -27,7 +28,9 @@ export default function Dashboard() {
 
       const apiClient = new ApiClient(appContext);
       try {
-        const result = await apiClient.workspaces.getWorkspaces();
+        let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+        const result = await apiClient.workspaces.getWorkspaces(username);
 
         const data = result.data?.listWorkspaces!;
         setWorkspaces(data);

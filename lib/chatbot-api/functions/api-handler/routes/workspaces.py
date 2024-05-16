@@ -60,8 +60,8 @@ class CreateWorkspaceKendraRequest(BaseModel):
 
 @router.resolver(field_name="listWorkspaces")
 @tracer.capture_method
-def list_workspaces():
-    workspaces = genai_core.workspaces.list_workspaces()
+def list_workspaces(username: str):
+    workspaces = genai_core.workspaces.list_workspaces(username)
 
     ret_value = [_convert_workspace(workspace) for workspace in workspaces]
 

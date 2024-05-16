@@ -18,6 +18,7 @@ import { AppContext } from "../../../common/app-context";
 import { ApiClient } from "../../../common/api-client/api-client";
 import { Workspace } from "../../../API";
 import { Utils } from "../../../common/utils";
+import { Auth } from "aws-amplify";
 
 export default function WorkspacesTable() {
   const appContext = useContext(AppContext);
@@ -62,7 +63,9 @@ export default function WorkspacesTable() {
 
     const apiClient = new ApiClient(appContext);
     try {
-      const result = await apiClient.workspaces.getWorkspaces();
+      let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+      const result = await apiClient.workspaces.getWorkspaces(username);
 
       setWorkspaces(result.data!.listWorkspaces);
     } catch (error) {

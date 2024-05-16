@@ -338,7 +338,7 @@ type Query {
   getUploadFileURL(input: FileUploadInput!): FileUploadResult
     @aws_cognito_user_pools
   listModels: [Model!]! @aws_cognito_user_pools
-  listWorkspaces: [Workspace!]! @aws_cognito_user_pools
+  listWorkspaces(username: String!): [Workspace!]! @aws_cognito_user_pools
   getWorkspace(workspaceId: String!): Workspace @aws_cognito_user_pools
   listRagEngines: [RagEngine!]! @aws_cognito_user_pools
   performSemanticSearch(input: SemanticSearchInput!): SemanticSearchResult!

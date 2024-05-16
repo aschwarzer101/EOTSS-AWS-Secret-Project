@@ -60,6 +60,7 @@ import { receiveMessages } from "../../graphql/subscriptions";
 import { Utils } from "../../common/utils";
 import { TaskOptions } from "../../common/constants";
 import {SessionRefreshContext} from "../../common/session-refresh-context"
+import { Auth } from "aws-amplify";
 
 export interface ChatInputPanelProps {
   running: boolean;
@@ -254,10 +255,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       let modelsResult: GraphQLResult<any>;
       let workspacesResult: GraphQLResult<any>;
       try {
+         let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
         if (appContext?.config.rag_enabled) {
           [modelsResult, workspacesResult] = await Promise.all([
             apiClient.models.getModels(),
-            apiClient.workspaces.getWorkspaces(),
+            apiClient.workspaces.getWorkspaces(username),
           ]);
           workspaces = workspacesResult.data?.listWorkspaces;
           workspacesStatus =

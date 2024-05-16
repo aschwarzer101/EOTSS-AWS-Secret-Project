@@ -17,11 +17,14 @@ import {
 } from "../../API";
 
 export class WorkspacesClient {
-  async getWorkspaces(): Promise<
+  async getWorkspaces( username: string): Promise<
     GraphQLResult<GraphQLQuery<ListWorkspacesQuery>>
   > {
     const result = await API.graphql<GraphQLQuery<ListWorkspacesQuery>>({
       query: listWorkspaces,
+      variables: {
+        username: username,
+      },
     });
     return result;
   }

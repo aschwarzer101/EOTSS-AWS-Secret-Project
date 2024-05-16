@@ -29,6 +29,7 @@ import SemanticSearchDetails from "./semantic-search-details";
 import ResultItems from "./result-items";
 import { CHATBOT_NAME } from "../../../common/constants";
 import { SemanticSearchResult, Workspace } from "../../../API";
+import Auth from "@aws-amplify/auth";
 
 interface SemanticSearchData {
   workspace: SelectProps.Option | null;
@@ -101,7 +102,9 @@ export default function SemanticSearch() {
     (async () => {
       const apiClient = new ApiClient(appContext);
       try {
-        const result = await apiClient.workspaces.getWorkspaces();
+        let username = "";
+         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+        const result = await apiClient.workspaces.getWorkspaces(username);
 
         const workspaceId = searchParams.get("workspaceId");
         if (workspaceId) {

@@ -41,11 +41,7 @@ export default function NavigationPanel() {
 
                 }
             }
-            // note from rudra - I commented this out bc the types don't match and I just really
-            // needed to deploy! sorry alayna :)
 
-            // B4 setSessions(fetchedSessions);
-            // B4 updateItems(fetchedSessions);
         }
 
         loadSessions();
@@ -84,14 +80,28 @@ export default function NavigationPanel() {
                 text: "Experiment With AI",
                 items: [
                     {type: "link", text: "Playground", href: "/chatbot/playground"},
-                    {type: "link", text: "Compare Models", href: "/chatbot/multichat"},
-                    {type: "link", text: "Sessions", href: "/chatbot/sessions"},
-                    {type: "link", text: "Models", href: "/chatbot/models"},
+                    {type: "link", text: "Compare Different Models", href: "/chatbot/multichat"},
+                    {type: "link", text: "Complete Chat History", href: "/chatbot/sessions"},
+                    {type: "link", text: "Document Upload", href: "/rag/workspaces/"},
+                    {type: "link", text: "Available Models", href: "/chatbot/models"},
+
                 ],
             },
+            // we should display a loading spinner here if the sessions are not loaded
+
+            (sessions.length === 0) ? {
+                type: "section",
+                text: "Recent Chat History",
+                items: [
+                    {
+                        type: "text",
+                        text: "No chat history available."
+                    }
+                ]
+                } :
             {
                 type: "section",
-                text: "Chat History",
+                text: "Recent Chat History",
                 items: sessions.map((session, index) => ({
                     type: "link",
                     text: `${truncateText(session.title || 'Untitled Session', 35)} - ${new Intl.DateTimeFormat('en-US', {
@@ -115,7 +125,7 @@ export default function NavigationPanel() {
             },
             { // need to learn how to refresh with side-bar navigation
                 type: "section",
-                text: "Explore AI Solutions",
+                text: "Explore Task Based AI Solutions",
                 items: [
                     {
                         type: "link",

@@ -68,7 +68,8 @@ import { Auth } from "aws-amplify";
     initialPrompt: string; 
     task: ChatBotTask ;
     instructions: string; 
-    apiPrompt: string; 
+    apiPrompt: string;
+    language: string; 
     messageHistory: ChatBotHistoryItem[];
     setMessageHistory: (history: ChatBotHistoryItem[]) => void;
     configuration: ChatBotConfiguration;
@@ -481,7 +482,6 @@ import { Auth } from "aws-amplify";
   const [selectedLanguage, setSelectedLanguage] = useState();
     
     const shouldDisplaySelect = props.task.name.includes('translate');
-    console.log(shouldDisplaySelect + " that translate was detected in input panel"); 
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
@@ -494,6 +494,7 @@ import { Auth } from "aws-amplify";
           selectedOption={selectedLanguage}
           onChange={({ detail }) => {
             console.log("Selected Language:" , detail.selectedOption.label); 
+            state.value + "translate into" + detail.selectedOption.label; 
           }}
           empty="No languages available"
           />

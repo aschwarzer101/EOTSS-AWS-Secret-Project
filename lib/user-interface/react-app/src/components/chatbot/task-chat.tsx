@@ -186,6 +186,7 @@ return (
       <TaskInputPanel //CHANGE TO TASK
         session={session}
         running={running}
+        language="english"
         setRunning={setRunning}
         initialPrompt={instructions}
         // CHECK HERE

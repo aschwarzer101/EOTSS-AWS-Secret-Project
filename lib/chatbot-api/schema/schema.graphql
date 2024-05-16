@@ -145,7 +145,6 @@ type KendraIndex @aws_cognito_user_pools {
   id: String!
   name: String!
   external: Boolean!
-  createdBy: String!
 }
 
 input ListDocumentsInput {

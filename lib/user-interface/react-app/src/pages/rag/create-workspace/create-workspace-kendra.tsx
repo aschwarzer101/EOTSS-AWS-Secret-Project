@@ -8,6 +8,7 @@ import { AppContext } from "../../../common/app-context";
 import { ApiClient } from "../../../common/api-client/api-client";
 import RouterButton from "../../../components/wrappers/router-button";
 import KendraForm from "./kendra-form";
+import { Auth } from "aws-amplify";
 
 const nameRegex = /^[\w+_-]+$/;
 const defaults: KendraWorkspaceCreateInput = {
@@ -58,12 +59,14 @@ export default function CreateWorkspaceKendra() {
     setSubmitting(true);
 
     const apiClient = new ApiClient(appContext);
+    let username = "";
+    username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
     try {
       await apiClient.workspaces.createKendraWorkspace({
         name: data.name.trim(),
         kendraIndexId: data.kendraIndex?.value ?? "",
         useAllData: data.useAllData,
-        createdBy: appContext.user?.username ?? " ",
+        createdBy: username,
       });
 
       navigate("/rag/workspaces");

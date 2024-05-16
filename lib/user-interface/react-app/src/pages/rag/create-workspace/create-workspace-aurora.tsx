@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import RouterButton from "../../../components/wrappers/router-button";
 import AuroraForm from "./aurora-form";
 import { Utils } from "../../../common/utils";
+import { Auth } from "aws-amplify";
 
 const nameRegex = /^[\w+_-]+$/;
 const metrics = [
@@ -134,6 +135,8 @@ export default function CreateWorkspaceAurora() {
 
     const apiClient = new ApiClient(appContext);
     try {
+      let username = "";
+      username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
       const result = await apiClient.workspaces.createAuroraWorkspace({
         name: data.name.trim(),
         embeddingsModelProvider: embeddingsModel.provider,
@@ -147,7 +150,7 @@ export default function CreateWorkspaceAurora() {
         chunkingStrategy: "recursive",
         chunkSize: data.chunkSize,
         chunkOverlap: data.chunkOverlap,
-        createdBy: appContext.user?.username ?? " ",
+        createdBy: username,
       });
 
       navigate(`/rag/workspaces/${result.data?.createAuroraWorkspace.id}`);

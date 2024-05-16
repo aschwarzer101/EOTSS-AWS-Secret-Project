@@ -10,6 +10,7 @@ import { OptionsHelper } from "../../../common/helpers/options-helper";
 import { ApiClient } from "../../../common/api-client/api-client";
 import RouterButton from "../../../components/wrappers/router-button";
 import { OpenSearchForm } from "./opensearch-form";
+import { Auth } from "aws-amplify";
 
 const nameRegex = /^[\w+_-]+$/;
 const defaults: OpenSearchWorkspaceCreateInput = {
@@ -106,6 +107,8 @@ export default function CreateWorkspaceOpenSearch() {
 
     const apiClient = new ApiClient(appContext);
     try {
+      let username = "";
+      username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
       await apiClient.workspaces.createOpenSearchWorkspace({
         name: data.name.trim(),
         embeddingsModelProvider: embeddingsModel.provider,
@@ -117,7 +120,7 @@ export default function CreateWorkspaceOpenSearch() {
         chunkingStrategy: "recursive",
         chunkSize: data.chunkSize,
         chunkOverlap: data.chunkOverlap,
-        createdBy: appContext.user?.username ?? " ",
+        createdBy: username,
       });
 
       navigate("/rag/workspaces");

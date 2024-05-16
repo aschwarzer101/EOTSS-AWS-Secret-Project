@@ -24,9 +24,9 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
   const taskName = props.taskOb.name;
   console.log("made it to chat" + taskName); 
   const apiPrompt = props.taskOb.apiPrompt;
-  console.log(apiPrompt); 
+  console.log("apiPrompt" + apiPrompt); 
   const instructions = props.taskOb.instructions; 
-  console.log(instructions); 
+  console.log("instructions" + instructions); 
   
   
   const appContext = useContext(AppContext); 

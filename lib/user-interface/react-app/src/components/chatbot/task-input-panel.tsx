@@ -374,6 +374,7 @@ import { Auth } from "aws-amplify";
       const { name, provider } = OptionsHelper.parseValue(
         state.selectedModel.value
       );
+      // change it here next if that doesnt work
       
       
       
@@ -398,9 +399,11 @@ import { Auth } from "aws-amplify";
           mode: ChatBotMode.Chain,
           text: value,
           files: props.configuration.files ?? [],
-          modelName: name,
-          modelId: state?.models?.find((obj: any) => obj.name === name)?.modelId || null,
-          provider: provider,
+          modelName: "Smart Model",
+          // modelName: name,
+          // modelId: state?.models?.find((obj: any) => obj.name === name)?.modelId || null,
+          modelId: "meta_model_as_db_supersecret_id", 
+          provider: "bedrock",
           sessionId: props.session.id,
           workspaceId: state.selectedWorkspace?.value,
           modelKwargs: {

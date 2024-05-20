@@ -482,13 +482,13 @@ import { Auth } from "aws-amplify";
     // State to keep track of the selected language
 
     //  console.log("Selected Language:" , detail.selectedOption.label); 
-    const shouldDisplaySelect = props.task.name.includes('translate');
+    // const shouldDisplaySelect = props.task.name.includes('translate');
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
             {props.initialPrompt}
         </div>
-        {shouldDisplaySelect && (
+       
           <Select
           placeholder="Select a language"
           options={languageList}
@@ -496,7 +496,7 @@ import { Auth } from "aws-amplify";
           onChange={({ detail }) => setSelectedLanguage(detail.selectedOption)}
           empty="No languages available"
           />
-        )}
+     
         
         <Container>
           <div className={styles.input_textarea_container}>

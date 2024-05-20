@@ -382,7 +382,7 @@ import { Auth } from "aws-amplify";
       
       
       // const value = state.value.trim() + "For the above text" + props.apiPrompt
-      const value = props.apiPrompt + "\n Text:  \"" + state.value.trim() + "\""
+      const value = props.apiPrompt + "\n Text:  \"" + state.value.trim() + "\"" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
 
       console.log(value)
       // if the selected lanuage is not null then append it here
@@ -434,7 +434,7 @@ import { Auth } from "aws-amplify";
   
         {
           type: ChatBotMessageType.Human,
-           content:  value + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."  ,
+           content:  value ,
           //content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
           metadata: {
             ...props.configuration,

@@ -182,28 +182,28 @@ export default function Welcome() {
                   type: "Translate the following text into",
                   href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`,
                   description:
-                    "Compose concise memos through automated drafting.",
+                    "Translate text into 24+ languages",
                 },
                 {
                   name: "Daily Planning",
                   type: "Translate the following text into" ,
                   href: `/chatbot/task-playground/${uuidv4()}/${"dailyPlanning"}`, 
                   description:
-                    "Save time and make plan for your day.",
+                    "Save time and let AI make a plan for your day.",
                 },
                 {
                   name: "Create A Meeting Agenda",
                   type: "Translate the following text into" ,
                   href: `/chatbot/task-playground/${uuidv4()}/${"meetingAgenda"}`, 
                   description:
-                    "Translate and generate text in 25+ languages ",
+                    "Create a strategic agenda for an upcoming meeting ",
                 },
                 {
                   name: "Need Some Positive Affirmation?",
-                  type: "Translate the following text into" ,
+                  type: "fun" , // use for categories
                   href: `/chatbot/task-playground/${uuidv4()}/${"positiveAffirmation"}`, 
                   description:
-                    "Translate and generate text in 25+ languages ",
+                    "Recieve uplifting affirmations o start your workday with positivity and motivation.",
                 },
               ]}
             />

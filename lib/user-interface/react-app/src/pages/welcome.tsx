@@ -174,12 +174,34 @@ export default function Welcome() {
                   type: "Draft a concise, professional memo based on the following text: ",
                   href: `/chatbot/task-playground/${uuidv4()}/${"memo"}`,
                   description:
-                    "Compose concise memos through automated drafting",
+                    "Compose concise memos through automated drafting.",
                 },
                 {
                   name: "Translate",
+                  external: false,
+                  type: "Translate the following text into",
+                  href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`,
+                  description:
+                    "Compose concise memos through automated drafting.",
+                },
+                {
+                  name: "Daily Planning",
                   type: "Translate the following text into" ,
-                  href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`, 
+                  href: `/chatbot/task-playground/${uuidv4()}/${"dailyPlanning"}`, 
+                  description:
+                    "Save time and make plan for your day.",
+                },
+                {
+                  name: "Create A Meeting Agenda",
+                  type: "Translate the following text into" ,
+                  href: `/chatbot/task-playground/${uuidv4()}/${"meetingAgenda"}`, 
+                  description:
+                    "Translate and generate text in 25+ languages ",
+                },
+                {
+                  name: "Need Some Positive Affirmation?",
+                  type: "Translate the following text into" ,
+                  href: `/chatbot/task-playground/${uuidv4()}/${"positiveAffirmation"}`, 
                   description:
                     "Translate and generate text in 25+ languages ",
                 },

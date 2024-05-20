@@ -434,7 +434,7 @@ import { Auth } from "aws-amplify";
   
         {
           type: ChatBotMessageType.Human,
-           content:  value + "\n Translate to:   " + selectedLanguage.label + " ."  , 
+           content:  value + "\n Translate the above text too: \"" + selectedLanguage.label + "\"."  ,
           //content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
           metadata: {
             ...props.configuration,

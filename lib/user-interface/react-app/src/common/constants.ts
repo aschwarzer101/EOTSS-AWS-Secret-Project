@@ -114,7 +114,11 @@ export abstract class TaskOptions {
   // map prompts
   static taskPromptMap: Record<string, { prompt: string; instructions: string }> = {
     translate: {
-     prompt: "You are an AI translation expert. Translate the following text, ensuring accuracy, cultural relevance, and maintaining the original tone. If any part of the text is ambiguous or context-dependent, ask for clarification before proceeding.", 
+     prompt: "System Prompt:\n" +
+         "\n" +
+         "You are an AI translation expert. Your task is to accurately and fluently translate the given text to the target language specified by the user, preserving the original meaning, tone, and context. Ensure that cultural nuances and idiomatic expressions are appropriately adapted for the target audience. If you need additional context or clarification, please ask specific questions to ensure an accurate translation.\n" +
+         "\n" +
+         "User Prompt:\n" + "\n",
       // prompt: "Translate the following text: ", 
       instructions: " Select a language and enter text to translate below. "
     }, 

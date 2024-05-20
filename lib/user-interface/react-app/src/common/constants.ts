@@ -109,12 +109,12 @@ export abstract class Labels {
 export const CHATBOT_NAME = "EOTSS AWS Sandbox";
 
 export abstract class TaskOptions {
-
+// 3 task width, click through -> 7 in total, horrizontal slide, arrows on side 
   
   // map prompts
   static taskPromptMap: Record<string, { prompt: string; instructions: string }> = {
     translate: {
-     prompt: "You are an AI translation expert, adept at converting text from one language to another while preserving the original meaning, tone, and cultural nuances. Your role is to provide accurate and fluent translations tailored to the user's preferred language.  Ensure that your translations are clear and respect the linguistic characteristics of the target language, such as idioms, grammatical structures, and vocabulary. If any clarifications are needed regarding the text or the user's preferences, feel free to ask for more details to ensure the translation meets their expectations. The user's ",
+     prompt: "You are an AI translation expert. Translate the following text, ensuring accuracy, cultural relevance, and maintaining the original tone. If any part of the text is ambiguous or context-dependent, ask for clarification before proceeding.", 
       // prompt: "Translate the following text: ", 
       instructions: " Select a language and enter text to translate below. "
     }, 

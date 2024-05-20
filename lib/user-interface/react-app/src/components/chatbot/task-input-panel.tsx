@@ -382,7 +382,7 @@ import { Auth } from "aws-amplify";
       
       
       // const value = state.value.trim() + "For the above text" + props.apiPrompt
-      const value = props.apiPrompt + " Here is the users text you need to perform the action on: " + state.value.trim()
+      const value = props.apiPrompt + " Text: " + state.value.trim()
 
       console.log(value)
       // if the selected lanuage is not null then append it here
@@ -434,7 +434,7 @@ import { Auth } from "aws-amplify";
   
         {
           type: ChatBotMessageType.Human,
-           content: "Text: " + value + "Translate the response into:   " + selectedLanguage.label + " ."  , 
+           content:  value + "Translate the response into:   " + selectedLanguage.label + " ."  , 
           //content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
           metadata: {
             ...props.configuration,

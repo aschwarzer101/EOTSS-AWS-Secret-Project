@@ -26,7 +26,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         bedrock = genai_core.clients.get_bedrock_client()
         params = {}
         if "temperature" in model_kwargs:
-            params["temperature"] = model_kwargs["temperature"]
+            params["temperature"] = 0.05
         if "topP" in model_kwargs:
             params["top_p"] = model_kwargs["topP"]
         if "maxTokens" in model_kwargs:

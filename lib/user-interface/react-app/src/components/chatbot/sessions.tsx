@@ -89,6 +89,7 @@ export default function Sessions(props: SessionsProps) {
     // Clear selected items
     setSelectedItems([]);
     setIsLoading(false);
+    setShowModalDelete(false)
   };
 
   const deleteUserSessions = async () => {
@@ -113,9 +114,8 @@ export default function Sessions(props: SessionsProps) {
               <Button variant="link" onClick={() => setShowModalDelete(false)}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={ () =>  {
+              <Button variant="primary" onClick={
                 deleteSelectedSessions
-                setShowModalDelete(false)}
               }>
                 Ok
               </Button>

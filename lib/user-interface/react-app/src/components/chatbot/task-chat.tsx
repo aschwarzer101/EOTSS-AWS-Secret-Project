@@ -26,7 +26,9 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
   const apiPrompt = props.taskOb.apiPrompt;
   console.log("apiPrompt" + apiPrompt); 
   const instructions = props.taskOb.instructions; 
-  console.log("instructions" + instructions); 
+  console.log("instructions" + instructions);
+  const sendPromptOnlyOnce = props.taskOb.sendPromptOnlyOnce;
+  console.log("sendPromptOnlyOnce" + sendPromptOnlyOnce);
   
   
   const appContext = useContext(AppContext); 
@@ -189,6 +191,7 @@ return (
         language="english"
         setRunning={setRunning}
         initialPrompt={instructions}
+        sendPromptOnlyOnce={sendPromptOnlyOnce}
         // CHECK HERE
         // initialPrompt={TaskOptions}
         messageHistory={messageHistory}

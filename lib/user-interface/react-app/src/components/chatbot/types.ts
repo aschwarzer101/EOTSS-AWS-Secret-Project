@@ -29,7 +29,7 @@ export interface ChatBotTask {
   name: string; 
   instructions: string; 
   apiPrompt: string; 
-
+  sendPromptOnlyOnce: boolean;
 }
 
 export enum ChatBotMessageType {

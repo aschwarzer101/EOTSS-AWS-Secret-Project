@@ -67,6 +67,7 @@ import { Auth } from "aws-amplify";
     session: { id: string; loading: boolean };
     initialPrompt: string; 
     task: ChatBotTask ;
+    sendPromptOnlyOnce: boolean;
     instructions: string; 
     apiPrompt: string;
     language: string; 
@@ -74,7 +75,6 @@ import { Auth } from "aws-amplify";
     setMessageHistory: (history: ChatBotHistoryItem[]) => void;
     configuration: ChatBotConfiguration;
     setConfiguration: Dispatch<React.SetStateAction<ChatBotConfiguration>>;
-  
   }
   
   export abstract class ChatScrollState {
@@ -111,7 +111,8 @@ import { Auth } from "aws-amplify";
      // initialPrompt: props.initialPrompt, 
       initialPrompt: props.task.apiPrompt, 
       instructions: props.task.instructions, 
-      apiPrompt: props.task.instructions, 
+      apiPrompt: props.task.instructions,
+      sendPromptOnlyOnce: props.task.sendPromptOnlyOnce,
       selectedModel: null,
       selectedModelMetadata: null,
       selectedWorkspace: workspaceDefaultOptions[0],
@@ -131,11 +132,7 @@ import { Auth } from "aws-amplify";
     useEffect(() => {
       messageHistoryRef.current = props.messageHistory;
     }, [props.messageHistory]);
-  
-    
-  
-  
-  
+
     useEffect(() => {
       async function subscribe() {
         console.log("Subscribing to AppSync");
@@ -382,8 +379,14 @@ import { Auth } from "aws-amplify";
       
       
       // const value = state.value.trim() + "For the above text" + props.apiPrompt
-      const value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
+      // check if this is the first time sending the prompt
 
+      if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
+        const value = "Text:  \"" + state.value.trim()
+      }
+      else {
+        const value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
+      }
       console.log(value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;

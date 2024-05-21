@@ -499,7 +499,7 @@ import { Auth } from "aws-amplify";
             {props.initialPrompt}
         </div>
        
-          {props.task.name === "language" && (<Select
+          {props.task.name === "translate" && (<Select
           placeholder="Select a language"
           options={languageList}
           selectedOption={selectedLanguage}

@@ -381,13 +381,13 @@ import { Auth } from "aws-amplify";
       // const value = state.value.trim() + "For the above text" + props.apiPrompt
       // check if this is the first time sending the prompt
 
-      const value = "";
+      let value: string;
 
       if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
-        const value = "Text:  \"" + state.value.trim()
+         value = "Text:  \"" + state.value.trim()
       }
       else {
-        const value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
+         value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
       }
       console.log(value)
       // if the selected lanuage is not null then append it here

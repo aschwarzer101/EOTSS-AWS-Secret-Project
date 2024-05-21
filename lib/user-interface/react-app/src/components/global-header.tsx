@@ -76,7 +76,7 @@ export default function GlobalHeader() {
               },
               {
                 id: "username",
-                text: "email: "
+                text: "email: " + userName
 
               }
             ],

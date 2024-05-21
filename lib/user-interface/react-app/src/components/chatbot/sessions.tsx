@@ -86,6 +86,8 @@ export default function Sessions(props: SessionsProps) {
       selectedItems.map((s) => apiClient.sessions.deleteSession(s.id))
     );
     await getSessions();
+    // Clear selected items
+    setSelectedItems([]);
     setIsLoading(false);
   };
 
@@ -111,7 +113,10 @@ export default function Sessions(props: SessionsProps) {
               <Button variant="link" onClick={() => setShowModalDelete(false)}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={deleteSelectedSessions}>
+              <Button variant="primary" onClick={ () =>  {
+                deleteSelectedSessions
+                setShowModalDelete(false)}
+              }>
                 Ok
               </Button>
             </SpaceBetween>{" "}

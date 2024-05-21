@@ -108,7 +108,7 @@ useEffect(() => {
             .map((x) => ({
               type: x!.type as ChatBotMessageType,
               metadata: JSON.parse(x!.metadata!),
-              content: x!.content + apiPrompt,
+              content: x!.content,
               
             }))
         );

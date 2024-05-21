@@ -394,6 +394,10 @@ import { Auth } from "aws-amplify";
         value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"."
         }
       }
+
+      if (props.messageHistory.length < 1){
+        value = props.task.name + " - " + value;
+      }
       console.log(value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;

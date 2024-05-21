@@ -89,7 +89,7 @@ export default function Sessions(props: SessionsProps) {
     // Clear selected items
     setSelectedItems([]);
     setIsLoading(false);
-    setShowModalDelete(false)
+    setShowModalDelete(false);
   };
 
   const deleteUserSessions = async () => {
@@ -100,7 +100,7 @@ export default function Sessions(props: SessionsProps) {
     await apiClient.sessions.deleteSessions();
     await getSessions();
     setIsLoading(false);
-    setShowModalDelete(false)
+    setShowModalDelete(false);
   };
 
   return (
@@ -236,10 +236,11 @@ export default function Sessions(props: SessionsProps) {
                   Delete
                 </Button>
                 <Button
+                  disabled={sessions.length == 0}
                   iconAlt="Delete all sessions"
                   iconName="delete-marker"
                   variant="inline-link"
-                  onClick={() => setDeleteAllSessions(true)}
+                  onClick={() => {setDeleteAllSessions(true)}}
                 >
                   Delete all sessions
                 </Button>

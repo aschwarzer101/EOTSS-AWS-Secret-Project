@@ -100,7 +100,7 @@ export default function Sessions(props: SessionsProps) {
     await apiClient.sessions.deleteSessions();
     await getSessions();
     setIsLoading(false);
-    setShowModalDelete(false);
+    setDeleteAllSessions(false);
   };
 
   return (

@@ -381,6 +381,8 @@ import { Auth } from "aws-amplify";
       // const value = state.value.trim() + "For the above text" + props.apiPrompt
       // check if this is the first time sending the prompt
 
+      const value = "";
+
       if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
         const value = "Text:  \"" + state.value.trim()
       }

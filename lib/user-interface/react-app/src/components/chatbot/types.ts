@@ -17,7 +17,8 @@ export interface ChatInputState {
   models?: Model[];
   initialPrompt?: string; // NEW ADDED HERE
   apiPrompt?: string; 
-  instructions?: string, 
+  instructions?: string,
+    sendPromptOnlyOnce?: boolean,
   selectedModel: SelectProps.Option | null;
   selectedModelMetadata: Model | null;
   selectedWorkspace: SelectProps.Option | null;

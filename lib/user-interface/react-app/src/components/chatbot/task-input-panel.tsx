@@ -384,10 +384,15 @@ import { Auth } from "aws-amplify";
       let value: string;
 
       if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
-         value = "Text:  \"" + state.value.trim()
+         value = "Text:  \"" + state.value.trim() + "\"."
       }
       else {
+        if(props.task.name === "translate"){
          value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
+      }
+      else{
+        value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"."
+        }
       }
       console.log(value)
       // if the selected lanuage is not null then append it here

@@ -102,7 +102,7 @@ export default function Welcome() {
                   external: false,
                   type: " ", 
                   href: "/chatbot/playground",
-                  img: "../../public/images/chatbotCard.jpg",
+                  img: "/Users/alaynam.schwarzer/Downloads/SandboxProject/EOTSS-AWS-Secret-Project/lib/user-interface/react-app/public/images/chatbotCard.jpg",
                   description:
                     "Experiment using different models to automate your everyday tasks",
                 },

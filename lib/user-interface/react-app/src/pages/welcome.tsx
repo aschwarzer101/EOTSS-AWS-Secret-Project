@@ -15,6 +15,7 @@ import { useHref } from "react-router-dom";
 import { TaskOptions } from "../common/constants";
 import TaskPriming from "../components/chatbot/task";
 import {v4 as uuidv4} from "uuid";
+import CarouselNext from "../components/carousel";
 
 export default function Welcome() {
   const onFollow = useOnFollow();
@@ -292,7 +293,9 @@ export default function Welcome() {
               ]}
             />
             </Container>
+          
           </SpaceBetween>
+          <CarouselNext></CarouselNext>
         </ContentLayout>
       }
     ></BaseAppLayout>

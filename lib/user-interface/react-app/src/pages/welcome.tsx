@@ -102,7 +102,7 @@ export default function Welcome() {
                   external: false,
                   type: " ", 
                   href: "/chatbot/playground",
-                  img: "/Users/alaynam.schwarzer/Downloads/SandboxProject/EOTSS-AWS-Secret-Project/lib/user-interface/react-app/public/images/chatbotCard.jpg",
+                  img: "https://files.oaiusercontent.com/file-jiSJZ0xkAuF1sQvRhT58PJNw?se=2024-05-22T19%3A09%3A13Z&sp=r&sv=2023-11-03&sr=b&rscc=max-age%3D299%2C%20immutable&rscd=attachment%3B%20filename%3DchatbotCard.jpg&sig=njE1jd0/1BEiKj6HQ7LvrJ87EcD8kGEz6dOKbx%2BBuPw%3D",
                   description:
                     "Experiment using different models to automate your everyday tasks",
                 },

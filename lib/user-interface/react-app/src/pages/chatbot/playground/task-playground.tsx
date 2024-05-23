@@ -48,7 +48,7 @@ export default function TaskPlayground() {
   const taskName = promptOptions[prompt];
   if (!taskName) {
     console.log("Task not found")
-    
+
   }
   console.log("task found in playground :)" + prompt)
   const instructions = taskName.instructions; 

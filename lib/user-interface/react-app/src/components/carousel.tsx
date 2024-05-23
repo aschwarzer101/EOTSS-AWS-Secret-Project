@@ -39,14 +39,6 @@ const CarouselNext = () => {
       itemClass="carousel-item"
       autoPlay
     >
-      <Card>
-        <Card.Header></Card.Header>
-        <CardBody>
-          <Card.Title>Summarize</Card.Title>
-          <Card.Text>Summarize meeting notes, articles, memos.</Card.Text>
-          <Button variant="primary" href=" ">Try it</Button>
-        </CardBody>
-      </Card>
       <TaskCard
         name="summarize"
         cardTitle="Summarize"

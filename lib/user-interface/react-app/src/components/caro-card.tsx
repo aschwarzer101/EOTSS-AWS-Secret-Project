@@ -23,7 +23,7 @@ export function TaskCard(props: ChatBotTaskCard) {
         <Card.Header></Card.Header>
         <CardBody>
           <Card.Title>{props.cardTitle}</Card.Title>
-          <Card.Text>{props.taskDescription}</Card.Text>
+          <Card.Text as= "p">{props.taskDescription}</Card.Text>
           <Button 
             as="a" 
             variant="primary" 

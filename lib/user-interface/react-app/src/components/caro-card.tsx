@@ -2,6 +2,7 @@ import React from "react";
 import Card from 'react-bootstrap/Card';
 import { CardBody } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+import useOnFollow from "../common/hooks/use-on-follow";
 
 export interface ChatBotTaskCard {
   name: string;
@@ -13,6 +14,7 @@ export interface ChatBotTaskCard {
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
+    const onFollow = useOnFollow();
   return (
     <div>
       <Card bg="info">
@@ -20,7 +22,14 @@ export function TaskCard(props: ChatBotTaskCard) {
         <CardBody>
           <Card.Title>{props.cardTitle}</Card.Title>
           <Card.Text>{props.taskDescription}</Card.Text>
-          <Button variant="primary" href={props.url}>Try it</Button>
+          <Button 
+            as="a" 
+            variant="primary" 
+            href={props.url} 
+            active
+            >
+                Try it 
+            </Button>
         </CardBody>
       </Card>
     </div>

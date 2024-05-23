@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { ChatBotTaskCard, TaskCard } from './caro-card';
 import Card from 'react-bootstrap/Card';
 import { CardBody, Button } from 'react-bootstrap';
+import {v4 as uuidv4} from "uuid";
 
 const CarouselNext = () => {
   const BreakpointSlides: ResponsiveType = {

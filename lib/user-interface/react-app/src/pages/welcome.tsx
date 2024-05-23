@@ -216,7 +216,7 @@ export default function Welcome() {
                                 /> */}
                                 <Container> 
                                 <div className="task-container" > 
-                                <CarouselNext></CarouselNext>
+                                <CarouselNext as= ""></CarouselNext>
                                 </div>
                                 </Container>
                                 <Container

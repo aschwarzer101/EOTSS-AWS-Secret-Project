@@ -17,7 +17,8 @@ export interface ChatBotTaskCard {
 export function TaskCard(props: ChatBotTaskCard) {
     const onFollow = useOnFollow();
   return (
-    <div>
+    
+    <div className="shadow p-3 mb-5 bg-white rounded">
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
@@ -33,6 +34,7 @@ export function TaskCard(props: ChatBotTaskCard) {
             </Button>
         </CardBody>
       </Card>
-    </div>
+      </div>
+      
   );
 }

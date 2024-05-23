@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { CardBody } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import useOnFollow from "../common/hooks/use-on-follow";
+import styles from "../../styles/globals.css";
 
 export interface ChatBotTaskCard {
   name: string;

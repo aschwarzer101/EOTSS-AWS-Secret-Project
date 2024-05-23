@@ -137,7 +137,7 @@ export default function Welcome() {
                                 >
                                     Tasks
                                 </Header>
-                                <Cards
+                                {/* <Cards
                                     cardDefinition={{
                                         header: (item) => (
                                             <Link
@@ -211,11 +211,12 @@ export default function Welcome() {
                                                 "Recieve uplifting affirmations o start your workday with positivity and motivation.",
                                         },
                                     ]}
-                                />
-                                <div className="container"> 
+                                /> */}
+                                <Container> 
+                                <div className="task-container"> 
                                 <CarouselNext></CarouselNext>
                                 </div>
-
+                                </Container>
                                 <Container
                                     header={
                                         <Header
@@ -303,8 +304,7 @@ export default function Welcome() {
                                 </Container>
 
                             </SpaceBetween>
-                        </div>
-                    </div>
+                        </div></div>
                 </ContentLayout>
             }
         />

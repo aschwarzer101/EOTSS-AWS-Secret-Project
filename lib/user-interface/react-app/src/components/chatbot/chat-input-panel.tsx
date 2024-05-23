@@ -35,7 +35,7 @@ import { LoadingStatus, ModelInterface } from "../../common/types";
 import styles from "../../styles/chat.module.scss";
 import ConfigDialog from "./config-dialog";
 import ImageDialog from "./image-dialog";
-import TaskPriming from "./task";
+
 import {
   ChabotInputModality,
   ChatBotHeartbeatRequest,

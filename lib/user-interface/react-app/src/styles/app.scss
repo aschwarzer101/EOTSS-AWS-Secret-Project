@@ -89,3 +89,13 @@ body.awsui-dark-mode {
   flex-flow: column nowrap;
   width: 100%;
 }
+
+.carousel-item {
+  padding: 2em 3em ;
+  pointer-events: none;
+  color: #272343;
+  margin: 1rem; 
+  border-radius: 20px;
+  background-color: #bae8e8;
+  
+}

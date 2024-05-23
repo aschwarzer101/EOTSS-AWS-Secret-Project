@@ -307,7 +307,6 @@ export default function Welcome() {
                     </div>
                 </ContentLayout>
             }
-        >
-        </BaseAppLayout>
+        />
     );
 }

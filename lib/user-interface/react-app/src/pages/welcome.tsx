@@ -210,6 +210,8 @@ export default function Welcome() {
               ]}
             />
 
+            <CarouselNext></CarouselNext>
+
         
             <Container
               header={
@@ -296,7 +298,7 @@ export default function Welcome() {
             </Container>
           
           </SpaceBetween>
-          <CarouselNext></CarouselNext>
+
         </ContentLayout>
       }
     ></BaseAppLayout>

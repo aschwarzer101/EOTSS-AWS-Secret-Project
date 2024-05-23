@@ -214,11 +214,11 @@ export default function Welcome() {
                                         },
                                     ]}
                                 /> */}
-                                <Container> 
+                              
                                 <div className="task-container" > 
-                                <CarouselNext as= ""></CarouselNext>
+                                <CarouselNext></CarouselNext>
                                 </div>
-                                </Container>
+                                
                                 <Container
                                     header={
                                         <Header

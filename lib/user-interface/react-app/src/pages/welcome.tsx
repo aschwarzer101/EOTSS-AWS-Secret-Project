@@ -212,9 +212,9 @@ export default function Welcome() {
                                         },
                                     ]}
                                 />
-
+                                <Container>
                                 <CarouselNext></CarouselNext>
-
+                                </Container>
 
                                 <Container
                                     header={

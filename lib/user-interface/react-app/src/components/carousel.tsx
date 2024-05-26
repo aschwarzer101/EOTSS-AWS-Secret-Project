@@ -10,7 +10,7 @@ const CarouselNext = () => {
   const BreakpointSlides: ResponsiveType = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 4,
+      items: 3,
       partialVisibilityGutter: 20
     },
     tablet: {
@@ -56,11 +56,10 @@ const CarouselNext = () => {
           renderButtonGroupOutside={false}
           renderDotsOutside={false}
           rewind={false}
-          rewindWithAnimation={false}
+          rewindWithAnimation={true}
           rtl={false}
           shouldResetAutoplay
           showDots={false}
-          sliderClass=""
           swipeable
       >
         <TaskCard

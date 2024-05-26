@@ -42,13 +42,23 @@
     font-size: 2rem;
   }
   
-  .task-container {
-    padding: 3rem 3rem;
-    margin: 2em;
-    display: flex;
-    flex-flow: column nowrap;
-    width: 85%;
-  }
+  /*.task-container {*/
+  /*  padding: 3rem 3rem;*/
+  /*  margin: 2em;*/
+  /*  display: flex;*/
+  /*  flex-flow: column nowrap;*/
+  /*  width: 100%;*/
+  /*}*/
+
+.task-container {
+  padding: 3rem; /* Adjust padding to fit the layout */
+  margin: 0 auto; /* Center the container */
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  overflow: hidden; /* Prevent overflow issues */
+}
   
   .carousel-item {
   padding: 2em 3em;
@@ -57,10 +67,6 @@
   border-radius: 20px;
   background-color: #bae8e8;
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
-}
-
-  .carousel-wrapper {
-  padding-right: 60px; /* Adjust this value as needed to ensure the last item is visible */
 }
 
   .carousel-container {

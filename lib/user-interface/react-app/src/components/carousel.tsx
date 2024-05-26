@@ -35,7 +35,6 @@ const CarouselNext = () => {
   };
 
   return (
-      <div className="carousel-wrapper">
       <Carousel
           responsive={BreakpointSlides}
           ssr
@@ -94,7 +93,6 @@ const CarouselNext = () => {
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
       </Carousel>
-        </div>
   );
 };
 

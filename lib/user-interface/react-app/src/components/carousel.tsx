@@ -11,17 +11,17 @@ const CarouselNext = () => {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
-      partialVisibilityGutter: 40
+      partialVisibilityGutter: 20
     },
     tablet: {
       breakpoint: { max: 1024, min: 530 },
       items: 2,
-      partialVisibilityGutter: 30
+      partialVisibilityGutter: 20
     },
     mobile: {
       breakpoint: { max: 530, min: 0 },
       items: 1,
-      partialVisibilityGutter: 30
+      partialVisibilityGutter: 20
     },
   };
 
@@ -40,8 +40,8 @@ const CarouselNext = () => {
       ssr
       infinite={false}
       itemClass="carousel-item"
-      autoPlay
-      slidesToSlide={2}
+      autoPlay={false}
+      slidesToSlide={1}
     >
       <TaskCard
         name="summarize"

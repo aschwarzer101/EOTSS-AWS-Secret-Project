@@ -67,7 +67,6 @@
   border-radius: 20px;
   background-color: #bae8e8;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);/* Ensure padding and border are included in the element's total width and height */
 }
 
   .carousel-container {

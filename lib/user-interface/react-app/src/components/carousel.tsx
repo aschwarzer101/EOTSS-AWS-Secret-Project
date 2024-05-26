@@ -10,7 +10,7 @@ const CarouselNext = () => {
   const BreakpointSlides: ResponsiveType = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
       partialVisibilityGutter: 20
     },
     tablet: {

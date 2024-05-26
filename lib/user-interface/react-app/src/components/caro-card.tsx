@@ -22,13 +22,14 @@ export function TaskCard(props: ChatBotTaskCard) {
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
-          <Card.Title>{props.cardTitle}</Card.Title>
+          <Card.Title className="task-card-title">{props.cardTitle}</Card.Title>
           <Card.Text as= "p">{props.taskDescription}</Card.Text>
           <Button 
             as="a" 
             variant="primary" 
             href={props.url} 
             active
+            onClick={onFollow}
             >
                 Try it 
             </Button>

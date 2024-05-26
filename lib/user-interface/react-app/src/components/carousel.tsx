@@ -41,8 +41,7 @@ const CarouselNext = () => {
       infinite={false}
       itemClass="carousel-item"
       autoPlay
-      showDots={true}
-      slidesToSlide={1}
+      slidesToSlide={2}
     >
       <TaskCard
         name="summarize"

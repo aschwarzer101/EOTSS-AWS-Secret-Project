@@ -40,6 +40,7 @@ const CarouselNext = () => {
       ssr
       infinite={false}
       itemClass="carousel-item"
+      containerClass="carousel-container"
       autoPlay={false}
       slidesToSlide={1}
     >
@@ -91,7 +92,6 @@ const CarouselNext = () => {
         url={`/chatbot/task-playground/${uuidv4()}/positiveAffirmation`}
         apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
       />
-      <div className="invisible-container"></div> {/* Invisible container */}
     </Carousel>
   );
 };

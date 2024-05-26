@@ -58,11 +58,14 @@
   background-color: #bae8e8;
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
+  .carousel-item:last-child {
+  margin-right: 40px; /* Adjust this value based on your layout needs */
+}
 
-  .invisible-container {
-  width: 300px; /* Adjust the width as needed */
-  height: 100%; /* Match the height of the carousel items */
-  background-color: transparent; /* Ensure it is invisible */
+  .carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
   .task-card-title {

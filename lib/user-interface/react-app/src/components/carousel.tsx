@@ -55,7 +55,7 @@ const CarouselNext = () => {
           renderArrowsWhenDisabled={false}
           renderButtonGroupOutside={false}
           renderDotsOutside={false}
-          rewind={false}
+          rewind={true}
           rewindWithAnimation={true}
           rtl={false}
           shouldResetAutoplay

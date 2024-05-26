@@ -61,6 +61,7 @@
 
   .ghost-item {
   visibility: hidden;
+    background-color: transparent;
   width: 300px; /* Adjust to be the same width as your TaskCard */
   margin: 1rem;
 }

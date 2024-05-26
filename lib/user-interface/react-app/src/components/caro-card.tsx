@@ -16,6 +16,19 @@ export interface ChatBotTaskCard {
 
 export function TaskCard(props: ChatBotTaskCard) {
     const onFollow = useOnFollow();
+
+    const handleFollow = (event) => {
+        event.preventDefault();
+        const customEvent = new CustomEvent('follow', {
+            detail: {
+                href: props.url,
+                external: false,
+            }
+        });
+        onFollow(customEvent);
+    };
+
+
   return (
     
     <div className="shadow p-3 mb-5 bg-white rounded">
@@ -29,7 +42,7 @@ export function TaskCard(props: ChatBotTaskCard) {
             variant="primary" 
             href={props.url} 
             active
-            onClick={onFollow}
+            onClick={handleFollow}
             >
                 Try it 
             </Button>

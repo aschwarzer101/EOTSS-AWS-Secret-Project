@@ -35,6 +35,7 @@ const CarouselNext = () => {
   };
 
   return (
+      <div className="carousel-wrapper">
       <Carousel
           responsive={BreakpointSlides}
           ssr
@@ -92,8 +93,8 @@ const CarouselNext = () => {
             url={`/chatbot/task-playground/${uuidv4()}/positiveAffirmation`}
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
-        <div className="carousel-item ghost-item"></div>
       </Carousel>
+        </div>
   );
 };
 

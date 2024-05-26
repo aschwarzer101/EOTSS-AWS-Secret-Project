@@ -59,11 +59,8 @@
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
-  .ghost-item {
-  visibility: hidden;
-    background-color: transparent;
-  width: 300px; /* Adjust to be the same width as your TaskCard */
-  margin: 1rem;
+  .carousel-wrapper {
+  padding-right: 60px; /* Adjust this value as needed to ensure the last item is visible */
 }
 
   .carousel-container {

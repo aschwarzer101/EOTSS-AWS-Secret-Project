@@ -57,7 +57,7 @@ export default function Welcome() {
                     }
                 >
                     <div style={{display: 'flex', height: '100vh',  overflowY: 'auto'}}>
-                        <div style={{flex: '1', overflowY: 'hidden'}}>
+                        <div style={{flex: '1', overflowY: 'auto'}}>
                             <SpaceBetween size="l">
                                 <Cards
                                     cardDefinition={{

@@ -59,6 +59,12 @@
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
+  .ghost-item {
+  visibility: hidden;
+  width: 300px; /* Adjust to be the same width as your TaskCard */
+  margin: 1rem;
+}
+
   .carousel-container {
   display: flex;
   align-items: center;

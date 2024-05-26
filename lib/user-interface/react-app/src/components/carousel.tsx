@@ -92,7 +92,7 @@ const CarouselNext = () => {
             url={`/chatbot/task-playground/${uuidv4()}/positiveAffirmation`}
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
-        <div className="ghost-item"></div>
+        <div className="carousel-item ghost-item"></div>
       </Carousel>
   );
 };

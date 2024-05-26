@@ -38,11 +38,30 @@ const CarouselNext = () => {
       <Carousel
           responsive={BreakpointSlides}
           ssr
-          infinite={false}
           itemClass="carousel-item"
           containerClass="carousel-container"
-          autoPlay={false}
+          autoPlay={true}
           slidesToSlide={1}
+          additionalTransfrom={0}
+          arrows
+          autoPlaySpeed={3000}
+          centerMode={false}
+          draggable
+          focusOnSelect={false}
+          infinite={false}
+          keyBoardControl
+          minimumTouchDrag={80}
+          pauseOnHover
+          renderArrowsWhenDisabled={false}
+          renderButtonGroupOutside={false}
+          renderDotsOutside={false}
+          rewind={false}
+          rewindWithAnimation={false}
+          rtl={false}
+          shouldResetAutoplay
+          showDots={false}
+          sliderClass=""
+          swipeable
       >
         <TaskCard
             name="summarize"

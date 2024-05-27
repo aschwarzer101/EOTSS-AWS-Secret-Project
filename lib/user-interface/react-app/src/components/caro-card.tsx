@@ -19,10 +19,10 @@ export function TaskCard(props: ChatBotTaskCard) {
 
 
     const handleFollow = (event, url) => {
-    event.preventDefault();
-    // use on follow
-    const onFollow = useOnFollow();
-    onFollow({ detail: { href: url, external: false } });
+        event.preventDefault();
+        // use on follow
+        const onFollow = useOnFollow();
+        onFollow({ detail: { href: url, external: false } });
     };
 
 

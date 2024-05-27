@@ -51,7 +51,6 @@
   /*}*/
 
 .task-container {
-  padding: 3rem; /* Adjust padding to fit the layout */
   margin: 0 auto; /* Center the container */
   display: flex;
   flex-flow: column nowrap;

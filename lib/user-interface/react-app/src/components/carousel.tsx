@@ -34,7 +34,16 @@ const CarouselNext = () => {
     apiPrompt: 'You are a summarization agent.',
   };
 
+  const handleCarouselClick = (event) => {
+    console.log("Carousel clicked", event.target);
+  };
+
+   const handleCardClick = (event) => {
+    console.log("Card clicked", event.target);
+  };
+
   return (
+      <div onClick={handleCarouselClick}>
       <Carousel
           responsive={BreakpointSlides}
           ssr
@@ -111,6 +120,7 @@ const CarouselNext = () => {
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
       </Carousel>
+      </div>
   );
 };
 

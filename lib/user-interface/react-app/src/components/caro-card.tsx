@@ -18,13 +18,15 @@ export interface ChatBotTaskCard {
 export function TaskCard(props: ChatBotTaskCard) {
 
 
-    const handleFollow = (event, url) => {
-        event.preventDefault();
-        // use on follow
-        const onFollow = useOnFollow();
-        onFollow({ detail: { href: url, external: false } });
-    };
+const onFollow = useOnFollow();
 
+  const handleFollow = (event, url) => {
+    event.preventDefault();
+    console.log("in handle follow of the try it button.");
+    const newEvent = new CustomEvent("follow", { detail: { href: url, external: false } });
+    onFollow(newEvent);
+    console.log("after on follow");
+  };
 
   return (
 

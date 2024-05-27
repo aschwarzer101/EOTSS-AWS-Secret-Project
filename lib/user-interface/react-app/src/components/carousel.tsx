@@ -72,7 +72,7 @@ const CarouselNext = () => {
                 instructions="Paste your text below"
                 url={`/chatbot/task-playground/${uuidv4()}/summarize`}
                 apiPrompt="You are a summarization agent..."
-                handleClick={handleClick}
+
             />
             <TaskCard
                 name="Translate"

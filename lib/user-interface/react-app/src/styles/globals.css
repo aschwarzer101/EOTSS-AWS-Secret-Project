@@ -57,7 +57,7 @@
   flex-flow: column nowrap;
   width: 100%;
   box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
-  overflow: hidden; /* Prevent overflow issues */
+  overflow: auto; /* Prevent overflow issues */
 }
   
   .carousel-item {

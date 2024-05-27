@@ -28,8 +28,8 @@ export function TaskCard(props: ChatBotTaskCard) {
 
 
   return (
-    
-    <div className="shadow p-3 mb-5 bg-white rounded" onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
+      <div onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
+    <div className="shadow p-3 mb-5 bg-white rounded">
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
@@ -48,6 +48,6 @@ export function TaskCard(props: ChatBotTaskCard) {
         </CardBody>
       </Card>
       </div>
-      
+      </div>
   );
 }

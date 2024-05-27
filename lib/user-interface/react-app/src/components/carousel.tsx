@@ -45,7 +45,7 @@ const CarouselNext = () => {
   return (
       <Carousel
           responsive={BreakpointSlides}
-          ssr
+          controls={false}
           itemClass="carousel-item"
           containerClass="carousel-container"
           autoPlay={true}

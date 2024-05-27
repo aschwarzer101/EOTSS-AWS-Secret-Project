@@ -34,17 +34,13 @@ const CarouselNext = () => {
     apiPrompt: 'You are a summarization agent.',
   };
 
-  const handleCarouselClick = (event) => {
-    console.log("Carousel clicked", event.target);
-    console.log("card clicked: ", event.target.closest(".carousel-item"));
-  };
+  // handle click
+    const handleClick = () => {
+        console.log("clicked");
+    };
 
-   const handleCardClick = (event) => {
-    console.log("Card clicked", event.target);
-  };
 
   return (
-      <div onClick={handleCarouselClick}>
       <Carousel
           responsive={BreakpointSlides}
           ssr
@@ -120,8 +116,17 @@ const CarouselNext = () => {
             url={`/chatbot/task-playground/${uuidv4()}/positiveAffirmation`}
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
+        <div onClick={handleClick}>
+          <TaskCard
+            name="summarize"
+            cardTitle="test"
+            taskDescription="Summarize meeting notes, articles, memos."
+            instructions="Paste your text below"
+            url={`/chatbot/task-playground/${uuidv4()}/summarize`}
+            apiPrompt="You are a summarization agent..."
+        />
+        </div>
       </Carousel>
-      </div>
   );
 };
 

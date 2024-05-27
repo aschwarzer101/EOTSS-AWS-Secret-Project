@@ -29,8 +29,8 @@ const onFollow = useOnFollow();
   };
 
   return (
-
-    <div className="carousel-item" onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
+    <div onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
+    <div className="carousel-item">
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
@@ -49,6 +49,6 @@ const onFollow = useOnFollow();
         </CardBody>
       </Card>
       </div>
-
+    </div>
   );
 }

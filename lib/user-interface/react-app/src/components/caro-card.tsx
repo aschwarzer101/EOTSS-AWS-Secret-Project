@@ -13,23 +13,22 @@ export interface ChatBotTaskCard {
   instructions: string;
   url: string;
   apiPrompt: string;
-  handleClick: (event: React.MouseEvent<HTMLDivElement>, url: string) => void;
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
 
 
     const handleFollow = (event, url) => {
-        console.log("in handle follow of the try it button.");
-        event.preventDefault();
-        props.handleClick(event,url);
-        console.log("after on follow");
+    event.preventDefault();
+    // use on follow
+    const onFollow = useOnFollow();
+    onFollow({ detail: { href: url, external: false } });
     };
 
 
   return (
-      <div onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
-    <div className="shadow p-3 mb-5 bg-white rounded">
+
+    <div className="carousel-item" onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
@@ -48,6 +47,6 @@ export function TaskCard(props: ChatBotTaskCard) {
         </CardBody>
       </Card>
       </div>
-      </div>
+
   );
 }

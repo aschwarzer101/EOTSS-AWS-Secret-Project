@@ -16,7 +16,6 @@ import {TaskOptions} from "../common/constants";
 import TaskPriming from "../components/chatbot/task";
 import {v4 as uuidv4} from "uuid";
 import CarouselNext from "../components/carousel";
-import styles from '../styles/task.module.css';
 import styles from "../../styles/globals.css";
 
 

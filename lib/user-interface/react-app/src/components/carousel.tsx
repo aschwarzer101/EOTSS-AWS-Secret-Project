@@ -36,7 +36,7 @@ const CarouselNext = () => {
 
   const handleCarouselClick = (event) => {
     console.log("Carousel clicked", event.target);
-    console.log("card clicked: ", event.cardTitle);
+    console.log("card clicked: ", event.target.closest(".carousel-item"));
   };
 
    const handleCardClick = (event) => {

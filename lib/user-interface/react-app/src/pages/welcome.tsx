@@ -17,10 +17,14 @@ import TaskPriming from "../components/chatbot/task";
 import {v4 as uuidv4} from "uuid";
 import CarouselNext from "../components/carousel";
 import styles from "../../styles/globals.css";
+import {StorageHelper} from "../common/helpers/storage-helper.ts";
+import {Mode} from "@cloudscape-design/global-styles";
+import { useState } from "react";
 
 
 export default function Welcome() {
     const onFollow = useOnFollow();
+    const [theme] = useState<Mode>(StorageHelper.getTheme());
 
     return (
         <BaseAppLayout
@@ -218,7 +222,7 @@ export default function Welcome() {
                                 /> */}
                               
                                 <div className="task-container" > 
-                                <CarouselNext></CarouselNext>
+                                <CarouselNext theme={theme}></CarouselNext>
                                 </div>
                                 
                                 <Container

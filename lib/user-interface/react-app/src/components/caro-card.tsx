@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import useOnFollow from "../common/hooks/use-on-follow";
 import styles from "../../styles/globals.css";
+import {Mode} from "@cloudscape-design/global-styles";
+import { useEffect, useState } from "react";
+import { StorageHelper } from "../common/helpers/storage-helper";
 
 export interface ChatBotTaskCard {
   name: string;
@@ -13,6 +16,7 @@ export interface ChatBotTaskCard {
   instructions: string;
   url: string;
   apiPrompt: string;
+    theme: Mode;
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
@@ -30,7 +34,7 @@ const onFollow = useOnFollow();
 
   return (
     <div onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
-    <div className="carousel-item">
+    <div className={props.theme === Mode.Dark ? "carousel-item-dark-mode" : "carousel-item"}>
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>

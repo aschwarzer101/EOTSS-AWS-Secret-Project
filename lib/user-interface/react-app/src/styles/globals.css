@@ -69,6 +69,17 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+  .carousel-item-dark-mode {
+  padding: 2em 3em;
+  color: #272343;
+  margin: 1rem;
+  border-radius: 20px;
+    background-color: chartreuse;
+  //background-color: #bae8e8;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1);
+}
+
 
 /*  .carousel-container {*/
 /*  display: flex;*/

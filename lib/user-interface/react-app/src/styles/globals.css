@@ -64,8 +64,7 @@
   color: #272343;
   margin: 1rem;
   border-radius: 20px;
-    background-color: chartreuse;
-  //background-color: #bae8e8;
+  background-color: #bae8e8;
   box-sizing: border-box;
 }
 
@@ -76,5 +75,5 @@
 /*}*/
 
   .task-card-title {
-    font-size: 1.5rem; /* Adjust the font size as needed */
+    font-size: 3rem; /* Adjust the font size as needed */
 }

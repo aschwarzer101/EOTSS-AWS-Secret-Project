@@ -64,9 +64,9 @@
   color: #272343;
   margin: 1rem;
   border-radius: 20px;
-  background-color: #bae8e8;
+    background-color: chartreuse;
+  //background-color: #bae8e8;
   box-sizing: border-box;
-  pointer-events: auto;
 }
 
 /*  .carousel-container {*/

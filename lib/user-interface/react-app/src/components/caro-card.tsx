@@ -2,6 +2,7 @@ import React from "react";
 import Card from 'react-bootstrap/Card';
 import { CardBody } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 import useOnFollow from "../common/hooks/use-on-follow";
 import styles from "../../styles/globals.css";
 
@@ -15,25 +16,19 @@ export interface ChatBotTaskCard {
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
-    const onFollow = useOnFollow();
+     const navigate = useNavigate();
 
     const handleFollow = (event) => {
         console.log("in handle follow of the try it button.");
         event.preventDefault();
-        const customEvent = new CustomEvent('follow', {
-            detail: {
-                href: props.url,
-                external: false,
-            }
-        });
-        onFollow(customEvent);
+        navigate(props.url);
         console.log("after on follow");
     };
 
 
   return (
     
-    <div className="shadow p-3 mb-5 bg-white rounded">
+    <div className="shadow p-3 mb-5 bg-white rounded" onClick={handleFollow} style={{ cursor: 'pointer' }}>
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
@@ -44,7 +39,8 @@ export function TaskCard(props: ChatBotTaskCard) {
             variant="primary" 
             href={props.url} 
             active
-            onClick={handleFollow}
+            onClick={(e) => e.stopPropagation()}
+            //onClick={handleFollow}
             >
                 Try it 
             </Button>

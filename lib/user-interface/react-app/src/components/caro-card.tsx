@@ -19,17 +19,17 @@ export interface ChatBotTaskCard {
 export function TaskCard(props: ChatBotTaskCard) {
 
 
-    const handleFollow = (event) => {
+    const handleFollow = (event, url) => {
         console.log("in handle follow of the try it button.");
         event.preventDefault();
-        props.handleClick(event, props.url);
+        props.handleClick(event,url);
         console.log("after on follow");
     };
 
 
   return (
     
-    <div className="shadow p-3 mb-5 bg-white rounded" onClick={handleFollow} style={{ cursor: 'pointer' }}>
+    <div className="shadow p-3 mb-5 bg-white rounded" onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>

@@ -36,6 +36,8 @@ const CarouselNext = () => {
 
   // handle click
     const handleClick = (e, url) => {
+      e.preventDefault();
+
         console.log("clicked :" + url);
     };
 

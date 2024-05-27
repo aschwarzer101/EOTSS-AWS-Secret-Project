@@ -19,12 +19,11 @@ import CarouselNext from "../components/carousel";
 import styles from "../../styles/globals.css";
 import {StorageHelper} from "../common/helpers/storage-helper.ts";
 import {Mode} from "@cloudscape-design/global-styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
-export default function Welcome() {
+export default function Welcome({theme}) {
     const onFollow = useOnFollow();
-    const [theme] = useState<Mode>(StorageHelper.getTheme());
 
     return (
         <BaseAppLayout

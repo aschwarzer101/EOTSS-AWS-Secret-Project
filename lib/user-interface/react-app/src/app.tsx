@@ -26,19 +26,24 @@ import Welcome from "./pages/welcome";
 import TaskPlayground from "./pages/chatbot/playground/task-playground";
 import "./styles/app.scss";
 import SessionPage from "./pages/chatbot/sessions/sessions";
+import {StorageHelper} from "./common/helpers/storage-helper.ts";
+import {Mode} from "@cloudscape-design/global-styles";
+import {useState} from "react";
 
 function App() {
   const appContext = useContext(AppContext);
   const Router = appContext?.config.privateWebsite ? HashRouter : BrowserRouter;
 
+  const [theme, setTheme] = useState<Mode>(StorageHelper.getTheme());
+
   return (
     <div style={{ height: "100%" }}>
       <Router>
-        <GlobalHeader />
+        <GlobalHeader setTheme={setTheme} theme={theme}/>
         <div style={{ height: "56px", backgroundColor: "#000716" }}>&nbsp;</div>
         <div>
           <Routes>
-            <Route index path="/" element={<Welcome />} />
+            <Route index path="/" element={<Welcome theme={theme}/>} />
             <Route path="/chatbot" element={<Outlet />}>
               <Route path="playground" element={<Playground />} />
               <Route path="playground/:sessionId" element={<Playground />} />

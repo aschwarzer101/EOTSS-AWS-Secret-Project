@@ -18,6 +18,7 @@ export function TaskCard(props: ChatBotTaskCard) {
     const onFollow = useOnFollow();
 
     const handleFollow = (event) => {
+        console.log("in handle follow of the try it button.");
         event.preventDefault();
         const customEvent = new CustomEvent('follow', {
             detail: {
@@ -26,6 +27,7 @@ export function TaskCard(props: ChatBotTaskCard) {
             }
         });
         onFollow(customEvent);
+        console.log("after on follow");
     };
 
 

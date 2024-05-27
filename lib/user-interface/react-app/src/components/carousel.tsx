@@ -35,8 +35,8 @@ const CarouselNext = () => {
   };
 
   // handle click
-    const handleClick = () => {
-        console.log("clicked");
+    const handleClick = (e, url) => {
+        console.log("clicked :" + url);
     };
 
 
@@ -53,7 +53,7 @@ const CarouselNext = () => {
           autoPlaySpeed={3000}
           centerMode={false}
           draggable
-          focusOnSelect={false}
+          focusOnSelect={true}
           infinite={false}
           keyBoardControl
           minimumTouchDrag={80}
@@ -116,16 +116,6 @@ const CarouselNext = () => {
             url={`/chatbot/task-playground/${uuidv4()}/positiveAffirmation`}
             apiPrompt={`Receive uplifting affirmations to start your workday with positivity and motivation.`}
         />
-        <div onClick={handleClick}>
-          <TaskCard
-            name="summarize"
-            cardTitle="test"
-            taskDescription="Summarize meeting notes, articles, memos."
-            instructions="Paste your text below"
-            url={`/chatbot/task-playground/${uuidv4()}/summarize`}
-            apiPrompt="You are a summarization agent..."
-        />
-        </div>
       </Carousel>
   );
 };

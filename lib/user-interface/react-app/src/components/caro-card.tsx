@@ -13,15 +13,16 @@ export interface ChatBotTaskCard {
   instructions: string;
   url: string;
   apiPrompt: string;
+  handleClick: (event: React.MouseEvent<HTMLDivElement>, url: string) => void;
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
-     const navigate = useNavigate();
+
 
     const handleFollow = (event) => {
         console.log("in handle follow of the try it button.");
         event.preventDefault();
-        navigate(props.url);
+        props.handleClick(event, props.url);
         console.log("after on follow");
     };
 

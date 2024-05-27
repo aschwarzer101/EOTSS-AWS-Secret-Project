@@ -11,17 +11,17 @@ const CarouselNext = () => {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
-      partialVisibilityGutter: 20
+      partialVisibilityGutter: 0
     },
     tablet: {
       breakpoint: { max: 1024, min: 530 },
       items: 2,
-      partialVisibilityGutter: 20
+      partialVisibilityGutter: 0
     },
     mobile: {
       breakpoint: { max: 530, min: 0 },
       items: 1,
-      partialVisibilityGutter: 20
+      partialVisibilityGutter: 0
     },
   };
 

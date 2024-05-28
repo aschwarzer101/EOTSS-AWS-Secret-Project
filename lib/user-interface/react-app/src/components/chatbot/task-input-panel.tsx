@@ -257,6 +257,14 @@ import { Auth } from "aws-amplify";
           }
   
           const models = modelsResult.data ? modelsResult.data.listModels : [];
+
+        // save meta model data to local storage as default
+        if(models.length){
+          const smartModel = models.find((m) => m.name === "Smart Model");
+          if (smartModel) {
+            StorageHelper.setSelectedLLM(smartModel);
+          }
+        }
   
           const selectedModelOption = getSelectedModelOption(models);
           const selectedModelMetadata = getSelectedModelMetadata(

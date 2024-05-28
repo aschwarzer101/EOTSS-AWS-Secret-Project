@@ -44,6 +44,7 @@ export default function KendraForm(props: KendraFormProps) {
           a.name.localeCompare(b.name)
         );
         setKendraIndexes(data);
+        props.onChange({ kendraIndex: { label: data[0].name, value: data[0].id, description: data[0].id } });
         setKendraIndexStatus("finished");
       } catch (error) {
         setKendraIndexStatus("error");
@@ -84,7 +85,7 @@ export default function KendraForm(props: KendraFormProps) {
         </FormField>
         <FormField label="Kendra Index" errorText={props.errors.kendraIndex}>
           <Select
-            disabled={props.submitting}
+            disabled={props.submitting || kendraIndexes.length === 1}
             selectedAriaLabel="Selected"
             placeholder="Choose Kendra index"
             statusType={kendraIndexStatus}
@@ -96,21 +97,21 @@ export default function KendraForm(props: KendraFormProps) {
             }
           />
         </FormField>
-        <FormField
-          label="Use all data in the Kendra index"
-          description="By default, only data uploaded to the Workspace is used. This approach allows us to isolate workspaces that utilize the same Kendra index. However, if desired, you can choose to use all the data in the index. This option is particularly useful when you have other Kendra data sources."
-          errorText={props.errors.index}
-        >
-          <Toggle
-            disabled={props.submitting || externalSelected}
-            checked={props.data.useAllData || externalSelected}
-            onChange={({ detail: { checked } }) =>
-              props.onChange({ useAllData: checked })
-            }
-          >
-            Use all data
-          </Toggle>
-        </FormField>
+        {/*<FormField*/}
+        {/*  label="Use all data in the Kendra index"*/}
+        {/*  description="By default, only data uploaded to the Workspace is used. This approach allows us to isolate workspaces that utilize the same Kendra index. However, if desired, you can choose to use all the data in the index. This option is particularly useful when you have other Kendra data sources."*/}
+        {/*  errorText={props.errors.index}*/}
+        {/*>*/}
+        {/*  <Toggle*/}
+        {/*    disabled={props.submitting || externalSelected}*/}
+        {/*    checked={props.data.useAllData || externalSelected}*/}
+        {/*    onChange={({ detail: { checked } }) =>*/}
+        {/*      props.onChange({ useAllData: checked })*/}
+        {/*    }*/}
+        {/*  >*/}
+        {/*    Use all data*/}
+        {/*  </Toggle>*/}
+        {/*</FormField>*/}
       </SpaceBetween>
     </Container>
   );

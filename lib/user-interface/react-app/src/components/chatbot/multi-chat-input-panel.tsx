@@ -99,7 +99,8 @@ export default function MultiChatInputPanel(props: MultiChatInputPanelProps) {
               if (!props.enabled) return;
               if (e.key == "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                props.onSendMessage(value);
+                let dateTime = new Date().toLocaleString();
+                props.onSendMessage(value+ "\n\nFor more context here is the current date and time: " + dateTime);
                 setValue("");
               }
             }}
@@ -110,7 +111,8 @@ export default function MultiChatInputPanel(props: MultiChatInputPanelProps) {
             <Button
               disabled={!props.enabled || value.trim().length === 0}
               onClick={() => {
-                props.onSendMessage(value);
+                let dateTime = new Date().toLocaleString();
+                props.onSendMessage(value+ "\n\nFor more context here is the current date and time: " + dateTime);
                 setValue("");
               }}
               iconAlign="right"

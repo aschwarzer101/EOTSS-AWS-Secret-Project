@@ -395,10 +395,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       state.selectedModel.value
     );
 
+    let dateTime = new Date();
 
+    let value = state.value + " For more context current date and time is: " + dateTime.toLocaleTimeString();
 
-
-    const value = state.value.trim()
+    value = value.trim()
     if (!value) return;
     // if (props.initialPrompt) {
     //   props.setRunning(true);

@@ -410,6 +410,10 @@ import { Auth } from "aws-amplify";
       console.log(value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;
+
+      let dateTime = new Date().toLocaleString();
+      value = value + "\n\nFor more context here is the current date and time: " + dateTime;
+
       const request: ChatBotRunRequest = {
         action: ChatBotAction.Run,
         modelInterface:

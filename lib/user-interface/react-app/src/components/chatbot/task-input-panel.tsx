@@ -262,7 +262,7 @@ import { Auth } from "aws-amplify";
         if(models.length){
           const smartModel = models.find((m) => m.name === "Smart Model");
           if (smartModel) {
-            StorageHelper.setSelectedLLM(smartModel);
+            StorageHelper.setSelectedLLM("Smart Model");
           }
         }
   

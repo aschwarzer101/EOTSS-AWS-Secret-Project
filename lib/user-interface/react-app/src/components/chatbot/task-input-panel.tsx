@@ -259,14 +259,15 @@ import { Auth } from "aws-amplify";
           const models = modelsResult.data ? modelsResult.data.listModels : [];
 
         // save meta model data to local storage as default
+        let defaultModel = '';
         if(models.length){
           const smartModel = models.find((m) => m.name === "Smart Model");
-          if (smartModel) {
-            StorageHelper.setSelectedLLM("Smart Model");
+          if (smartModel)  {
+            defaultModel = "Smart Model";
           }
         }
-  
-          const selectedModelOption = getSelectedModelOption(models);
+
+        const selectedModelOption = getSelectedModelOption(models, defaultModel);
           const selectedModelMetadata = getSelectedModelMetadata(
             models,
             selectedModelOption
@@ -758,9 +759,13 @@ import { Auth } from "aws-amplify";
     return selectedWorkspaceOption;
   }
   
-  function getSelectedModelOption(models: Model[]): SelectProps.Option | null {
+  function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
     let selectedModelOption: SelectProps.Option | null = null;
-    const savedModel = StorageHelper.getSelectedLLM();
+    let savedModel = StorageHelper.getSelectedLLM();
+
+    if(defaultModel){
+    savedModel = defaultModel;
+  }
   
     if (savedModel) {
       const savedModelDetails = OptionsHelper.parseValue(savedModel);

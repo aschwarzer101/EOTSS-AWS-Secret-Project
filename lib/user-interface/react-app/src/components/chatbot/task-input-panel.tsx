@@ -263,7 +263,7 @@ import { Auth } from "aws-amplify";
         if(models.length){
           const smartModel = models.find((m) => m.name === "Smart Model");
           if (smartModel)  {
-            defaultModel = "Smart Model";
+            defaultModel = "bedrock::Smart Model";
           }
         }
 

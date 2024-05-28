@@ -12,6 +12,7 @@ from langchain.utilities.anthropic import (
     get_num_tokens_anthropic,
     get_token_ids_anthropic,
 )
+from datetime import datetime
 
 
 class LLMInputOutputAdapter:
@@ -25,6 +26,9 @@ class LLMInputOutputAdapter:
     def prepare_input(
         cls, provider: str, prompt: str, model_kwargs: Dict[str, Any]
     ) -> Dict[str, Any]:
+        # get current date and time, so we can use it to send to the model in the prompt
+        now = datetime.now()
+        prompt = f"{prompt}\n\nFor more context Current Date and Time is: {now.strftime('%Y-%m-%d %H:%M:%S')}."
         input_body = {**model_kwargs}
         if provider == "anthropic":
             input_body["messages"] = [{"role": "user", "content": prompt}]

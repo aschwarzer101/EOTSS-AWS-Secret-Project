@@ -50,63 +50,63 @@
   /*  width: 100%;*/
   /*}*/
 
-.task-container {
-  margin: 0 auto; /* Center the container */
-  display: flex;
-  flex-flow: column nowrap;
-  width: 100%;
-  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
-  overflow: auto; /* Prevent overflow issues */
-}
-  
-  .carousel-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 2em 3em;
-  color: #272343;
-  margin: 1rem;
-  border-radius: 20px;
-  background-color: #bae8e8;
-  box-sizing: border-box;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
+/*.task-container {*/
+/*  margin: 0 auto; !* Center the container *!*/
+/*  display: flex;*/
+/*  flex-flow: column nowrap;*/
+/*  width: 100%;*/
+/*  box-sizing: border-box; !* Ensure padding is included in the element's total width and height *!*/
+/*  overflow: auto; !* Prevent overflow issues *!*/
+/*}*/
+/*  */
+/*  .carousel-item {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: space-between;*/
+/*  padding: 2em 3em;*/
+/*  color: #272343;*/
+/*  margin: 1rem;*/
+/*  border-radius: 20px;*/
+/*  background-color: #bae8e8;*/
+/*  box-sizing: border-box;*/
+/*  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+/*}*/
 
-  .carousel-item-dark-mode {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 2em 3em;
-  color: #272343;
-  margin: 1rem;
-  border-radius: 20px;
-  background-color: #bae8e8;
-  box-sizing: border-box;
-  box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);
-}
+/*  .carousel-item-dark-mode {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: space-between;*/
+/*  padding: 2em 3em;*/
+/*  color: #272343;*/
+/*  margin: 1rem;*/
+/*  border-radius: 20px;*/
+/*  background-color: #bae8e8;*/
+/*  box-sizing: border-box;*/
+/*  box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);*/
+/*}*/
 
-  .task-card-footer {
-    margin-top: auto;
-}
+/*  .task-card-footer {*/
+/*    margin-top: auto;*/
+/*}*/
 
-  .task-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
+/*  .task-card {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: space-between;*/
+/*  height: 100%;*/
+/*}*/
 
-.task-card-content {
-    flex: 1;
-}
+/*.task-card-content {*/
+/*    flex: 1;*/
+/*}*/
 
-.task-container-carousel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
+/*.task-container-carousel {*/
+/*  display: grid;*/
+/*  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));*/
+/*  gap: 1rem;*/
+/*  width: 100%;*/
+/*  box-sizing: border-box;*/
+/*}*/
 
 
 /*  .carousel-container {*/

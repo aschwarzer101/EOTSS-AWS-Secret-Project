@@ -7,6 +7,7 @@ import {CardBody, Button} from 'react-bootstrap';
 import {v4 as uuidv4} from "uuid";
 import useOnFollow from "../common/hooks/use-on-follow.ts";
 import {Mode} from "@cloudscape-design/global-styles";
+import styles from "../../styles/globals.css";
 
 interface CarouselNextProps {
     theme: Mode;

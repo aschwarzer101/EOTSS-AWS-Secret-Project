@@ -90,9 +90,33 @@ body.awsui-dark-mode {
 //  width: 100%;
 //}
 
+//.carousel-item {
+//  padding: 2em 3em ;
+//  pointer-events: none;
+//  color: #272343;
+//  margin: 1rem;
+//  border-radius: 20px;
+//  background-color: #bae8e8;
+//  box-sizing: border-box;
+//  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+//}
+//
+//  .carousel-item-dark-mode {
+//  padding: 2em 3em;
+//  pointer-events: none;
+//  color: #272343;
+//  margin: 1rem;
+//  border-radius: 20px;
+//  background-color: #bae8e8;
+//  box-sizing: border-box;
+//  box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);
+//}
+
 .carousel-item {
-  padding: 2em 3em ;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2em 3em;
   color: #272343;
   margin: 1rem;
   border-radius: 20px;
@@ -102,8 +126,10 @@ body.awsui-dark-mode {
 }
 
   .carousel-item-dark-mode {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 2em 3em;
-  pointer-events: none;
   color: #272343;
   margin: 1rem;
   border-radius: 20px;

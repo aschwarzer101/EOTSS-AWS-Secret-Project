@@ -90,12 +90,10 @@
 }
 
   .task-card {
-    flex: 1 1 30%; /* Adjust the basis as needed for your layout */
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .task-card-content {
@@ -103,9 +101,11 @@
 }
 
 .task-container-carousel {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 

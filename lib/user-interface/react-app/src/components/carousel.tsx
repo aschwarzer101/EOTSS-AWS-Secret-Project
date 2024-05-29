@@ -32,6 +32,7 @@ const CarouselNext = ({theme}: CarouselNextProps) => {
     };
 
     return (
+        <div className="task-container-carousel">
         <Carousel
             responsive={BreakpointSlides}
             //itemClass="carousel-item"
@@ -113,6 +114,7 @@ const CarouselNext = ({theme}: CarouselNextProps) => {
                 theme={theme}
             />
         </Carousel>
+        </div>
     );
 };
 

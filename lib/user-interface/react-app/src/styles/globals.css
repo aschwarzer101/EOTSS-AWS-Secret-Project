@@ -60,6 +60,9 @@
 }
   
   .carousel-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 2em 3em;
   color: #272343;
   margin: 1rem;
@@ -70,6 +73,9 @@
 }
 
   .carousel-item-dark-mode {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 2em 3em;
   color: #272343;
   margin: 1rem;
@@ -78,6 +84,7 @@
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);
 }
+
   .task-card-footer {
     margin-top: auto;
 }

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import useOnFollow from "../common/hooks/use-on-follow";
 import styles from "../../styles/globals.css";
-import {Mode} from "@cloudscape-design/global-styles";
+import { Mode } from "@cloudscape-design/global-styles";
 
 export interface ChatBotTaskCard {
   name: string;

@@ -142,7 +142,7 @@ export abstract class TaskOptions {
      prompt: "You are an AI trained to assist with composing professional and clear emails. Your role is to help draft emails that are concise, polite, and effectively communicate the sender's message. Please ensure the tone is appropriate for a business setting and that the emails are free of spelling and grammatical errors. Additionally, be ready to offer suggestions on email etiquette and structure when necessary. If any further details are needed to complete the draft, such as the recipient's information or the email's purpose, feel free to ask clarifying question.",
     // prompt: "Compose a professional and cleary worded email based on the following ", 
     instructions: "Enter a rough draft of your email below: ",
-      sendPromptOnlyOnce: false
+      sendPromptOnlyOnce: true
     }, 
 
     dailyPlanning: { 

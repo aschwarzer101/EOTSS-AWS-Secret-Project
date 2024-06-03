@@ -86,6 +86,15 @@ const CarouselNext = ({theme}: CarouselNextProps) => {
                 theme={theme}
             />
             <TaskCard
+                name="email"
+                cardTitle="Email Composition Assistant"
+                taskDescription="Compose professional and clear emails"
+                instructions="Enter a rough draft of your email below:"
+                url={`/chatbot/task-playground/${uuidv4()}/email`}
+                apiPrompt="You are an AI trained to assist with composing professional and clear emails..."
+                theme={theme}
+            />
+            <TaskCard
                 name="memo"
                 cardTitle="Draft A Memo"
                 taskDescription="Compose concise memos through automated drafting"

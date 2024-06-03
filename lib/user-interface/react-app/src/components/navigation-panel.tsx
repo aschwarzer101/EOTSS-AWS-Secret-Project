@@ -111,18 +111,38 @@ export default function NavigationPanel() {
                 items: [
                     {
                         type: "link",
-                        text: "Draft A Memo",
-                        href: `/chatbot/task-playground/${uuidv4()}/${"memo"}`
-                    },
-                    {
-                        type: "link",
                         text: "Summarize Text",
-                        href: `/chatbot/task-playground/${uuidv4()}/${"summarize"}`
+                        href: `/chatbot/task-playground/${uuidv4()}/summarize`
                     },
                     {
                         type: "link",
                         text: "Translate",
-                        href: `/chatbot/task-playground/${uuidv4()}/${"translate"}`
+                        href: `/chatbot/task-playground/${uuidv4()}/translate`
+                    },
+                    {
+                        type: "link",
+                        text: "Create A Meeting Agenda",
+                        href: `/chatbot/task-playground/${uuidv4()}/meetingAgenda`
+                    },
+                    {
+                        type: "link",
+                        text: "Email Composition Assistant",
+                        href: `/chatbot/task-playground/${uuidv4()}/email`
+                    },
+                    {
+                        type: "link",
+                        text: "Draft A Memo",
+                        href: `/chatbot/task-playground/${uuidv4()}/memo`
+                    },
+                    {
+                        type: "link",
+                        text: "Daily Planning",
+                        href: `/chatbot/task-playground/${uuidv4()}/dailyPlanning`
+                    },
+                    {
+                        type: "link",
+                        text: "Need Some Positive Affirmation?",
+                        href: `/chatbot/task-playground/${uuidv4()}/positiveAffirmation`
                     },
                 ],
             },

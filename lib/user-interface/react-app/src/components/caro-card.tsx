@@ -38,7 +38,7 @@ const onFollow = useOnFollow();
       <Card bg="info">
         <Card.Header></Card.Header>
         <CardBody>
-          <Card.Title style={{ fontSize: "25px" }}>{props.cardTitle}</Card.Title>
+          <Card.Title style={{ fontSize: "22px" }}>{props.cardTitle}</Card.Title>
           <Card.Text as= "p">{props.taskDescription}</Card.Text>
           <Button
             as="a"
@@ -48,7 +48,7 @@ const onFollow = useOnFollow();
             onClick={(e) => e.stopPropagation()}
             //onClick={handleFollow}
             >
-                Try it
+                Try it &rarr;
             </Button>
         </CardBody>
       </Card>

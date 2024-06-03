@@ -7,7 +7,7 @@ import {
 import useOnFollow from "../common/hooks/use-on-follow";
 import {useNavigationPanelState} from "../common/hooks/use-navigation-panel-state";
 import {AppContext} from "../common/app-context";
-import {useContext, useState, useEffect} from "react";
+import {useContext, useState, useEffect, useMemo} from "react";
 import {CHATBOT_NAME} from "../common/constants";
 import {ApiClient} from "../common/api-client/api-client";
 import RouterButton from "../components/wrappers/router-button";
@@ -57,7 +57,7 @@ export default function NavigationPanel() {
         return cleanText;
     }
 
-    const updateItems = () => {
+    const items = useMemo(() => {
         const baseItems: SideNavigationProps.Item[] = [
             {
                 type: "link", text: "", href: "/", info: <RouterButton
@@ -132,7 +132,7 @@ export default function NavigationPanel() {
             // Add additional items if RAG is enabled
         }
         return baseItems;
-    };
+    }, [sessions, loading, appContext?.config.rag_enabled]);
 
     const onChange = ({
                           detail,
@@ -154,7 +154,7 @@ export default function NavigationPanel() {
                 onFollow={onFollow}
                 onChange={onChange}
                 header={{href: "/", text: CHATBOT_NAME}}
-                items={updateItems()}
+                items={items}
             />
         </div>
     );

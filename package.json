@@ -46,6 +46,7 @@
     "@cdklabs/generative-ai-cdk-constructs": "^0.1.50",
     "@cloudscape-design/components": "github:cloudscape-design/components",
     "@cloudscape-design/global-styles": "^1.0.26",
+    "aws-amplify": "^6.3.4",
     "aws-cdk-lib": "2.126.0",
     "cdk-nag": "2.27.170",
     "commander": "^11.0.0",

@@ -7,6 +7,8 @@ import TaskChat from "../../../components/chatbot/task-chat";
 import TaskPriming from "../../../components/chatbot/task";
 import { ChatBotTask } from "../../../components/chatbot/types";
 import { TaskOptions } from "../../../common/constants";
+import {Alert} from "@cloudscape-design/components";
+
 
 export default function TaskPlayground() {
   const { sessionId } = useParams();
@@ -99,7 +101,13 @@ export default function TaskPlayground() {
       }
       toolsWidth={300}
       // 
-      content={<TaskChat sessionId={sessionId} prompt={prompt} taskOb={cbTask3} />}
-    />
-  ); //send prompt here : prompt = {}
-}
+      content={<div>
+                    <Alert
+                        statusIconAriaLabel="Info"
+                        header="">
+                        AI models may occasionally make errors. Please validate critical information, avoid entering
+                        sensitive data, and refrain from attaching any sensitive documents.
+                    </Alert><TaskChat sessionId={sessionId} prompt={prompt} taskOb={cbTask3}/></div>}
+        />
+        ); //send prompt here : prompt = {}
+        }

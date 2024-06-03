@@ -2,6 +2,8 @@ import BaseAppLayout from "../../../components/base-app-layout";
 import MultiChat from "../../../components/chatbot/multi-chat";
 import { Header, HelpPanel } from "@cloudscape-design/components";
 import { Link } from "react-router-dom";
+import {Alert} from "@cloudscape-design/components";
+
 
 export default function MultiChatPlayground() {
   return (
@@ -32,7 +34,13 @@ export default function MultiChatPlayground() {
           </p>
         </HelpPanel>
       }
-      content={<MultiChat />}
-    />
-  );
-}
+      content={<div>
+                    <Alert
+                        statusIconAriaLabel="Info"
+                        header="">
+                        AI models may occasionally make errors. Please validate critical information, avoid entering
+                        sensitive data, and refrain from attaching any sensitive documents.
+                    </Alert><MultiChat/></div>}
+        />
+        );
+        }

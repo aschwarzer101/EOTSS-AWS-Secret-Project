@@ -257,8 +257,17 @@ import { Auth } from "aws-amplify";
           }
   
           const models = modelsResult.data ? modelsResult.data.listModels : [];
-  
-          const selectedModelOption = getSelectedModelOption(models);
+
+        // save meta model data to local storage as default
+        let defaultModel = '';
+        if(models.length){
+          const smartModel = models.find((m) => m.name === "Smart Model");
+          if (smartModel)  {
+            defaultModel = "bedrock::Smart Model";
+          }
+        }
+
+        const selectedModelOption = getSelectedModelOption(models, defaultModel);
           const selectedModelMetadata = getSelectedModelMetadata(
             models,
             selectedModelOption
@@ -401,6 +410,10 @@ import { Auth } from "aws-amplify";
       console.log(value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;
+
+      let dateTime = new Date().toLocaleString();
+      value = value + "\n\nFor more context here is the current date and time: " + dateTime;
+
       const request: ChatBotRunRequest = {
         action: ChatBotAction.Run,
         modelInterface:
@@ -750,9 +763,13 @@ import { Auth } from "aws-amplify";
     return selectedWorkspaceOption;
   }
   
-  function getSelectedModelOption(models: Model[]): SelectProps.Option | null {
+  function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
     let selectedModelOption: SelectProps.Option | null = null;
-    const savedModel = StorageHelper.getSelectedLLM();
+    let savedModel = StorageHelper.getSelectedLLM();
+
+    if(defaultModel){
+    savedModel = defaultModel;
+  }
   
     if (savedModel) {
       const savedModelDetails = OptionsHelper.parseValue(savedModel);

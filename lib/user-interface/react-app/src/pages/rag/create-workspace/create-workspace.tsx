@@ -39,12 +39,12 @@ export default function CreateWorkspace() {
         });
 
         if (result.data!.listRagEngines.length > 0) {
-          if (engineMap.get("aurora") === true) {
-            setEngine("aurora");
+          if (engineMap.get("kendra") === true) {
+            setEngine("kendra");
           } else if (engineMap.get("opensearch") === true) {
             setEngine("opensearch");
-          } else if (engineMap.get("kendra") === true) {
-            setEngine("kendra");
+          } else if (engineMap.get("aurora") === true) {
+            setEngine("aurora");
           }
         }
 

@@ -138,6 +138,8 @@ export default function MultiChat() {
           modelsResult = await apiClient.models.getModels();
         }
 
+
+
         const models = modelsResult.data
           ? modelsResult.data.listModels.filter(
               (m: any) =>

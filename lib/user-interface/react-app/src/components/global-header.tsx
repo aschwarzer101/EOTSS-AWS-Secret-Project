@@ -9,11 +9,12 @@ import { Auth } from "@aws-amplify/auth";
 import useOnFollow from "../common/hooks/use-on-follow";
 import { CHATBOT_NAME } from "../common/constants";
 
-export default function GlobalHeader() {
+
+export default function GlobalHeader({theme, setTheme}) {
   const onFollow = useOnFollow();
   // possibel change here
   const [userName, setUserName] = useState<string | null>(null);
-  const [theme, setTheme] = useState<Mode>(StorageHelper.getTheme());
+
 
   useEffect(() => {
     (async () => {

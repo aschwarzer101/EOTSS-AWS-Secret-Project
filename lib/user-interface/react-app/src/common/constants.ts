@@ -24,7 +24,7 @@ export const languageList = [
   { value: "norwegian", label: "Norwegian" },
   { value: "portuguese", label: "Portuguese" },
   { value: "romanian", label: "Romanian" },
-  { value: "tagalog", label: "Tagalog"}, 
+  { value: "tagalog", label: "Tagalog"},
   { value: "russian", label: "Russian" }, //T
   { value: "serbian", label: "Serbian" },
   { value: "spanish", label: "Spanish" }, //T

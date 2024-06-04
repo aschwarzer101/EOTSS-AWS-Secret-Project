@@ -42,20 +42,50 @@
     font-size: 2rem;
   }
   
-  .task-container {
-    padding: 3rem 3rem;
-    margin: 2em;
-    display: flex;
-    flex-flow: column nowrap;
-    width: 100%;
-  }
-  
+  /*.task-container {*/
+  /*  padding: 3rem 3rem;*/
+  /*  margin: 2em;*/
+  /*  display: flex;*/
+  /*  flex-flow: column nowrap;*/
+  /*  width: 100%;*/
+  /*}*/
+
+.task-container {
+  margin: 0 auto; /* Center the container */
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  overflow: auto; /* Prevent overflow issues */
+}
+
   .carousel-item {
-    padding: 2em 3em ;
-    pointer-events: none;
-    color: #272343;
-    margin: 1rem; 
-    border-radius: 20px;
-    background-color: #bae8e8;
-    
-  }
+  padding: 2em 3em;
+  color: #272343;
+  margin: 1rem;
+  border-radius: 20px;
+  background-color: #bae8e8;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+  .carousel-item-dark-mode {
+  padding: 2em 3em;
+  color: #272343;
+  margin: 1rem;
+  border-radius: 20px;
+  background-color: #bae8e8;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);
+}
+
+
+/*  .carousel-container {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: space-between;*/
+/*}*/
+
+/*  .task-card-title {*/
+/*    font-size: 30px; !* Adjust the font size as needed *!*/
+/*}*/

@@ -271,7 +271,16 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
         const models = modelsResult.data ? modelsResult.data.listModels : [];
 
-        const selectedModelOption = getSelectedModelOption(models);
+        // save meta model data to local storage as default
+        let defaultModel = '';
+        if(models.length){
+          const smartModel = models.find((m) => m.name === "Smart Model");
+          if (smartModel)  {
+            defaultModel = "bedrock::Smart Model";
+          }
+        }
+
+        const selectedModelOption = getSelectedModelOption(models, defaultModel);
         const selectedModelMetadata = getSelectedModelMetadata(
           models,
           selectedModelOption
@@ -386,10 +395,11 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       state.selectedModel.value
     );
 
+    let dateTime = new Date();
 
+    let value = state.value + " For more context current date and time is: " + dateTime.toLocaleString();
 
-
-    const value = state.value.trim()
+    value = value.trim()
     if (!value) return;
     // if (props.initialPrompt) {
     //   props.setRunning(true);
@@ -770,9 +780,13 @@ function getSelectedWorkspaceOption(
   return selectedWorkspaceOption;
 }
 
-function getSelectedModelOption(models: Model[]): SelectProps.Option | null {
+function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
   let selectedModelOption: SelectProps.Option | null = null;
-  const savedModel = StorageHelper.getSelectedLLM();
+  let savedModel = StorageHelper.getSelectedLLM();
+
+  if(defaultModel){
+    savedModel = defaultModel;
+  }
 
   if (savedModel) {
     const savedModelDetails = OptionsHelper.parseValue(savedModel);

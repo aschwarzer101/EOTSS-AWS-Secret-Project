@@ -215,9 +215,9 @@ export default function Welcome() {
                                     ]}
                                 /> */}
                               
-                                <div className="task-container" > 
+                                <div> </div>
                                 <CarouselNext></CarouselNext>
-                                </div>
+                              
                                 
                                 <Container
                                     header={

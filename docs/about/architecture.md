@@ -4,4 +4,4 @@ This repository comes with several reusable CDK constructs. Giving you the freed
 
 Here's an overview:
 
-![sample](./assets/architecture.png "Architecture Diagram")
+![sample](./assets/architecture.jpg "Architecture Diagram")

@@ -32,7 +32,7 @@ The RAG setup allows users to upload documents and perform search queries, ensur
 
 For more information, visit the [AWS GenAI LLM Chatbot](https://aws-samples.github.io/aws-genai-llm-chatbot/).
 
-## Creators
+## Developers
 
 - [Alayna Schwarzer](https://www.linkedin.com/in/alayna-schwarzer/)
 - [Dhruv Kamalesh Kumar](https://www.linkedin.com/in/dhruvkamaleshkumar)

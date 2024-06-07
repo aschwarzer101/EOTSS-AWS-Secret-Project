@@ -1,43 +1,38 @@
-# EOTSS-AWS Gen-AI Sandbox 
+# EOTSS GenAI Sandbox README
 
-[![Release Notes](https://img.shields.io/github/v/release/aws-samples/aws-genai-llm-chatbot)](https://github.com/aws-samples/aws-genai-llm-chatbot/releases)
-[![GitHub star chart](https://img.shields.io/github/stars/aws-samples/aws-genai-llm-chatbot?style=social)](https://star-history.com/#aws-samples/aws-genai-llm-chatbot)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Overview
 
-[![Deploy with GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://aws-samples.github.io/aws-genai-llm-chatbot/guide/deploy.html#deploy-with-github-codespaces)
+The GenAI Sandbox is designed to empower Massachusetts state agency employees with varying technical proficiencies to effectively utilize AI technologies. It addresses the challenges of accessibility, system integration, and ethical concerns while enhancing operational efficiency, service delivery, and innovation within public sector operations.
 
-[![Full Documentation](https://img.shields.io/badge/Full%20Documentation-blue?style=for-the-badge&logo=Vite&logoColor=white)](https://aws-samples.github.io/aws-genai-llm-chatbot/)
+## Sandbox Features
 
-![sample](docs/about/assets/chabot-sample.gif "AWS GenAI Chatbot")
+### Chatbot Playground
+The Chatbot Playground provides a safe environment for users to experiment with different Large Language Models (LLMs). Users can test various models, customize parameters (e.g., TopP, temperature), and observe how different configurations affect model responses. This feature is ideal for gaining hands-on experience with AI models and understanding their capabilities.
 
-This solution provides ready-to-use code so you can start **experimenting with a variety of Large Language Models and Multimodal Language Models, settings, and prompts** in a safe environment.
+### Multi-Chat Playground
+The Multi-Chat Playground enhances the Chatbot Playground by allowing users to query 2-4 models simultaneously. This feature facilitates efficient comparison of results on a single screen, helping users to evaluate and select the best model for their specific needs.
 
-Supported model providers:
+![Multi-Chat Tutorial](docs/about/assets/multiChatTutorial.gif)
 
-- [Amazon Bedrock](https://aws.amazon.com/bedrock/)
+### Smart Model
+The Smart Model feature enhances AI responses by leveraging advanced algorithms and a dedicated context management system. It automatically decides which model to use based on various factors such as task requirements, cost, efficiency, token size, and model capabilities. This ensures that beginner users can focus on their tasks without needing in-depth knowledge of model specifications.
 
-# Additional Resources
+### Smart Navigation
+Smart Navigation, or the Task Carousel, offers a pre-filled prompt system to assist users in completing specific tasks, enhancing user experience and productivity. It automates prompt engineering, enabling users to concentrate on tasks without the need to craft detailed prompts.
 
-| Resource |Description|
-|:-------------|:-------------|
-| [AWS Generative AI CDK Constructs](https://github.com/awslabs/generative-ai-cdk-constructs/) | Open-source library extension of the [AWS Cloud Development Kit (AWS CDK)](https://docs.aws.amazon.com/cdk/v2/guide/home.html)  aimed to help developers build generative AI solutions using pattern-based definitions for their architecture. |
-| [Project Lakechain](https://github.com/awslabs/project-lakechain) | A powerful cloud-native, AI-powered, document (docs, images, audios, videos) processing framework built on top of the AWS CDK. |
+### Workspaces
+Workspaces function like a file system within the AI Sandbox, allowing users to create and manage multiple private workspaces. Each workspace can be configured with different Retrieval-Augmented Generation (RAG) engines, such as Aurora, OpenSearch, and Kendra. Users can upload multiple documents to their workspaces and perform queries using the RAG setup.
 
-# Roadmap
+### Retrieval-Augmented Generation (RAG)
+The RAG setup allows users to upload documents and perform search queries, ensuring accurate and relevant information retrieval tailored to user needs. This feature enhances the ability to find and utilize critical information from large datasets efficiently.
 
-[Roadmap](https://docs.google.com/document/d/1sdMllBzb0-4jc7J6-oybvX0xrWbJ9Ybjsp4J5WDwfGY/edit?usp=sharing)
+## Architecture
 
-# Creators
+![AI Sandbox Architecture](docs/about/assets/architecture.jpg)
+
+For more information, visit the [AWS GenAI LLM Chatbot](https://aws-samples.github.io/aws-genai-llm-chatbot/).
+
+## Creators
 
 - [Alayna Schwarzer](https://www.linkedin.com/in/alayna-schwarzer/)
 - [Dhruv Kamalesh Kumar](https://www.linkedin.com/in/dhruvkamaleshkumar)
-
-# License
-
-This library is licensed under the MIT-0 License. See the LICENSE file.
-
-- [Changelog](CHANGELOG.md) of the project.
-- [License](LICENSE) of the project.
-- [Code of Conduct](CODE_OF_CONDUCT.md) of the project.
-- [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-

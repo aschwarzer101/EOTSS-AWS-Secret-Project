@@ -9,6 +9,8 @@ The GenAI Sandbox is designed to empower Massachusetts state agency employees wi
 ### Chatbot Playground
 The Chatbot Playground provides a safe environment for users to experiment with different Large Language Models (LLMs). Users can test various models, customize parameters (e.g., TopP, temperature), and observe how different configurations affect model responses. This feature is ideal for gaining hands-on experience with AI models and understanding their capabilities.
 
+![Chatbot Playground Tutorial](docs/about/assets/chatbotPlaygroundTutorial.gif)
+
 ### Multi-Chat Playground
 The Multi-Chat Playground enhances the Chatbot Playground by allowing users to query 2-4 models simultaneously. This feature facilitates efficient comparison of results on a single screen, helping users to evaluate and select the best model for their specific needs.
 
@@ -16,6 +18,8 @@ The Multi-Chat Playground enhances the Chatbot Playground by allowing users to q
 
 ### Smart Model
 The Smart Model feature enhances AI responses by leveraging advanced algorithms and a dedicated context management system. It automatically decides which model to use based on various factors such as task requirements, cost, efficiency, token size, and model capabilities. This ensures that beginner users can focus on their tasks without needing in-depth knowledge of model specifications.
+
+![Smart Model Tutorial](docs/about/assets/smartModel.gif)
 
 ### Smart Navigation
 Smart Navigation, or the Task Carousel, offers a pre-filled prompt system to assist users in completing specific tasks, enhancing user experience and productivity. It automates prompt engineering, enabling users to concentrate on tasks without the need to craft detailed prompts.

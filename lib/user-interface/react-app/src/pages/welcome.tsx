@@ -197,13 +197,13 @@ export default function Welcome({theme}) {
                                 cardsPerRow={[{cards: 1}, {minWidth: 700, cards: 3}]}
                                 items={[
                                     {
-                                        name: "Tailored AI Solutions",
-                                        type: "Sagemaker",
+                                        name: "Learn What Generative AI Can Do",
+                                        type: " ",
                                         external: true,
-                                        href: "https://aws.amazon.com/about-aws/whats-new/2023/07/amazon-aurora-postgresql-pgvector-vector-storage-similarity-search/",
-                                        img: "/images/welcome/sagemaker.png",
+                                        href: "https://youtu.be/jNNatjruXx8?si=dRhLLnnBxiNByon4",
+                                        img: "/images/welcome/ai.jpeg",
                                         description:
-                                            "Empower your applications by integrating advanced AI capabilities effortlessly.",
+                                            "Discover the capabilities of generative AI and learn how to craft effective prompts to enhance productivity.",
                                         tags: [""],
                                     },
                                     {

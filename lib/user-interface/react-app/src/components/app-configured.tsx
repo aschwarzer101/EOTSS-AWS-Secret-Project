@@ -28,13 +28,14 @@ export default function AppConfigured() {
       try {     
         const result = await fetch("/aws-exports.json");
         const awsExports = await result.json();
+        // start removing here
         delete awsExports['aws_cognito_identity_pool_id']
         delete awsExports['aws_user_pools_id']
         delete awsExports['aws_user_pools_web_client_id']
         awsExports["Auth"] = {
     "region": "us-east-1",
     "userPoolId": "us-east-1_BHned34tF",
-    "userPoolWebClientId": "4qn890ga2uh7a04ia5hkqaep3b",    
+    "userPoolWebClientId": "657dsvjcbccmk6al61ub8cgdfa",
     "oauth": {
       "domain": "sandbox-mass-gov.auth.us-east-1.amazoncognito.com",
       "scope": ["email", "openid", "profile"],
@@ -42,6 +43,7 @@ export default function AppConfigured() {
       "redirectSignOut": "https://myapplications.microsoft.com/",
       "responseType": "code"
     }};
+    // end removing here
         Amplify.configure(awsExports);   
         setConfigured(true);
         // const currentUser = 

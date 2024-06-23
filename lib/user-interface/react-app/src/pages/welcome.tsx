@@ -147,9 +147,9 @@ export default function Welcome({theme}) {
                             header={
                                 <Header
                                     variant="h2"
-                                    description="Create custom solutions for your organization. Optimize your workflows with Tailored AI, Data Analytics, and Cloud Computing Soluions."
+                                    description="Explore our comprehensive library of learning materials designed to enhance your skills in generative AI, prompt engineering, and other cutting-edge AI technologies. Dive into tutorials, guides, and interactive courses tailored for all levels, from beginners to advanced practitioners."
                                 >
-                                    Create
+                                    Learn Generative AI
                                 </Header>
                             }>
                             <Cards

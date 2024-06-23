@@ -201,7 +201,7 @@ export default function Welcome({theme}) {
                                         type: " ",
                                         external: true,
                                         href: "https://youtu.be/jNNatjruXx8?si=dRhLLnnBxiNByon4",
-                                        img: "/images/welcome/ai.jpeg",
+                                        img: "/images/welcome/bottom1.png",
                                         description:
                                             "Discover the capabilities of generative AI and learn how to craft effective prompts to enhance productivity.",
                                         tags: [""],
@@ -211,7 +211,7 @@ export default function Welcome({theme}) {
                                         type: " ",
                                         external: true,
                                         href: "https://aws.amazon.com/blogs/big-data/amazon-opensearch-services-vector-database-capabilities-explained/",
-                                        img: "/images/welcome/advanData.jpg",
+                                        img: "/images/welcome/bottom2.png",
                                         description:
                                             "Transform data into actionable insights, driving strategic decisions for your organization.",
                                     },
@@ -220,7 +220,7 @@ export default function Welcome({theme}) {
                                         external: true,
                                         type: " ",
                                         href: "https://www.promptingguide.ai/",
-                                        img: "/images/welcome/lambda.png",
+                                        img: "/images/welcome/bottom3.png",
                                         description:
                                             "Prompt engineering is the skill of crafting clear and specific questions to get the best answers from an AI system.",
                                     },

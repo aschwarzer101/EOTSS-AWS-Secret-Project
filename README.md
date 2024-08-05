@@ -36,6 +36,9 @@ The RAG setup allows users to upload documents and perform search queries, ensur
 
 For more information, visit the [AWS GenAI LLM Chatbot](https://aws-samples.github.io/aws-genai-llm-chatbot/).
 
+## Deployment Guide
+[Guide link](https://github.com/aschwarzer101/EOTSS-AWS-Secret-Project/blob/main/docs/guide/deploy.md)
+
 ## Developers
 
 - [Alayna Schwarzer](https://www.linkedin.com/in/alayna-schwarzer/)

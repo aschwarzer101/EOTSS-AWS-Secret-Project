@@ -45,6 +45,7 @@ function App() {
           <Routes>
             <Route index path="/" element={<Welcome theme={theme}/>} />
             <Route path="/chatbot" element={<Outlet />}>
+                            
               <Route path="playground" element={<Playground />} />
               <Route path="playground/:sessionId" element={<Playground />} />
               <Route path="task-playground" element={<TaskPlayground/>} /> 

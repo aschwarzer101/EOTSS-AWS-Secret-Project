@@ -35,7 +35,7 @@ export default function AppConfigured() {
         awsExports["Auth"] = {
     "region": "us-east-1",
     "userPoolId": "us-east-1_BHned34tF",
-    "userPoolWebClientId": "657dsvjcbccmk6al61ub8cgdfa",
+    "userPoolWebClientId": "4plddm493u4jcei3ucq0o5pbdv",
     "oauth": {
       "domain": "sandbox-mass-gov.auth.us-east-1.amazoncognito.com",
       "scope": ["email", "openid", "profile"],

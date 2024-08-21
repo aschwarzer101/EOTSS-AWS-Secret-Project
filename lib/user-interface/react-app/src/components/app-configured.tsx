@@ -39,7 +39,7 @@ export default function AppConfigured() {
     "oauth": {
       "domain": "sandbox-mass-gov.auth.us-east-1.amazoncognito.com",
       "scope": ["email", "openid", "profile"],
-      "redirectSignIn": "https://dhusitpbrgxtd.cloudfront.net/",
+      "redirectSignIn": "https://dr7l4jtkt9o67.cloudfront.net/",
       "redirectSignOut": "https://myapplications.microsoft.com/",
       "responseType": "code"
     }};

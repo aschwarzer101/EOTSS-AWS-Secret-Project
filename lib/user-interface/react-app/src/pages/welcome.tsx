@@ -21,6 +21,7 @@ import {StorageHelper} from "../common/helpers/storage-helper.ts";
 import {Mode} from "@cloudscape-design/global-styles";
 import { useState, useEffect } from "react";
 
+
 export default function Welcome({theme}) {
     const onFollow = useOnFollow();
 
@@ -122,9 +123,9 @@ export default function Welcome({theme}) {
                                         "Compare how models respond to the same prompt",
                                 },
                                 {
-                                    name: "Models",
-                                    type: " ",
-                                    href: "/chatbot/models",
+                                    name: "Give Feedback",
+                                    type: "external",
+                                    href: "https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=gcLuqKOqrk2sm5o5i5IV55HNZjMP7jpLpt2EMCrmsi1UNVVVQjUwMllDS1hRRlRRQVJKVzRSTTVFMC4u&Token=7a2f41f4072f473c8bf6fa8b634760ca",
                                     img: "/images/welcome/modelBg.png",
                                     description:
                                         "Explore models with AWS Bedrock, Claude, and Llama",

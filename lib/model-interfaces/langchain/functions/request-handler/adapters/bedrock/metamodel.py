@@ -57,6 +57,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         "Titan Text G1 - Lite": "amazon.titan-text-lite-v1",
         "Claude": "anthropic.claude-v2:1",
         "Claude 3 Sonnet": "anthropic.claude-3-sonnet-20240229-v1:0",
+        "Claude 3.5 Sonnet": "anthropic.claude-3-5-sonnet-20240620-v1:0",
         "Claude 3 Haiku": "anthropic.claude-3-haiku-20240307-v1:0",
         "Claude Instant": "anthropic.claude-instant-v1",
         "Jurassic-2 Mid": "ai21.j2-mid-v1",
@@ -96,6 +97,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         Claude Instant
         Claude
         Claude 3 Sonnet
+        Claude 3.5 Sonnet
         Claude 3 Haiku
         Command
         Command Light

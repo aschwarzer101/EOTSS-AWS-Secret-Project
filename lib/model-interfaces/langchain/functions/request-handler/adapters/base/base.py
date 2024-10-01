@@ -137,8 +137,7 @@ class ModelAdapter:
                 for doc in enhanced_result["source_documents"]
             ]
 
-            return enhanced_documents
-
+            # creating the metadata 
             metadata = {
                 "modelId": self.model_id,
                 "modelKwargs": self.model_kwargs,
@@ -149,13 +148,14 @@ class ModelAdapter:
                 "documents": documents,
                 "prompts": self.callback_handler.prompts,
             }
-
+    
             self.chat_history.add_metadata(metadata)
 
+            # returning with enhanced result 
             return {
                 "sessionId": self.session_id,
                 "type": "text",
-                "content": result["answer"],
+                "content": enhanced_result["answer"],
                 "metadata": metadata,
             }
 

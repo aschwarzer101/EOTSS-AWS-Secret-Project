@@ -121,6 +121,24 @@ class ModelAdapter:
                 for doc in result["source_documents"]
             ]
 
+            # Enhance the prompt
+            chat_history = self.callback_handler.prompts
+            initial_output = documents
+            enhanced_prompt = self.enhance_prompt(user_prompt, chat_history, initial_output)
+
+            # Use the enhanced prompt for further processing
+            enhanced_result = conversation({"question": enhanced_prompt})
+            logger.info(enhanced_result["source_documents"])
+            enhanced_documents = [
+                {
+                    "page_content": doc.page_content,
+                    "metadata": doc.metadata,
+                }
+                for doc in enhanced_result["source_documents"]
+            ]
+
+            return enhanced_documents
+
             metadata = {
                 "modelId": self.model_id,
                 "modelKwargs": self.model_kwargs,
@@ -157,7 +175,7 @@ class ModelAdapter:
             "mode": self._mode,
             "sessionId": self.session_id,
             "userId": self.user_id,
-            "documents": [],
+            "documents": [],   
             "prompts": self.callback_handler.prompts,
         }
 

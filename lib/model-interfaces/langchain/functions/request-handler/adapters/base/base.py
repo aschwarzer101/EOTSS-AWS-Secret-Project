@@ -145,7 +145,7 @@ class ModelAdapter:
                 "sessionId": self.session_id,
                 "userId": self.user_id,
                 "workspaceId": workspace_id,
-                "documents": documents,
+                "documents": enhanced_documents,
                 "prompts": self.callback_handler.prompts,
             }
     

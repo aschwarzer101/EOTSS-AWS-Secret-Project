@@ -7,13 +7,13 @@ from langchain.schema import BaseRetriever, Document
 class WorkspaceRetriever(BaseRetriever):
     workspace_id: str
 
-    def get_relevant_documents(
-        self, query: str) -> List[Document]:
-        result = genai_core.semantic_search.semantic_search(
-            self.workspace_id, query, limit=3, full_response=False
-        )
+    # def get_relevant_documents(
+    #     self, query: str) -> List[Document]:
+    #     result = genai_core.semantic_search.semantic_search(
+    #         self.workspace_id, query, limit=3, full_response=False
+    #     )
 
-        return [self._get_document(item) for item in result.get("items", [])]
+    #     return [self._get_document(item) for item in result.get("items", [])]
 
 
     def _get_relevant_documents(

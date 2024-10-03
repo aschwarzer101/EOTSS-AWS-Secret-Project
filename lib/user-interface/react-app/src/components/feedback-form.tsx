@@ -5,7 +5,7 @@ import Button from "@cloudscape-design/components/button";
 import Header from "@cloudscape-design/components/header";
 import Container from "@cloudscape-design/components/container";
 
-export default function FeedbackForm {
+export default function FeedbackForm() {
   return (
     <Container header={<Header>Container header</Header>}>
       <form onSubmit={e => e.preventDefault()}>

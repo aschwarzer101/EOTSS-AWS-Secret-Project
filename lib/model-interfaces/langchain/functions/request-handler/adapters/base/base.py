@@ -114,7 +114,7 @@ class ModelAdapter:
 
             # Instance of WorkspaceRetriever
             instance = WorkspaceRetriever(workspace_id=workspace_id)
-            relevant_documents = instance._get_relevant_documents()
+            relevant_documents = instance._get_relevant_documents(query=user_prompt)
             print(relevant_documents)
 
             

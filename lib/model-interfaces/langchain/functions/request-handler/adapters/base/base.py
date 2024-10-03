@@ -111,33 +111,14 @@ class ModelAdapter:
                 verbose=True,
                 callbacks=[self.callback_handler],
             )
-
-            # Run initial query 
-            initial_result = conversation({"question": user_prompt})
-            logger.info(initial_result["source_documents"])
-
-            # Extract initial answer and source documents
-            initial_answer = initial_result["answer"]
-            initial_source_documents = initial_result["source_documents"]
-
-            # Prompt Enhancer
-            enhanced_prompt = f"{user_prompt}\n\nContext:\n{initial_answer}\n\nSource Documents:\n"
-            for doc in initial_source_documents:
-                enhanced_prompt += f"{doc.page_content}\n"
-
-            # Run the query again with the enhanced prompt
-            enhanced_result = conversation({"question": enhanced_prompt})
-            logger.info(enhanced_result["source_documents"])
-
-
-            # result = conversation({"question": user_prompt})
-            # logger.info(result["source_documents"])
+            result = conversation({"question": user_prompt})
+            logger.info(result["source_documents"])
             documents = [
                 {
                     "page_content": doc.page_content,
                     "metadata": doc.metadata,
                 }
-                for doc in enhanced_result["source_documents"]
+                for doc in result["source_documents"]
             ]
 
 

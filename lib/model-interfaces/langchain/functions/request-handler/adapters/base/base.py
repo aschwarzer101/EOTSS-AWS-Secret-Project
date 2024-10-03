@@ -3,6 +3,7 @@ from enum import Enum
 from aws_lambda_powertools import Logger
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chains import ConversationalRetrievalChain, ConversationChain
+from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts.prompt import PromptTemplate
 from langchain.chains.conversational_retrieval.prompts import (

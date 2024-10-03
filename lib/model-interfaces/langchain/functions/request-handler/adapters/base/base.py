@@ -114,7 +114,12 @@ class ModelAdapter:
 
             # Instance of WorkspaceRetriever
             instance = WorkspaceRetriever(workspace_id=workspace_id)
-            relevant_documents = instance._get_relevant_documents(query=user_prompt)
+            
+            # Create an instance of CallbackManagerForRetrieverRun
+            run_manager = CallbackManagerForRetrieverRun()
+            
+            # Pass the query and run_manager to _get_relevant_documents
+            relevant_documents = instance._get_relevant_documents(query=user_prompt, run_manager=run_manager)
             print(relevant_documents)
 
             

@@ -111,6 +111,13 @@ class ModelAdapter:
                 verbose=True,
                 callbacks=[self.callback_handler],
             )
+
+            # Instance of WorkspaceRetriever
+            instance = WorkspaceRetriever(workspace_id=workspace_id)
+            relevant_documents = instance._get_relevant_documents()
+            print(relevant_documents)
+
+            
             result = conversation({"question": user_prompt})
             logger.info(result["source_documents"])
             documents = [
@@ -120,6 +127,8 @@ class ModelAdapter:
                 }
                 for doc in result["source_documents"]
             ]
+
+
 
 
             metadata = {
@@ -148,6 +157,7 @@ class ModelAdapter:
             memory=self.get_memory(),
             verbose=True,
         )
+        print(user_prompt)
         answer = conversation.predict(
             input=user_prompt, callbacks=[self.callback_handler]
         )

@@ -112,14 +112,14 @@ class ModelAdapter:
                 callbacks=[self.callback_handler],
             )
 
-            # Instance of WorkspaceRetriever
-            # instance = WorkspaceRetriever(workspace_id=workspace_id)
-            # relevant_documents = instance.get_relevant_documents(query=user_prompt)
-            # print(relevant_documents)
-
             
             result = conversation({"question": user_prompt})
             logger.info(result["source_documents"])
+
+            # Print the retrieved documents -- testing
+            for doc in result["source_documents"]:
+                print(f"Page Content: {doc.page_content}")
+                print(f"Metadata: {doc.metadata}")
             documents = [
                 {
                     "page_content": doc.page_content,
@@ -128,8 +128,7 @@ class ModelAdapter:
                 for doc in result["source_documents"]
             ]
 
-
-
+    
 
             metadata = {
                 "modelId": self.model_id,

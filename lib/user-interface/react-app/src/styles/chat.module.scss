@@ -223,3 +223,15 @@
   opacity: 1 !important;
   pointer-events: none; /* Disable pointer events for the selected icon */
 }
+
+.input_message {
+  background-color: #e0f7fa; /* Light cyan background */
+  color: #000000; /* black text */
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 60%;
+  word-wrap: break-word;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  align-self: flex-end; /* Align the message to the right */
+}

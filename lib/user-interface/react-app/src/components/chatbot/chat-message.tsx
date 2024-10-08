@@ -48,6 +48,15 @@ export default function ChatMessage(props: ChatMessageProps) {
     const [showFeedbackBox, setShowFeedbackBox] = useState<boolean>(false);
     const [writtenFeedback, setWrittenFeedback] = useState<string>("");
 
+    const getContentUpToForMore = (content) => {
+        const phrase = "For more";
+        const index = content.indexOf(phrase);
+        if (index !== -1) {
+          return content.substring(0, index).trim();
+        }
+        return content;
+      };
+
     useEffect(() => {
         const getSignedUrls = async () => {
             setLoading(true);
@@ -349,10 +358,11 @@ export default function ChatMessage(props: ChatMessageProps) {
                     ))}
                 </>
             )}
+
             {props.message?.type === ChatBotMessageType.Human && (
                 <div className={styles.chat_message_container}>
                     <div className={styles.input_message}>
-                        {props.message.content}
+                        {getContentUpToForMore(props.message.content)}
                     </div>
                 </div>
             )}

@@ -398,6 +398,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     let dateTime = new Date();
 
     let value = state.value + " For more context current date and time is: " + dateTime.toLocaleString();
+    
 
     value = value.trim()
     if (!value) return;
@@ -481,13 +482,13 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: "", // previously "value"
+        content: value, 
         //  props.initialPrompt +
         metadata: {
           ...props.configuration,
         },
         tokens: [],
-      },
+      }, 
       {
         type: ChatBotMessageType.AI,
         tokens: [],

@@ -349,11 +349,11 @@ export default function ChatMessage(props: ChatMessageProps) {
                     ))}
                 </>
             )}
-            {props.message?.type === ChatBotMessageType.Human && (
+            {/* {props.message?.type === ChatBotMessageType.Human && (
                 <TextContent>
                     <strong>{props.message.content}</strong>
                 </TextContent>
-            )}
+            )} */}
         </div>
     );
 }

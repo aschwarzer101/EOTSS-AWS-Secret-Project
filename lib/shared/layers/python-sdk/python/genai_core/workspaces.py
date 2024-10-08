@@ -2,6 +2,7 @@ import os
 import json
 import uuid
 import boto3
+from genai_core import kendra
 import genai_core.embeddings
 from datetime import datetime
 from genai_core.types import Task
@@ -303,3 +304,4 @@ def delete_workspace(workspace_id: str):
     )
 
     print(response)
+

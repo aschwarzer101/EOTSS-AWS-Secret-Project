@@ -136,16 +136,24 @@ class ModelAdapter:
                     "page_content": doc.page_content,
                     "metadata": doc.metadata,
                 }
-                for doc in source_documents #result["source_documents"]
+                for doc in result["source_documents"]
             ]
 
             # prompt enhancer 
             chat_history = self.callback_handler.prompts   
-            enhanced_prompt = self.enhance_prompt(chat_history, initial_output, source_documents)
+            enhanced_prompt = self.enhance_prompt(chat_history, initial_output, documents)
 
             # run conversation with enhanced prompt
             final_result = conversation.run({"question": enhanced_prompt})
             final_output = final_result["answer"]
+
+            final_documents = [
+                {
+                    "page_content": doc.page_content,
+                    "metadata": doc.metadata,
+                }
+                for doc in final_result["source_documents"]
+            ]
     
 
             metadata = {
@@ -155,7 +163,7 @@ class ModelAdapter:
                 "sessionId": self.session_id,
                 "userId": self.user_id,
                 "workspaceId": workspace_id,
-                "documents": documents,
+                "documents": final_documents,
                 "prompts": self.callback_handler.prompts,
             }
     
@@ -164,7 +172,7 @@ class ModelAdapter:
             return {
                 "sessionId": self.session_id,
                 "type": "text",
-                "content": final_output, # old result["answer"],
+                "content": final_result["answer"], # old result["answer"],
                 "metadata": metadata,
             }
 

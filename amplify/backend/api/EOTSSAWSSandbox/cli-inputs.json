@@ -1,7 +1,7 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "EOTSSAWSSandbox",
+    "apiName": "EOTSSAWSGENIE",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",

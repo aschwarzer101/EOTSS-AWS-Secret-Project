@@ -55,7 +55,7 @@ export default function Welcome({theme}) {
                                 </RouterButton>
                             }
                         >
-                            Sandbox Home
+                            GENIE Home
                         </Header>
                     }
                 >

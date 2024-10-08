@@ -46,10 +46,6 @@ class ModelAdapter:
         self.chat_history = self.get_chat_history()
         self.llm = self.get_llm(model_kwargs)
 
-        # Track the initial question and documents
-        self.initial_question = None
-        self.initial_documents = []
-
     def __bind_callbacks(self):
         callback_methods = [method for method in dir(self) if method.startswith("on_")]
         valid_callback_names = [
@@ -96,45 +92,6 @@ class ModelAdapter:
 
     def get_qa_prompt(self):
         return QA_PROMPT
-    
-    # Enhancer: Adds initial question and initial documents to context history
-    # def enhance_prompt(self, chat_history, user_input):
-    #     initial_context = ""
-    #     if self.initial_question:
-    #         initial_context += f"\nInitial question: {self.initial_question}\n"
-        
-    #     if self.initial_documents:
-    #         initial_context += "\nInitial source documents:\n"
-    #         for doc in self.initial_documents:
-    #             initial_context += f"- {doc['page_content'][:200]}...\n"  # Shortened content preview
-
-    #     enhanced_prompt = f"{chat_history}\n{initial_context}\nQuestion: {user_input}"
-    #     return enhanced_prompt
-    def enhance_prompt(self, chat_history, user_input):
-        """
-        Enhances the user input prompt by adding initial question and initial documents to the context history.
-
-        Args:
-            chat_history (str): The chat history to include in the prompt.
-            user_input (str): The user's input question.
-
-        Returns:
-            str: The enhanced prompt.
-        """
-        context_parts = [chat_history]
-
-        if self.initial_question:
-            context_parts.append(f"\nInitial question: {self.initial_question}\n")
-        
-        if self.initial_documents:
-            context_parts.append("\nInitial source documents:\n")
-            for doc in self.initial_documents:
-                context_parts.append(f"- {doc['page_content'][:200]}...\n")  # Shortened content preview
-
-        context_parts.append(f"\nQuestion: {user_input}")
-        
-        enhanced_prompt = ''.join(context_parts)
-        return enhanced_prompt
 
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
@@ -155,23 +112,14 @@ class ModelAdapter:
                 callbacks=[self.callback_handler],
             )
 
-            #initial code 
+            # Instance of WorkspaceRetriever
+            # instance = WorkspaceRetriever(workspace_id=workspace_id)
+            # relevant_documents = instance.get_relevant_documents(query=user_prompt)
+            # print(relevant_documents)
+
+            
             result = conversation({"question": user_prompt})
             logger.info(result["source_documents"])
-
-            # Capture initial question and documents if it's the first run
-            if not self.initial_question:
-                self.initial_question = user_prompt
-                self.initial_documents = [
-                    {"page_content": doc.page_content, "metadata": doc.metadata}
-                    for doc in result["source_documents"]
-                ]
-
-            # Print the retrieved documents -- testing
-            for doc in result["source_documents"]:
-                print(f"Page Content: {doc.page_content}")
-                print(f"Metadata: {doc.metadata}")
-            
             documents = [
                 {
                     "page_content": doc.page_content,
@@ -179,6 +127,9 @@ class ModelAdapter:
                 }
                 for doc in result["source_documents"]
             ]
+
+
+
 
             metadata = {
                 "modelId": self.model_id,
@@ -200,25 +151,15 @@ class ModelAdapter:
                 "metadata": metadata,
             }
 
-        # Enhance the prompt with context before running the chain
-        enhanced_user_prompt = self.enhance_prompt(self.chat_history, user_prompt)
-
-        # newest update
-        # # Fetch relevant documents based on the enhanced prompt
-        # relevant_documents = self.fetch_documents(enhanced_user_prompt)
-
-        # # Update initial documents with the newly fetched relevant documents
-        # self.initial_documents = relevant_documents
-        
         conversation = ConversationChain(
             llm=self.llm,
             prompt=self.get_prompt(),
             memory=self.get_memory(),
             verbose=True,
         )
-  
+        print(user_prompt)
         answer = conversation.predict(
-            input=enhanced_user_prompt, callbacks=[self.callback_handler]
+            input=user_prompt, callbacks=[self.callback_handler]
         )
 
         metadata = {

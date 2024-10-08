@@ -481,7 +481,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
       {
         type: ChatBotMessageType.Human,
-        content: value,
+        content: "", // previously "value"
         //  props.initialPrompt +
         metadata: {
           ...props.configuration,

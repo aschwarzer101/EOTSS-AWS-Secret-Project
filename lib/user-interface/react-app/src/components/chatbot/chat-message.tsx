@@ -79,260 +79,260 @@ export default function ChatMessage(props: ChatMessageProps) {
     return (
         <div>
             {props.message?.type === ChatBotMessageType.AI && (
-                <Container
-                    footer={
-                        ((props?.showMetadata && props.message.metadata) ||
-                            (props.message.metadata &&
-                                props.configuration?.showMetadata)) && (
-                            <ExpandableSection variant="footer" headerText="Metadata">
-                                <JsonView
-                                    shouldInitiallyExpand={(level) => level < 2}
-                                    data={JSON.parse(
-                                        JSON.stringify(props.message.metadata).replace(
-                                            /\\n/g,
-                                            "\\\\n"
-                                        )
-                                    )}
-                                    style={{
-                                        ...darkStyles,
-                                        stringValue: "jsonStrings",
-                                        numberValue: "jsonNumbers",
-                                        booleanValue: "jsonBool",
-                                        nullValue: "jsonNull",
-                                        container: "jsonContainer",
-                                    }}
-                                />
-                                {props.message.metadata.documents && (
-                                    <>
-                                        <div className={styles.btn_chabot_metadata_copy}>
-                                            <Popover
-                                                size="medium"
-                                                position="top"
-                                                triggerType="custom"
-                                                dismissButton={false}
-                                                content={
-                                                    <StatusIndicator type="success">
-                                                        Copied to clipboard
-                                                    </StatusIndicator>
-                                                }
-                                            >
-                                                <Button
-                                                    variant="inline-icon"
-                                                    iconName="copy"
-                                                    onClick={() => {
-                                                        navigator.clipboard.writeText(
-                                                            (
-                                                                props.message.metadata
-                                                                    .documents as RagDocument[]
-                                                            )[parseInt(documentIndex)].page_content
-                                                        );
-                                                    }}
-                                                />
-                                            </Popover>
-                                        </div>
-                                        <Tabs
-                                            tabs={(
-                                                props.message.metadata.documents as RagDocument[]
-                                            ).map((p: any, i) => {
-                                                return {
-                                                    id: `${i}`,
-                                                    label: p.metadata.path,
-                                                    content: (
-                                                        <>
-                                                            <Textarea
-                                                                value={p.page_content}
-                                                                readOnly={true}
-                                                                rows={8}
-                                                            />
-                                                        </>
-                                                    ),
-                                                };
-                                            })}
-                                            activeTabId={documentIndex}
-                                            onChange={({detail}) =>
-                                                setDocumentIndex(detail.activeTabId)
-                                            }
-                                        />
-                                    </>
-                                )}
-                                {props.message.metadata.prompts && (
-                                    <>
-                                        <div className={styles.btn_chabot_metadata_copy}>
-                                            <Popover
-                                                size="medium"
-                                                position="top"
-                                                triggerType="custom"
-                                                dismissButton={false}
-                                                content={
-                                                    <StatusIndicator type="success">
-                                                        Copied to clipboard
-                                                    </StatusIndicator>
-                                                }
-                                            >
-                                                <Button
-                                                    variant="inline-icon"
-                                                    iconName="copy"
-                                                    onClick={() => {
-                                                        navigator.clipboard.writeText(
-                                                            (props.message.metadata.prompts as string[][])[
-                                                                parseInt(promptIndex)
-                                                                ][0]
-                                                        );
-                                                    }}
-                                                />
-                                            </Popover>
-                                        </div>
-                                        <Tabs
-                                            tabs={(props.message.metadata.prompts as string[][]).map(
-                                                (p, i) => {
-                                                    return {
-                                                        id: `${i}`,
-                                                        label: `Prompt ${
-                                                            (props.message.metadata.prompts as string[][])
-                                                                .length > 1
-                                                                ? i + 1
-                                                                : ""
-                                                        }`,
-                                                        content: (
-                                                            <>
-                                                                <Textarea
-                                                                    value={p[0]}
-                                                                    readOnly={true}
-                                                                    rows={8}
-                                                                />
-                                                            </>
-                                                        ),
-                                                    };
-                                                }
-                                            )}
-                                            activeTabId={promptIndex}
-                                            onChange={({detail}) =>
-                                                setPromptIndex(detail.activeTabId)
-                                            }
-                                        />
-                                    </>
-                                )}
-                            </ExpandableSection>
+            <Container
+                footer={
+                ((props?.showMetadata && props.message.metadata) ||
+                    (props.message.metadata &&
+                    props.configuration?.showMetadata)) && (
+                    <ExpandableSection variant="footer" headerText="Metadata">
+                    <JsonView
+                        shouldInitiallyExpand={(level) => level < 2}
+                        data={JSON.parse(
+                        JSON.stringify(props.message.metadata).replace(
+                            /\\n/g,
+                            "\\\\n"
                         )
-                    }
-                >
-                    {content?.length === 0 ? (
-                        <Box>
-                            <Spinner/>
-                        </Box>
-                    ) : null}
-                    {props.message.content.length > 0 ? (
-                        <div className={styles.btn_chabot_message_copy}>
-                            <Popover
-                                size="medium"
-                                position="top"
-                                triggerType="custom"
-                                dismissButton={false}
-                                content={
-                                    <StatusIndicator type="success">
-                                        Copied to clipboard
-                                    </StatusIndicator>
-                                }
-                            >
-                                <Button
-                                    variant="inline-icon"
-                                    iconName="copy"
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(props.message.content);
-                                    }}
-                                />
-                            </Popover>
-                        </div>
-                    ) : null}
-                    <ReactMarkdown
-                        children={content}
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                            pre(props) {
-                                const {children, ...rest} = props;
-                                return (
-                                    <pre {...rest} className={styles.codeMarkdown}>
-                    {children}
-                  </pre>
-                                );
-                            },
-                            table(props) {
-                                const {children, ...rest} = props;
-                                return (
-                                    <table {...rest} className={styles.markdownTable}>
-                                        {children}
-                                    </table>
-                                );
-                            },
-                            th(props) {
-                                const {children, ...rest} = props;
-                                return (
-                                    <th {...rest} className={styles.markdownTableCell}>
-                                        {children}
-                                    </th>
-                                );
-                            },
-                            td(props) {
-                                const {children, ...rest} = props;
-                                return (
-                                    <td {...rest} className={styles.markdownTableCell}>
-                                        {children}
-                                    </td>
-                                );
-                            },
+                        )}
+                        style={{
+                        ...darkStyles,
+                        stringValue: "jsonStrings",
+                        numberValue: "jsonNumbers",
+                        booleanValue: "jsonBool",
+                        nullValue: "jsonNull",
+                        container: "jsonContainer",
                         }}
                     />
-                    <div className={styles.thumbsContainer}>
-                        {(selectedIcon === 1 || selectedIcon === null) && (
+                    {props.message.metadata.documents && (
+                        <>
+                        <div className={styles.btn_chabot_metadata_copy}>
+                            <Popover
+                            size="medium"
+                            position="top"
+                            triggerType="custom"
+                            dismissButton={false}
+                            content={
+                                <StatusIndicator type="success">
+                                Copied to clipboard
+                                </StatusIndicator>
+                            }
+                            >
                             <Button
-                                variant="icon"
-                                iconName={selectedIcon === 1 ? "thumbs-up-filled" : "thumbs-up"}
+                                variant="inline-icon"
+                                iconName="copy"
                                 onClick={() => {
-                                    props.onThumbsUp("");
-                                    setSelectedIcon(1);
+                                navigator.clipboard.writeText(
+                                    (
+                                    props.message.metadata
+                                        .documents as RagDocument[]
+                                    )[parseInt(documentIndex)].page_content
+                                );
                                 }}
                             />
-                        )}
-                        {(selectedIcon === 0 || selectedIcon === null) && !showFeedbackBox && (
+                            </Popover>
+                        </div>
+                        <Tabs
+                            tabs={(
+                            props.message.metadata.documents as RagDocument[]
+                            ).map((p: any, i) => {
+                            return {
+                                id: `${i}`,
+                                label: p.metadata.path,
+                                content: (
+                                <>
+                                    <Textarea
+                                    value={p.page_content}
+                                    readOnly={true}
+                                    rows={8}
+                                    />
+                                </>
+                                ),
+                            };
+                            })}
+                            activeTabId={documentIndex}
+                            onChange={({detail}) =>
+                            setDocumentIndex(detail.activeTabId)
+                            }
+                        />
+                        </>
+                    )}
+                    {props.message.metadata.prompts && (
+                        <>
+                        <div className={styles.btn_chabot_metadata_copy}>
+                            <Popover
+                            size="medium"
+                            position="top"
+                            triggerType="custom"
+                            dismissButton={false}
+                            content={
+                                <StatusIndicator type="success">
+                                Copied to clipboard
+                                </StatusIndicator>
+                            }
+                            >
                             <Button
-                                iconName={
-                                    selectedIcon === 0 ? "thumbs-down-filled" : "thumbs-down"
-                                }
-                                variant="icon"
+                                variant="inline-icon"
+                                iconName="copy"
                                 onClick={() => {
-                                    // props.onThumbsDown("Hi!, this is DB testing!");
-                                    setShowFeedbackBox(true);
-                                    setSelectedIcon(0);
+                                navigator.clipboard.writeText(
+                                    (props.message.metadata.prompts as string[][])[
+                                    parseInt(promptIndex)
+                                    ][0]
+                                );
                                 }}
                             />
-                        )}
-                        {showFeedbackBox && <SpaceBetween size="xxs">
-                            <Input
-                                onChange={({detail}) => setWrittenFeedback(detail.value)}
-                                placeholder="Please provide feedback"
-                                onKeyDown={({detail}) => {
-                                    if (detail.key == "Enter") {
-                                        props.onThumbsDown(writtenFeedback)
-                                        setShowFeedbackBox(false);
-                                    }
-                                }}
-                                value={writtenFeedback}
-                            ></Input>
-                            <Button onClick={() => {
-                                    props.onThumbsDown(writtenFeedback);
-                                    setShowFeedbackBox(false);
-                                 }}>Submit</Button>
-                        </SpaceBetween>}
-                    </div>
-                </Container>
-            )}
-            {loading && (
-                <Box float="left">
+                            </Popover>
+                        </div>
+                        <Tabs
+                            tabs={(props.message.metadata.prompts as string[][]).map(
+                            (p, i) => {
+                                return {
+                                id: `${i}`,
+                                label: `Prompt ${
+                                    (props.message.metadata.prompts as string[][])
+                                    .length > 1
+                                    ? i + 1
+                                    : ""
+                                }`,
+                                content: (
+                                    <>
+                                    <Textarea
+                                        value={p[0]}
+                                        readOnly={true}
+                                        rows={8}
+                                    />
+                                    </>
+                                ),
+                                };
+                            }
+                            )}
+                            activeTabId={promptIndex}
+                            onChange={({detail}) =>
+                            setPromptIndex(detail.activeTabId)
+                            }
+                        />
+                        </>
+                    )}
+                    </ExpandableSection>
+                )
+                }
+            >
+                {content?.length === 0 ? (
+                <Box>
                     <Spinner/>
                 </Box>
+                ) : null}
+                {props.message.content.length > 0 ? (
+                <div className={styles.btn_chabot_message_copy}>
+                    <Popover
+                    size="medium"
+                    position="top"
+                    triggerType="custom"
+                    dismissButton={false}
+                    content={
+                        <StatusIndicator type="success">
+                        Copied to clipboard
+                        </StatusIndicator>
+                    }
+                    >
+                    <Button
+                        variant="inline-icon"
+                        iconName="copy"
+                        onClick={() => {
+                        navigator.clipboard.writeText(props.message.content);
+                        }}
+                    />
+                    </Popover>
+                </div>
+                ) : null}
+                <ReactMarkdown
+                children={content}
+                remarkPlugins={[remarkGfm]}
+                components={{
+                    pre(props) {
+                    const {children, ...rest} = props;
+                    return (
+                        <pre {...rest} className={styles.codeMarkdown}>
+                {children}
+              </pre>
+                    );
+                    },
+                    table(props) {
+                    const {children, ...rest} = props;
+                    return (
+                        <table {...rest} className={styles.markdownTable}>
+                        {children}
+                        </table>
+                    );
+                    },
+                    th(props) {
+                    const {children, ...rest} = props;
+                    return (
+                        <th {...rest} className={styles.markdownTableCell}>
+                        {children}
+                        </th>
+                    );
+                    },
+                    td(props) {
+                    const {children, ...rest} = props;
+                    return (
+                        <td {...rest} className={styles.markdownTableCell}>
+                        {children}
+                        </td>
+                    );
+                    },
+                }}
+                />
+                <div className={styles.thumbsContainer}>
+                {(selectedIcon === 1 || selectedIcon === null) && (
+                    <Button
+                    variant="icon"
+                    iconName={selectedIcon === 1 ? "thumbs-up-filled" : "thumbs-up"}
+                    onClick={() => {
+                        props.onThumbsUp("");
+                        setSelectedIcon(1);
+                    }}
+                    />
+                )}
+                {(selectedIcon === 0 || selectedIcon === null) && !showFeedbackBox && (
+                    <Button
+                    iconName={
+                        selectedIcon === 0 ? "thumbs-down-filled" : "thumbs-down"
+                    }
+                    variant="icon"
+                    onClick={() => {
+                        // props.onThumbsDown("Hi!, this is DB testing!");
+                        setShowFeedbackBox(true);
+                        setSelectedIcon(0);
+                    }}
+                    />
+                )}
+                {showFeedbackBox && <SpaceBetween size="xxs">
+                    <Input
+                    onChange={({detail}) => setWrittenFeedback(detail.value)}
+                    placeholder="Please provide feedback"
+                    onKeyDown={({detail}) => {
+                        if (detail.key == "Enter") {
+                        props.onThumbsDown(writtenFeedback)
+                        setShowFeedbackBox(false);
+                        }
+                    }}
+                    value={writtenFeedback}
+                    ></Input>
+                    <Button onClick={() => {
+                        props.onThumbsDown(writtenFeedback);
+                        setShowFeedbackBox(false);
+                     }}>Submit</Button>
+                </SpaceBetween>}
+                </div>
+            </Container>
+            )}
+            {loading && (
+            <Box float="left">
+                <Spinner/>
+            </Box>
             )}
             {files && !loading && (
-                <>
+            <>
                     {files.map((file, idx) => (
                         <a
                             key={idx}

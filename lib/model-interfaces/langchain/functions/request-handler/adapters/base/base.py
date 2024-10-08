@@ -204,11 +204,11 @@ class ModelAdapter:
         enhanced_user_prompt = self.enhance_prompt(self.chat_history, user_prompt)
 
         # newest update
-        # Fetch relevant documents based on the enhanced prompt
-        relevant_documents = self.fetch_documents(enhanced_user_prompt)
+        # # Fetch relevant documents based on the enhanced prompt
+        # relevant_documents = self.fetch_documents(enhanced_user_prompt)
 
-        # Update initial documents with the newly fetched relevant documents
-        self.initial_documents = relevant_documents
+        # # Update initial documents with the newly fetched relevant documents
+        # self.initial_documents = relevant_documents
         
         conversation = ConversationChain(
             llm=self.llm,
@@ -227,7 +227,7 @@ class ModelAdapter:
             "mode": self._mode,
             "sessionId": self.session_id,
             "userId": self.user_id,
-            "documents": relevant_documents#[],   
+            "documents": [],   
             "prompts": self.callback_handler.prompts,
         }
 

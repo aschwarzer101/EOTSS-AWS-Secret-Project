@@ -98,17 +98,42 @@ class ModelAdapter:
         return QA_PROMPT
     
     # Enhancer: Adds initial question and initial documents to context history
+    # def enhance_prompt(self, chat_history, user_input):
+    #     initial_context = ""
+    #     if self.initial_question:
+    #         initial_context += f"\nInitial question: {self.initial_question}\n"
+        
+    #     if self.initial_documents:
+    #         initial_context += "\nInitial source documents:\n"
+    #         for doc in self.initial_documents:
+    #             initial_context += f"- {doc['page_content'][:200]}...\n"  # Shortened content preview
+
+    #     enhanced_prompt = f"{chat_history}\n{initial_context}\nQuestion: {user_input}"
+    #     return enhanced_prompt
     def enhance_prompt(self, chat_history, user_input):
-        initial_context = ""
+        """
+        Enhances the user input prompt by adding initial question and initial documents to the context history.
+
+        Args:
+            chat_history (str): The chat history to include in the prompt.
+            user_input (str): The user's input question.
+
+        Returns:
+            str: The enhanced prompt.
+        """
+        context_parts = [chat_history]
+
         if self.initial_question:
-            initial_context += f"\nInitial question: {self.initial_question}\n"
+            context_parts.append(f"\nInitial question: {self.initial_question}\n")
         
         if self.initial_documents:
-            initial_context += "\nInitial source documents:\n"
+            context_parts.append("\nInitial source documents:\n")
             for doc in self.initial_documents:
-                initial_context += f"- {doc['page_content'][:200]}...\n"  # Shortened content preview
+                context_parts.append(f"- {doc['page_content'][:200]}...\n")  # Shortened content preview
 
-        enhanced_prompt = f"{chat_history}\n{initial_context}\nQuestion: {user_input}"
+        context_parts.append(f"\nQuestion: {user_input}")
+        
+        enhanced_prompt = ''.join(context_parts)
         return enhanced_prompt
 
     def run_with_chain(self, user_prompt, workspace_id=None):
@@ -176,7 +201,7 @@ class ModelAdapter:
             }
 
         # Enhance the prompt with context before running the chain
-        enhanced_user_prompt = self.enhance_prompt(self.chat_history.load(), user_prompt)
+        enhanced_user_prompt = self.enhance_prompt(self.chat_history, user_prompt)
         
         conversation = ConversationChain(
             llm=self.llm,

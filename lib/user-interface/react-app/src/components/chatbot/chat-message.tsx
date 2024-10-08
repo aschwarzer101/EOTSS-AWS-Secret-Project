@@ -73,7 +73,7 @@ export default function ChatMessage(props: ChatMessageProps) {
 
     const content =
         props.message.content && props.message.content.length > 0
-            ? props.message.content
+            ? props.message.content.split("For more context")[0] # removing for more context
             : props.message.tokens?.map((v) => v.value).join("");
 
     return (

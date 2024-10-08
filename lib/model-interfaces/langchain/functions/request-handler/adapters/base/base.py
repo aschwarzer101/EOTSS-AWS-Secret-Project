@@ -92,6 +92,11 @@ class ModelAdapter:
 
     def get_qa_prompt(self):
         return QA_PROMPT
+    
+    def enhance_prompt(self, chat_history, initial_output, source_documents):
+    # Implement your logic to enhance the prompt here
+        enhanced_prompt = f"{chat_history}\n{initial_output}\n{source_documents}"
+        return enhanced_prompt
 
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
@@ -112,22 +117,35 @@ class ModelAdapter:
                 callbacks=[self.callback_handler],
             )
 
-            
-            result = conversation({"question": user_prompt})
-            logger.info(result["source_documents"])
+            #initial code 
+            #result = conversation({"question": user_prompt})
+            #logger.info(result["source_documents"])
+
+            #initial conversation output and source documents
+            result = conversation.run({"question": user_prompt})
+            initial_output = result["answer"]
+            source_documents = result["source_documents"]
 
             # Print the retrieved documents -- testing
             for doc in result["source_documents"]:
                 print(f"Page Content: {doc.page_content}")
                 print(f"Metadata: {doc.metadata}")
+            
             documents = [
                 {
                     "page_content": doc.page_content,
                     "metadata": doc.metadata,
                 }
-                for doc in result["source_documents"]
+                for doc in source_documents #result["source_documents"]
             ]
 
+            # prompt enhancer 
+            chat_history = self.callback_handler.prompts   
+            enhanced_prompt = self.enhance_prompt(chat_history, initial_output, source_documents)
+
+            # run conversation with enhanced prompt
+            final_result = conversation.run({"question": enhanced_prompt})
+            final_output = final_result["answer"]
     
 
             metadata = {
@@ -146,7 +164,7 @@ class ModelAdapter:
             return {
                 "sessionId": self.session_id,
                 "type": "text",
-                "content": result["answer"],
+                "content": final_output, # old result["answer"],
                 "metadata": metadata,
             }
 

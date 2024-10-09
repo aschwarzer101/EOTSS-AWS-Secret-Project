@@ -169,7 +169,7 @@ class ModelAdapter:
 
         # Step 1: accepting hte user query 
         # Step 2: Enahncing the query 
-        chat_history = self.chat_history.get_history()  # Assuming you have a method to get chat history
+        chat_history = self.chat_history.get_chat_history()  # Assuming you have a method to get chat history
         initial_question = user_prompt  # Initial question is the user prompt
         initial_documents = []  # Initialize an empty list for initial documents
         print('initial question:', initial_question)

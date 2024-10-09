@@ -96,7 +96,7 @@ class ModelAdapter:
         return QA_PROMPT
     
     def get_enhanced_prompt(self, chat_history, user_input, initial_question=None, initial_documents=None):
-        print('in enhnacement')
+        console.log('Enhancing prompt') 
         context_parts = [chat_history]
 
         if initial_question:
@@ -179,7 +179,7 @@ class ModelAdapter:
                 initial_question=initial_question,
                 initial_documents=initial_documents
             )
-            print('enhanced prompt:', enhanced_prompt)
+            
 
             # Contextualize and response
             conversation = ConversationalRetrievalChain.from_llm(

@@ -96,6 +96,7 @@ class ModelAdapter:
         return QA_PROMPT
     
     def get_enhanced_prompt(self, chat_history, user_input, initial_question=None, initial_documents=None):
+        print('in enhnacement')
         context_parts = [chat_history]
 
         if initial_question:
@@ -163,7 +164,7 @@ class ModelAdapter:
         chat_history = self.chat_history.get_history()  # Assuming you have a method to get chat history
         initial_question = user_prompt  # Initial question is the user prompt
         initial_documents = []  # Initialize an empty list for initial documents
-
+        print('initial question:', initial_question)
 
         if workspace_id:
             # Retrieving Relevant Documents 
@@ -178,6 +179,7 @@ class ModelAdapter:
                 initial_question=initial_question,
                 initial_documents=initial_documents
             )
+            print('enhanced prompt:', enhanced_prompt)
 
             # Contextualize and response
             conversation = ConversationalRetrievalChain.from_llm(

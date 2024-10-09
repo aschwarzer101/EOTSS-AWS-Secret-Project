@@ -142,12 +142,14 @@ class ModelAdapter:
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
+            print("Response from Bedrock:", response)  # Print the raw response
             result = json.loads(response.get("body").read())
+            print("Parsed result:", result)  # Print the parsed result
             enhanced_prompt = result.get("content", [{}])[0].get("text", "")
+            print("Enhanced prompt:", enhanced_prompt)  # Print the enhanced prompt
             return enhanced_prompt
         except ClientError as err:
-            logger.error(
-                f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
+            print(f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
             return None
 
     def run_with_chain(self, user_prompt, workspace_id=None):

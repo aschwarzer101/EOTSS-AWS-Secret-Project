@@ -15,6 +15,7 @@ import {SessionRefreshContext} from "../common/session-refresh-context";
 import {Auth} from "aws-amplify";
 import {v4 as uuidv4} from "uuid";
 import TaskPriming from "./chatbot/task";
+import "./navigation-panel.css";
 
 export default function NavigationPanel() {
     const appContext = useContext(AppContext);

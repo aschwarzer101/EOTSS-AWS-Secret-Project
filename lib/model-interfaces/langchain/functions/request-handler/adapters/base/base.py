@@ -2,6 +2,7 @@ import os
 import genai_core.clients
 import json
 from enum import Enum
+from botocore.exceptions import ClientError
 from aws_lambda_powertools import Logger
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chains import ConversationalRetrievalChain, ConversationChain
@@ -96,7 +97,9 @@ class ModelAdapter:
         return QA_PROMPT
     
     def get_enhanced_prompt(self, chat_history, user_input, initial_question=None, initial_documents=None):
-        console.log('Enhancing prompt') 
+        print('Enhancing prompt') 
+        
+        # Create the context parts
         context_parts = [chat_history]
 
         if initial_question:
@@ -112,6 +115,10 @@ class ModelAdapter:
         # Combine context parts into a single string
         context = "\n".join(context_parts)
         
+        # Create a string for initial documents
+        initial_documents_str = "\n".join([f"- {doc['page_content'][:200]}..." for doc in initial_documents]) if initial_documents else "N/A"
+
+        # Construct the base prompt
         base_prompt = f"""Prompt Enhancement Task:
 
         Context: You are tasked with enhancing a user prompt based on the provided chat history, initial question, and initial documents. The goal is to generate a more detailed and contextually rich prompt for further processing.
@@ -123,7 +130,7 @@ class ModelAdapter:
         {initial_question if initial_question else "N/A"}
 
         Initial Documents:
-        {''.join([f"- {doc['page_content'][:200]}...\n" for doc in initial_documents]) if initial_documents else "N/A"}
+        {initial_documents_str}
 
         User Prompt:
         {user_input}
@@ -139,9 +146,9 @@ class ModelAdapter:
             response = bedrock.invoke_model(
                 modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
                 body=json.dumps({
-                    "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 1024,
-                    "messages": [{"role": "user", "content": base_prompt}],
+                        "anthropic_version": "bedrock-2023-05-31",
+                        "max_tokens": 1024,
+                        "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
             print("Response from Bedrock:", response)  # Print the raw response
@@ -162,7 +169,8 @@ class ModelAdapter:
 
         # Step 1: accepting hte user query 
         # Step 2: Enahncing the query 
-        chat_history = self.chat_history.get_history()  # Assuming you have a method to get chat history
+        #chat_history = self.chat_history.get_chat_history()  # Assuming you have a method to get chat history
+        chat_history = ModelAdapter(session_id=self.session_id, user_id=self.user_id)
         initial_question = user_prompt  # Initial question is the user prompt
         initial_documents = []  # Initialize an empty list for initial documents
         print('initial question:', initial_question)

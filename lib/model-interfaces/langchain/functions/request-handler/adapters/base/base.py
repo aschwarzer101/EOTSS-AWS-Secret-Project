@@ -1,4 +1,6 @@
 import os
+import genai_core.clients
+import json
 from enum import Enum
 from aws_lambda_powertools import Logger
 from langchain.callbacks.base import BaseCallbackHandler
@@ -92,6 +94,64 @@ class ModelAdapter:
 
     def get_qa_prompt(self):
         return QA_PROMPT
+    
+    def get_enhanced_prompt(self, chat_history, user_input, initial_question=None, initial_documents=None):
+        console.log('Enhancing prompt') 
+        context_parts = [chat_history]
+
+        if initial_question:
+            context_parts.append(f"\nInitial question: {initial_question}\n")
+        
+        if initial_documents:
+            context_parts.append("\nInitial source documents:\n")
+            for doc in initial_documents:
+                context_parts.append(f"- {doc['page_content'][:200]}...\n")  # Shortened content preview
+
+        context_parts.append(f"\nQuestion: {user_input}")
+
+        # Combine context parts into a single string
+        context = "\n".join(context_parts)
+        
+        base_prompt = f"""Prompt Enhancement Task:
+
+        Context: You are tasked with enhancing a user prompt based on the provided chat history, initial question, and initial documents. The goal is to generate a more detailed and contextually rich prompt for further processing.
+
+        Chat History:
+        {chat_history}
+
+        Initial Question:
+        {initial_question if initial_question else "N/A"}
+
+        Initial Documents:
+        {''.join([f"- {doc['page_content'][:200]}...\n" for doc in initial_documents]) if initial_documents else "N/A"}
+
+        User Prompt:
+        {user_input}
+
+        Task: Enhance the user prompt by incorporating relevant details from the chat history, initial question, and initial documents. The enhanced prompt should be clear, detailed, and contextually rich.
+
+        Enhanced Prompt:"""
+
+        # Call LLM to enhance the prompt
+        bedrock = genai_core.clients.get_bedrock_client()
+        try:
+            response = bedrock.invoke_model(
+                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
+                body=json.dumps({
+                    "anthropic_version": "bedrock-2023-05-31",
+                    "max_tokens": 1024,
+                    "messages": [{"role": "user", "content": base_prompt}],
+                })
+            )
+            print("Response from Bedrock:", response)  # Print the raw response
+            result = json.loads(response.get("body").read())
+            print("Parsed result:", result)  # Print the parsed result
+            enhanced_prompt = result.get("content", [{}])[0].get("text", "")
+            print("Enhanced prompt:", enhanced_prompt)  # Print the enhanced prompt
+            return enhanced_prompt
+        except ClientError as err:
+            print(f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
+            return None
 
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
@@ -99,7 +159,29 @@ class ModelAdapter:
 
         self.callback_handler.prompts = []
 
+        # Step 1: accepting hte user query 
+        # Step 2: Enahncing the query 
+        chat_history = self.chat_history.get_history()  # Assuming you have a method to get chat history
+        initial_question = user_prompt  # Initial question is the user prompt
+        initial_documents = []  # Initialize an empty list for initial documents
+        print('initial question:', initial_question)
+
         if workspace_id:
+            # Retrieving Relevant Documents 
+            retriever = WorkspaceRetriever(workspace_id=workspace_id)
+            relevant_documents = retriever.get_relevant_documents(query=user_prompt)
+            initial_documents = [{"page_content": doc.page_content, "metadata": doc.metadata} for doc in relevant_documents]
+
+            # Enhance the prompt
+            enhanced_prompt = self.get_enhanced_prompt(
+                chat_history=chat_history,
+                user_input=user_prompt,
+                initial_question=initial_question,
+                initial_documents=initial_documents
+            )
+            
+
+            # Contextualize and response
             conversation = ConversationalRetrievalChain.from_llm(
                 self.llm,
                 WorkspaceRetriever(workspace_id=workspace_id),
@@ -111,12 +193,6 @@ class ModelAdapter:
                 verbose=True,
                 callbacks=[self.callback_handler],
             )
-
-            # Instance of WorkspaceRetriever
-            # instance = WorkspaceRetriever(workspace_id=workspace_id)
-            # relevant_documents = instance.get_relevant_documents(query=user_prompt)
-            # print(relevant_documents)
-
             
             result = conversation({"question": user_prompt})
             logger.info(result["source_documents"])
@@ -127,9 +203,6 @@ class ModelAdapter:
                 }
                 for doc in result["source_documents"]
             ]
-
-
-
 
             metadata = {
                 "modelId": self.model_id,
@@ -151,6 +224,14 @@ class ModelAdapter:
                 "metadata": metadata,
             }
 
+        # Step 4: Provide the response for non-workspace queries
+        enhanced_prompt = self.enhance_prompt(
+            chat_history=chat_history,
+            user_input=user_prompt,
+            initial_question=initial_question,
+            initial_documents=initial_documents
+        )
+
         conversation = ConversationChain(
             llm=self.llm,
             prompt=self.get_prompt(),
@@ -159,7 +240,7 @@ class ModelAdapter:
         )
         print(user_prompt)
         answer = conversation.predict(
-            input=user_prompt, callbacks=[self.callback_handler]
+            input=enhanced_prompt, callbacks=[self.callback_handler] # using enhanced prompt instead of user_prompt
         )
 
         metadata = {

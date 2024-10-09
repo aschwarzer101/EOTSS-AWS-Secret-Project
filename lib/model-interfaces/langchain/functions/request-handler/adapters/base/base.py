@@ -130,7 +130,8 @@ class ModelAdapter:
 
         Task: Enhance the user prompt by incorporating relevant details from the chat history, initial question, and initial documents. The enhanced prompt should be clear, detailed, and contextually rich.
 
-        Enhanced Prompt:"""
+        Enhanced Prompt:
+        """
 
         # Call LLM to enhance the prompt
         bedrock = genai_core.clients.get_bedrock_client()

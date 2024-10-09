@@ -72,7 +72,7 @@ export default function NavigationPanel() {
                 type: "section",
                 text: "Experiment With AI",
                 items: [
-                    {type: "link", text: "Playground", href: "/chatbot/playground"},
+                    {type: "link", text: "Chatbot", href: "/chatbot/playground"},
                     {type: "link", text: "Compare Different Models", href: "/chatbot/multichat"},
                     {type: "link", text: "Complete Chat History", href: "/chatbot/sessions"},
                     {type: "link", text: "Document Upload", href: "/rag/workspaces/"},

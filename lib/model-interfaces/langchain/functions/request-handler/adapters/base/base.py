@@ -167,6 +167,7 @@ class ModelAdapter:
             
             # enhanced prompt 
             chat_history = self.chat_history.messages
+            print('chat_history', chat_history)
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
             print('enhanced', enhanced_prompt) 
             user_prompt = enhanced_prompt

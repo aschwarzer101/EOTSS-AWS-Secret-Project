@@ -107,8 +107,7 @@ class ModelAdapter:
         {chat_history}
         User Prompt:
         {user_prompt}
-        Task: Enhance the user prompt by incorporating relevant details from the chat history and initial question. The enhanced prompt should be clear, detailed, and contextually rich.
-        Enhanced Prompt:"""
+        Task: Enhance the user prompt in less than 1000 words by incorporating relevant details from the chat history and initial question. The enhanced prompt should be clear, detailed, and contextually rich."""
 
         # Call the LLM to get the enhanced prompt
         bedrock = genai_core.clients.get_bedrock_client()

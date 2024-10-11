@@ -100,19 +100,20 @@ class ModelAdapter:
         print('running get_enhanced_prompt')
         llm = self.get_llm({"streaming": False})
 
-       # Define the base prompt template
+       # Enhanced prompt template 
         base_prompt = f"""Enhance the following user prompt based on the provided chat history:
-        Chat History (summarized):
-        {chat_history}
-        User Prompt:
-        {user_prompt}
-        Task: Generate a more detailed, contextually rich prompt for processing. The enhanced prompt must be less than 900 characters.
-        Enhanced Prompt:"""
-        # Call the LLM to get the enhanced prompt
+        Chat History (summarized):{chat_history}. 
+        Given a chat history and the latest user question {user_prompt} which might reference context in the chat history, formulate a standalone question
+        which can be understood without the chat history. Do NOT answer the question, just reformulate it if needed using relevant keywords from the chat history and otherwise return it as is.
+        """
+
+        print('base_prompt', base_prompt)
+
+        # Call the LLM to get the enhanced prompt on Sonnet 3.5
         bedrock = genai_core.clients.get_bedrock_client()
         try:
             response = bedrock.invoke_model(
-                modelId= "anthropic.claude-3-5-sonnet-20240620-v1:0",
+                modelId= "anthropic.claude-3-5-sonnet-20240620-v1:0", # Change for different model 
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
                     "max_tokens": 1024,
@@ -122,7 +123,6 @@ class ModelAdapter:
             # Response from bedrock
             result = json.loads(response.get("body").read())
             print("Response from Bedrock:", result)  
-            # print("text response")
 
             # Extract and print the enhanced prompt from the content list
             content_list = result.get("content", [])
@@ -133,12 +133,6 @@ class ModelAdapter:
             else:
                 print("No content found in the response.")
                 return None
-
-            # # Extract enhanced prompt from the content of the assistant's message
-            # enhanced_prompt = result.get("content", [{}])[0].get('text', "")
-            # print("Enhanced prompt:", enhanced_prompt)  # Debugging
-
-            return enhanced_prompt
         except ClientError as err:
             logger.error(
                 f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")

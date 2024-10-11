@@ -99,6 +99,7 @@ class ModelAdapter:
 
         self.callback_handler.prompts = []
 
+        # When there is a workspace_id
         if workspace_id:
             conversation = ConversationalRetrievalChain.from_llm(
                 self.llm,
@@ -112,13 +113,10 @@ class ModelAdapter:
                 callbacks=[self.callback_handler],
             )
 
-            # Instance of WorkspaceRetriever
-            # instance = WorkspaceRetriever(workspace_id=workspace_id)
-            # relevant_documents = instance.get_relevant_documents(query=user_prompt)
-            # print(relevant_documents)
-
-            
+            logger.info('before llm', user_prompt)
+            # Running the user prompt through the llm 
             result = conversation({"question": user_prompt})
+            logger.info('result llm', result['prompt'])
             logger.info(result["source_documents"])
             documents = [
                 {
@@ -127,9 +125,6 @@ class ModelAdapter:
                 }
                 for doc in result["source_documents"]
             ]
-
-
-
 
             metadata = {
                 "modelId": self.model_id,
@@ -150,7 +145,8 @@ class ModelAdapter:
                 "content": result["answer"],
                 "metadata": metadata,
             }
-
+        
+        # When there isnt a workspace_id
         conversation = ConversationChain(
             llm=self.llm,
             prompt=self.get_prompt(),

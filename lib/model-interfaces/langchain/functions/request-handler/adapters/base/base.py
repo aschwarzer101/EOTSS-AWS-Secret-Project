@@ -93,7 +93,8 @@ class ModelAdapter:
     def get_qa_prompt(self):
         return QA_PROMPT
     
-    def get_enhanced_prompt(self, user_prompt):
+    def get_enhanced_prompt(self, user_prompt, chat_history):
+        print('running get_enhanced_prompt')
         llm = self.get_llm({"streaming": False})
 
        # Define the base prompt template
@@ -101,10 +102,8 @@ class ModelAdapter:
         Context: You are tasked with enhancing a user prompt based on the provided chat history and initial question. The goal is to generate a more detailed and contextually rich prompt for further processing.
         Chat History:
         {chat_history}
-        Initial Question:
-        {user_question if user_question else "N/A"}
         User Prompt:
-        {user_question}
+        {user_prompt}
         Task: Enhance the user prompt by incorporating relevant details from the chat history and initial question. The enhanced prompt should be clear, detailed, and contextually rich.
         Enhanced Prompt:"""
 
@@ -139,8 +138,8 @@ class ModelAdapter:
             
             # enhanced prompt 
             chat_history = self.chat_history.messages
-            enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history )
-            print(enhanced_prompt) 
+            enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
+            print('enhanced', enhanced_prompt) 
 
             # call the llm with user prompt and get response 
             result = conversation({"question": user_prompt})

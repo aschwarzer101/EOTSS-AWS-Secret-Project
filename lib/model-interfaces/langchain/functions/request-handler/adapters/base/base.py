@@ -128,7 +128,7 @@ class ModelAdapter:
             # Extract enhanced prompt from the content of the assistant's message
             enhanced_prompt = result.get("content", [{}])[0].get('text', "")
             print("Enhanced prompt:", enhanced_prompt)  # Debugging
-            
+
             return enhanced_prompt
         except ClientError as err:
             logger.error(
@@ -160,6 +160,7 @@ class ModelAdapter:
             chat_history = self.chat_history.messages
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
             print('enhanced', enhanced_prompt) 
+            user_prompt = enhanced_prompt
 
             # call the llm with user prompt and get response 
             result = conversation({"question": user_prompt})

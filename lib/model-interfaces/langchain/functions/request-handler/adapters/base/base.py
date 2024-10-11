@@ -1,4 +1,5 @@
 import os
+import genai_core.clients 
 from enum import Enum
 from aws_lambda_powertools import Logger
 from langchain.callbacks.base import BaseCallbackHandler

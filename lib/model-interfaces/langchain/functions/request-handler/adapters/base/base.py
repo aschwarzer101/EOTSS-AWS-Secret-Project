@@ -101,14 +101,13 @@ class ModelAdapter:
         llm = self.get_llm({"streaming": False})
 
        # Define the base prompt template
-        base_prompt = f"""Prompt Enhancement Task:
-        Context: You are tasked with enhancing a user prompt based on the provided chat history and initial question. The goal is to generate a more detailed and contextually rich prompt for further processing.
-        Chat History:
+        base_prompt = f"""Enhance the following user prompt based on the provided chat history:
+        Chat History (summarized):
         {chat_history}
         User Prompt:
         {user_prompt}
-        Task: Enhance the user prompt in less than 1000 words by incorporating relevant details from the chat history and initial question. The enhanced prompt should be clear, detailed, and contextually rich."""
-
+        Task: Generate a more detailed, contextually rich prompt for processing. The enhanced prompt must be less than 1000 words.
+        Enhanced Prompt:"""
         # Call the LLM to get the enhanced prompt
         bedrock = genai_core.clients.get_bedrock_client()
         try:
@@ -123,10 +122,21 @@ class ModelAdapter:
             # Response from bedrock
             result = json.loads(response.get("body").read())
             print("Response from Bedrock:", result)  
+            # print("text response")
 
-            # Extract enhanced prompt from the content of the assistant's message
-            enhanced_prompt = result.get("content", [{}])[0].get('text', "")
-            print("Enhanced prompt:", enhanced_prompt)  # Debugging
+            # Extract and print the enhanced prompt from the content list
+            content_list = result.get("content", [])
+            if content_list:
+                enhanced_prompt = content_list[0].get("text", "")
+                print("Enhanced Prompt Text:", enhanced_prompt)  # Print only the text from content
+                return enhanced_prompt
+            else:
+                print("No content found in the response.")
+                return None
+
+            # # Extract enhanced prompt from the content of the assistant's message
+            # enhanced_prompt = result.get("content", [{}])[0].get('text', "")
+            # print("Enhanced prompt:", enhanced_prompt)  # Debugging
 
             return enhanced_prompt
         except ClientError as err:

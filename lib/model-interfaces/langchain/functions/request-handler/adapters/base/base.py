@@ -106,7 +106,7 @@ class ModelAdapter:
         {chat_history}
         User Prompt:
         {user_prompt}
-        Task: Generate a more detailed, contextually rich prompt for processing. The enhanced prompt must be less than 1000 characters.
+        Task: Generate a more detailed, contextually rich prompt for processing. The enhanced prompt must be less than 900 characters.
         Enhanced Prompt:"""
         # Call the LLM to get the enhanced prompt
         bedrock = genai_core.clients.get_bedrock_client()

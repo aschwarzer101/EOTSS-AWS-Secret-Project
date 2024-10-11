@@ -17,7 +17,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         # Initialize the model_id for this instance
         self.model_id = model_id
         # A specific model identifier for a particular version of a model
-        self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet = "anthropic.claude-3-sonnet-20240229-v1:0"
+        self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet = "anthropic.claude-3-5-sonnet-20240620-v1:0"
 
         # Call the superclass constructor with all required and optional parameters
         super().__init__(session_id, user_id, model_kwargs=model_kwargs, *args, **kwargs)
@@ -35,7 +35,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         params["anthropic_version"] = "bedrock-2023-05-31"
         return Bedrock(
             client=bedrock,
-            model_id=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
+            model_id=self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet,
             model_kwargs=params,
             streaming=model_kwargs.get("streaming", False),
             callbacks=[self.callback_handler],
@@ -76,7 +76,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         csv_data = self.get_csv_data_as_text()
         if not csv_data:
             logger.error("Error reading CSV data.")
-            return self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet
+            return self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet
 
         base_prompt = f"""Decision-Making Task with Model Name Consistency:
 
@@ -120,7 +120,7 @@ class BedrockMetaModelAdapter(ModelAdapter):
         bedrock = genai_core.clients.get_bedrock_client()
         try:
             response = bedrock.invoke_model(
-                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
+                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet,
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
                     "max_tokens": 1024,
@@ -138,11 +138,11 @@ class BedrockMetaModelAdapter(ModelAdapter):
     def check_model_and_return(self, model_name):
         valid_models = [
             "Titan Text G1 - Lite", "Titan Text G1 - Express", "Jurassic-2 Mid", "Jurassic-2 Ultra",
-            "Claude Instant", "Claude", "Claude 3 Sonnet", "Claude 3 Haiku",
+            "Claude Instant", "Claude", "Claude 3 Sonnet", "Cloude 3.5 Sonnet", "Claude 3 Haiku",
             "Command", "Command Light", "Llama 2 Chat 13B", "Llama 2 Chat 70B", "Llama 3 8B Instruct", "Llama 3 70B Instruct",
             "Mistral 7B Instruct", "Mixtral 8x7B Instruct"
         ]
-        return model_name if model_name in valid_models else "Claude 3 Sonnet"
+        return model_name if model_name in valid_models else "Claude 3.5 Sonnet"
 
 
 

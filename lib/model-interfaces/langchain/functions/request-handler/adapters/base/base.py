@@ -99,7 +99,6 @@ class ModelAdapter:
 
         self.callback_handler.prompts = []
 
-        # When there is a workspace_id
         if workspace_id:
             conversation = ConversationalRetrievalChain.from_llm(
                 self.llm,
@@ -112,11 +111,7 @@ class ModelAdapter:
                 verbose=True,
                 callbacks=[self.callback_handler],
             )
-
-            logger.info('before llm', user_prompt)
-            # Running the user prompt through the llm 
             result = conversation({"question": user_prompt})
-            logger.info('result llm', result['prompt'])
             logger.info(result["source_documents"])
             documents = [
                 {
@@ -136,7 +131,7 @@ class ModelAdapter:
                 "documents": documents,
                 "prompts": self.callback_handler.prompts,
             }
-    
+
             self.chat_history.add_metadata(metadata)
 
             return {
@@ -145,15 +140,13 @@ class ModelAdapter:
                 "content": result["answer"],
                 "metadata": metadata,
             }
-        
-        # When there isnt a workspace_id
+
         conversation = ConversationChain(
             llm=self.llm,
             prompt=self.get_prompt(),
             memory=self.get_memory(),
             verbose=True,
         )
-        print(user_prompt)
         answer = conversation.predict(
             input=user_prompt, callbacks=[self.callback_handler]
         )
@@ -164,7 +157,7 @@ class ModelAdapter:
             "mode": self._mode,
             "sessionId": self.session_id,
             "userId": self.user_id,
-            "documents": [],   
+            "documents": [],
             "prompts": self.callback_handler.prompts,
         }
 

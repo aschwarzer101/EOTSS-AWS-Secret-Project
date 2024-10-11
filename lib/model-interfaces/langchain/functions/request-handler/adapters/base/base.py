@@ -114,7 +114,7 @@ class ModelAdapter:
         bedrock = genai_core.clients.get_bedrock_client()
         try:
             response = bedrock.invoke_model(
-                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet,
+                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_Sonnet,
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
                     "max_tokens": 1024,

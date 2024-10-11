@@ -56,7 +56,7 @@ export default function GlobalHeader({theme, setTheme}) {
       <TopNavigation
         identity={{
           href: "/",
-          title: "Welcome to the AI GENIE" ,
+          title: "Welcome to GENIE" ,
           logo: { src: "/images/stateseal-color.png", alt: { CHATBOT_NAME } + " Logo" },
         }}
         utilities={[

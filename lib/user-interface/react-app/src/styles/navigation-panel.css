@@ -1,0 +1,9 @@
+.navigationItem {
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .navigationItem:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Transparent blue background */
+  }

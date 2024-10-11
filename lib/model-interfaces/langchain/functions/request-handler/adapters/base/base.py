@@ -121,18 +121,20 @@ class ModelAdapter:
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
+            # Response from bedrock
             result = json.loads(response.get("body").read())
-            print("Response from Bedrock:", result)  # Print the raw response for debugging
-            enhanced_prompt = result.get("messages", [{}])[0].get("content", "")
-            print("Enhanced prompt:", enhanced_prompt)  # Print the enhanced prompt for debugging
+            print("Response from Bedrock:", result)  
+
+            # Extract enhanced prompt from the content of the assistant's message
+            enhanced_prompt = result.get("content", [{}])[0].get('text', "")
+            print("Enhanced prompt:", enhanced_prompt)  # Debugging
+            
             return enhanced_prompt
         except ClientError as err:
             logger.error(
                 f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
             return None
         
-
-
 
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:

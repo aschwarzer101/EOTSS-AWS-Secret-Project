@@ -108,13 +108,27 @@ class ModelAdapter:
         Enhanced Prompt:"""
 
         # Call the LLM to get the enhanced prompt
-        response = llm(base_prompt)
-        print('response', response)
+        bedrock = genai_core.clients.get_bedrock_client()
+        try:
+            response = bedrock.invoke_model(
+                modelId=self.BEDROCK_MODEL_ID_CLAUDE_3_5_Sonnet,
+                body=json.dumps({
+                    "anthropic_version": "bedrock-2023-05-31",
+                    "max_tokens": 1024,
+                    "messages": [{"role": "user", "content": base_prompt}],
+                })
+            )
+            result = json.loads(response.get("body").read())
+            print("Response from Bedrock:", result)  # Print the raw response for debugging
+            enhanced_prompt = result.get("messages", [{}])[0].get("content", "")
+            print("Enhanced prompt:", enhanced_prompt)  # Print the enhanced prompt for debugging
+            return enhanced_prompt
+        except ClientError as err:
+            logger.error(
+                f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
+            return None
         
-        # Extract and return the enhanced prompt
-        enhanced_prompt = response["content"]
-        
-        return enhanced_prompt
+
 
 
     def run_with_chain(self, user_prompt, workspace_id=None):

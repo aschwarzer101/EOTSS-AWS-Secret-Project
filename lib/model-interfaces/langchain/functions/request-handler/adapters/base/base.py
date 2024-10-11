@@ -109,6 +109,7 @@ class ModelAdapter:
 
         # Call the LLM to get the enhanced prompt
         response = llm(base_prompt)
+        print('response', response)
         
         # Extract and return the enhanced prompt
         enhanced_prompt = response["content"]

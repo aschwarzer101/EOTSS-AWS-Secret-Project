@@ -1,5 +1,5 @@
 import os
-import genai_core.clients 
+import genai_core.clients
 import json
 from botocore.exceptions import ClientError
 from enum import Enum
@@ -28,7 +28,7 @@ class LLMStartHandler(BaseCallbackHandler):
     prompts = []
 
     def on_llm_start(
-        self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
+            self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
     ) -> Any:
         logger.info(prompts)
         self.prompts.append(prompts)
@@ -36,7 +36,7 @@ class LLMStartHandler(BaseCallbackHandler):
 
 class ModelAdapter:
     def __init__(
-        self, session_id, user_id, mode=ChatbotMode.CHAIN.value, model_kwargs={}
+            self, session_id, user_id, mode=ChatbotMode.CHAIN.value, model_kwargs={}
     ):
         self.session_id = session_id
         self.user_id = user_id
@@ -95,35 +95,39 @@ class ModelAdapter:
 
     def get_qa_prompt(self):
         return QA_PROMPT
-    
+
     def get_enhanced_prompt(self, user_prompt, chat_history):
         print('running get_enhanced_prompt')
         llm = self.get_llm({"streaming": False})
 
-       # Enhanced prompt template 
+        # Enhanced prompt template
         base_prompt = f"""Prompt Enhancement Task:
-        Context: You are tasked with enhancing a user prompt based on the provided chat history, initial question, and initial documents. The goal is to generate a more detailed and contextually rich prompt for further processing.
-        Chat History:
-        {chat_history}
-        User Prompt:
-        {user_prompt}
-        Task: Generate a more detailed, contextually rich prompt for processing. The enhanced prompt must be less than 900 characters."""
+
+Context: You are tasked with enhancing a user prompt using the provided chat history, initial question, and initial documents to create a more detailed, contextually rich prompt for further processing.
+
+Chat History:
+{chat_history}
+
+User Prompt:
+{user_prompt}
+
+Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output."""
         print('base_prompt', base_prompt)
 
         # Call the LLM to get the enhanced prompt on Sonnet 3.5
         bedrock = genai_core.clients.get_bedrock_client()
         try:
             response = bedrock.invoke_model(
-                modelId= "anthropic.claude-3-5-sonnet-20240620-v1:0", # Change for different model 
+                modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 1024,
+                    "max_tokens": 999,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
             # Response from bedrock
             result = json.loads(response.get("body").read())
-            print("Response from Bedrock:", result)  
+            print("Response from Bedrock:", result)
 
             # Extract and print the enhanced prompt from the content list
             content_list = result.get("content", [])
@@ -138,7 +142,6 @@ class ModelAdapter:
             logger.error(
                 f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
             return None
-        
 
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
@@ -159,12 +162,12 @@ class ModelAdapter:
                 verbose=True,
                 callbacks=[self.callback_handler],
             )
-            
+
             # enhanced prompt 
             chat_history = self.chat_history.messages
             print('chat_history', chat_history)
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
-            print('enhanced', enhanced_prompt) 
+            print('enhanced', enhanced_prompt)
             user_prompt = enhanced_prompt
 
             # call the llm with user prompt and get response 

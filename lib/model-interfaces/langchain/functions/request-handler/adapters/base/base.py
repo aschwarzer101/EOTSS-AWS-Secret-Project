@@ -1,5 +1,7 @@
 import os
 import genai_core.clients 
+import json
+from botocore.exceptions import ClientError
 from enum import Enum
 from aws_lambda_powertools import Logger
 from langchain.callbacks.base import BaseCallbackHandler

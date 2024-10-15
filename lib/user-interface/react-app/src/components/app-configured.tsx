@@ -37,7 +37,7 @@ export default function AppConfigured() {
     "userPoolId": "us-east-1_BHned34tF",
     "userPoolWebClientId": "4plddm493u4jcei3ucq0o5pbdv",
     "oauth": {
-      "domain": "GENIE-mass-gov.auth.us-east-1.amazoncognito.com",
+      "domain": "sandbox-mass-gov.auth.us-east-1.amazoncognito.com",
       "scope": ["email", "openid", "profile"],
       "redirectSignIn": "https://dr7l4jtkt9o67.cloudfront.net/",
       "redirectSignOut": "https://myapplications.microsoft.com/",

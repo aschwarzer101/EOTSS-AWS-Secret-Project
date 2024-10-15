@@ -124,11 +124,11 @@ export default function Welcome({theme}) {
                                 },
                                 {
                                     name: "Give Feedback",
-                                    type: "external",
+                                    type: " ",
                                     href: "https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=gcLuqKOqrk2sm5o5i5IV55HNZjMP7jpLpt2EMCrmsi1UNVVVQjUwMllDS1hRRlRRQVJKVzRSTTVFMC4u&Token=7a2f41f4072f473c8bf6fa8b634760ca",
                                     img: "/images/welcome/modelBg.png",
                                     description:
-                                        "Explore models with AWS Bedrock, Claude, and Llama",
+                                        "Provide feedback about your experience with GENIE!",
                                 },
                             ]}
                         />

@@ -193,6 +193,18 @@ export default function Welcome({theme}) {
                                             header: " ",
                                             content: (item) => item.type,
                                         },
+                                        {
+                                            id: "video",
+                                            header: "Document-Video",
+                                            content: (item) => (
+                                                <div>
+                                                    <video width="300" controls>
+                                                        <source src={item.videoSrc} type="video/mov">
+                                                        </source>
+                                                    </video>
+                                                </div>
+                                            ),
+                                        }
                                     ],
                                 }}
                                 cardsPerRow={[{cards: 1}, {minWidth: 700, cards: 3}]}
@@ -208,10 +220,10 @@ export default function Welcome({theme}) {
                                         tags: [""],
                                     },
                                     {
-                                        name: "Advanced Data Analytics",
+                                        name: "How to Upload Documents to the Chatbot",
                                         type: " ",
                                         external: true,
-                                        href: "https://aws.amazon.com/blogs/big-data/amazon-opensearch-services-vector-database-capabilities-explained/",
+                                        videoSrc: "/Document-Upload-Tutorial.mov",
                                         img: "/images/welcome/bottom2.png",
                                         description:
                                             "Transform data into actionable insights, driving strategic decisions for your organization.",

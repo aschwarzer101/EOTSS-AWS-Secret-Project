@@ -193,18 +193,6 @@ export default function Welcome({theme}) {
                                             header: " ",
                                             content: (item) => item.type,
                                         },
-                                        {
-                                            id: "video",
-                                            header: "Document-Video",
-                                            content: (item) => (
-                                                <div>
-                                                    <video width="300" controls>
-                                                        <source src={item.videoSrc} type="video/mov">
-                                                        </source>
-                                                    </video>
-                                                </div>
-                                            ),
-                                        }
                                     ],
                                 }}
                                 cardsPerRow={[{cards: 1}, {minWidth: 700, cards: 3}]}
@@ -223,10 +211,10 @@ export default function Welcome({theme}) {
                                         name: "How to Upload Documents to the Chatbot",
                                         type: " ",
                                         external: true,
-                                        videoSrc: "/Document-Upload-Tutorial.mov",
+                                        href: "https://youtu.be/2d-FeSmGzbk",
                                         img: "/images/welcome/bottom2.png",
                                         description:
-                                            "Transform data into actionable insights, driving strategic decisions for your organization.",
+                                            "Learn how to upload documents to the chatbot!",
                                     },
                                     {
                                         name: "Prompt Engineering Guide",

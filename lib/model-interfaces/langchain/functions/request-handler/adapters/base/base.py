@@ -103,15 +103,15 @@ class ModelAdapter:
         # Enhanced prompt template
         base_prompt = f"""Prompt Enhancement Task:
 
-Context: You are tasked with enhancing a user prompt using the provided chat history, initial question, and initial documents to create a more detailed, contextually rich prompt for further processing.
+        Context: You are tasked with enhancing a user prompt using the provided chat history, initial question, and initial documents to create a more detailed, contextually rich prompt for further processing.
 
-Chat History:
-{chat_history}
+        Chat History:
+        {chat_history}
 
-User Prompt:
-{user_prompt}
+        User Prompt:
+        {user_prompt}
 
-Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output."""
+        Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output."""
         print('base_prompt', base_prompt)
 
         # Call the LLM to get the enhanced prompt on Sonnet 3.5

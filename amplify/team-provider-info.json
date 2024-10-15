@@ -1,14 +1,14 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-eotssawsGENIE-staging-204832-authRole",
-      "UnauthRoleArn": "arn:aws:iam::807596108910:role/amplify-eotssawsGENIE-staging-204832-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::807596108910:role/amplify-eotssawsGENIE-staging-204832-authRole",
+      "AuthRoleName": "amplify-eotssawssandbox-staging-204832-authRole",
+      "UnauthRoleArn": "arn:aws:iam::807596108910:role/amplify-eotssawssandbox-staging-204832-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::807596108910:role/amplify-eotssawssandbox-staging-204832-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-eotssawsGENIE-staging-204832-deployment",
-      "UnauthRoleName": "amplify-eotssawsGENIE-staging-204832-unauthRole",
-      "StackName": "amplify-eotssawsGENIE-staging-204832",
-      "StackId": "arn:aws:cloudformation:us-east-1:807596108910:stack/amplify-eotssawsGENIE-staging-204832/3866d1a0-e244-11ee-83c7-12f09a08ca61",
+      "DeploymentBucketName": "amplify-eotssawssandbox-staging-204832-deployment",
+      "UnauthRoleName": "amplify-eotssawssandbox-staging-204832-unauthRole",
+      "StackName": "amplify-eotssawssandbox-staging-204832",
+      "StackId": "arn:aws:cloudformation:us-east-1:807596108910:stack/amplify-eotssawssandbox-staging-204832/3866d1a0-e244-11ee-83c7-12f09a08ca61",
       "AmplifyAppId": "d2vwx8ucutukuy"
     }
   }

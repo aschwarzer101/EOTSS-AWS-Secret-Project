@@ -1,6 +1,6 @@
 {
   "api": {
-    "EOTSSAWSGENIE": {
+    "EOTSSAWSSandbox": {
       "dependsOn": [],
       "output": {
         "authConfig": {

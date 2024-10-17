@@ -168,10 +168,10 @@ class ModelAdapter:
             print('chat_history', chat_history)
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
             print('enhanced', enhanced_prompt)
-            user_prompt = enhanced_prompt
+            
 
             # call the llm with user prompt and get response 
-            result = conversation({"question": user_prompt})
+            result = conversation({"question": enhanced_prompt})
             logger.info(result["source_documents"])
             documents = [
                 {
@@ -190,6 +190,7 @@ class ModelAdapter:
                 "workspaceId": workspace_id,
                 "documents": documents,
                 "prompts": self.callback_handler.prompts,
+                "original_prompt": user_prompt,  # Store the original prompt
             }
 
             self.chat_history.add_metadata(metadata)
@@ -210,7 +211,7 @@ class ModelAdapter:
         )
         # call llm and get response 
         answer = conversation.predict(
-            input=user_prompt, callbacks=[self.callback_handler]
+            input=enhanced_prompt, callbacks=[self.callback_handler]
         )
 
         metadata = {
@@ -221,6 +222,7 @@ class ModelAdapter:
             "userId": self.user_id,
             "documents": [],
             "prompts": self.callback_handler.prompts,
+            "original_prompt": user_prompt,  # Store the original prompt
         }
 
         self.chat_history.add_metadata(metadata)

@@ -192,6 +192,7 @@ class ModelAdapter:
                 "prompts": self.callback_handler.prompts,
                 "original_prompt": user_prompt,  # Store the original prompt
             }
+            print(self.callback_handler.prompts)
 
             self.chat_history.add_metadata(metadata)
 

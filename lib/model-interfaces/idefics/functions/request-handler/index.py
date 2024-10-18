@@ -35,6 +35,7 @@ def handle_run(record):
     mode = data["mode"]
     model_kwargs = data.get("modelKwargs", {})
     prompt = data["text"]
+    print('prompt within handle_run', prompt)
     session_id = data.get("sessionId")
     files = data.get("files", [])
 
@@ -87,7 +88,7 @@ def handle_run(record):
     }
     if files:
         metadata["files"] = files
-
+    print('before added to chat history', prompt)
     chat_history.add_user_message(prompt)
     chat_history.add_metadata(metadata)
     chat_history.add_ai_message(mlm_response)

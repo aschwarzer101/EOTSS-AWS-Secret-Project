@@ -192,9 +192,10 @@ class ModelAdapter:
                 "prompts": self.callback_handler.prompts,
                 "original_prompt": user_prompt,  # Store the original prompt
             }
-            print(self.callback_handler.prompts)
+            print('callback', self.callback_handler.prompts)
 
             self.chat_history.add_metadata(metadata)
+            print('chat', self.chat_history.add_metadata(metadata))
 
             return {
                 "sessionId": self.session_id,
@@ -210,9 +211,10 @@ class ModelAdapter:
             memory=self.get_memory(),
             verbose=True,
         )
+
         # call llm and get response 
         answer = conversation.predict(
-            input=enhanced_prompt, callbacks=[self.callback_handler]
+            input=user_prompt, callbacks=[self.callback_handler]
         )
 
         metadata = {

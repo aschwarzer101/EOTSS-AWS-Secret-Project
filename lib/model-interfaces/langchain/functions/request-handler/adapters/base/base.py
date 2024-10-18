@@ -195,7 +195,8 @@ class ModelAdapter:
             print('callback', self.callback_handler.prompts)
 
             self.chat_history.add_metadata(metadata)
-            print('chat', self.chat_history.add_metadata(metadata))
+            print('callback handler', self.callback_handler.prompts))
+            #print('chat', self.chat_history.add_metadata(metadata))
 
             return {
                 "sessionId": self.session_id,
@@ -225,7 +226,6 @@ class ModelAdapter:
             "userId": self.user_id,
             "documents": [],
             "prompts": self.callback_handler.prompts,
-            "original_prompt": user_prompt,  # Store the original prompt
         }
 
         self.chat_history.add_metadata(metadata)

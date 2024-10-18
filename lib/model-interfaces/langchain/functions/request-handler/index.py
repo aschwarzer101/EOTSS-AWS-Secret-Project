@@ -37,7 +37,7 @@ def on_llm_new_token(user_id, session_id, self, token, run_id, *args, **kwargs):
             "type": "text",
             "action": ChatbotAction.LLM_NEW_TOKEN.value,
             "userId": user_id,
-            "timestamp": str(int(round(datetime.now().timestamp()))),
+            # "timestamp": str(int(round(datetime.now().timestamp()))),
             "data": {
                 "sessionId": session_id,
                 "token": {
@@ -58,7 +58,7 @@ def handle_heartbeat(record):
         {
             "type": "text",
             "action": ChatbotAction.HEARTBEAT.value,
-            "timestamp": str(int(round(datetime.now().timestamp()))),
+            # "timestamp": str(int(round(datetime.now().timestamp()))),
             "userId": user_id,
             "data": {
                 "sessionId": session_id,
@@ -118,7 +118,7 @@ def handle_run(record):
         {
             "type": "text",
             "action": ChatbotAction.FINAL_RESPONSE.value,
-            "timestamp": str(int(round(datetime.now().timestamp()))),
+            # "timestamp": str(int(round(datetime.now().timestamp()))),
             "userId": user_id,
             "data": response,
         }
@@ -155,7 +155,7 @@ def handle_failed_records(records):
                 "action": "error",
                 "direction": "OUT",
                 "userId": user_id,
-                "timestamp": str(int(round(datetime.now().timestamp()))),
+                # "timestamp": str(int(round(datetime.now().timestamp()))),
                 "data": {
                     "sessionId": session_id,
                     "content": str(error),

@@ -96,13 +96,28 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
           setMessageHistory(
             result
               .data!.getSession!.history.filter((x) => x !== null)
-              .map((x) => ({
-                type: x!.type as ChatBotMessageType,
-                metadata: JSON.parse(x!.metadata!),
-                og_message: x.metadata, 
-                content: x!.content,
-              }))
+              .map((x) => {
+                const metadata = JSON.parse(x!.metadata!);
+                const og_message = metadata.original_prompt;
+                console.log('og message', og_message);
+                return {
+                  type: x!.type as ChatBotMessageType,
+                  metadata: metadata,
+                  og_message: og_message,
+                  content: x!.content,
+                };
+              })
           );
+          //   result
+          //     .data!.getSession!.history.filter((x) => x !== null)
+          //     .map((x) => ({
+          //       type: x!.type as ChatBotMessageType,
+          //       metadata: JSON.parse(x!.metadata!),
+          //       og_message: x.metadata.original_prompt, 
+          //       content: x!.content,
+          //     }))
+          // console.log('og message', og_message)
+          // );
 // UPDATED IN CHAT MESSAGE 
           window.scrollTo({
             top: 0,

@@ -165,6 +165,9 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
               console.log("Heartbeat pong!");
               return;
             }
+            console.log("Session ID:", props.session.id);
+            console.log("Message History Ref Current:", messageHistoryRef.current);
+            console.log("Response:", response);
             updateMessageHistoryRef(
               props.session.id,
               messageHistoryRef.current,

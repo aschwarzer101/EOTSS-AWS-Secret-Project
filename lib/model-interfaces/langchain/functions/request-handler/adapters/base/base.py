@@ -180,6 +180,7 @@ class ModelAdapter:
                 }
                 for doc in result["source_documents"]
             ]
+            print('result ran', result)
 
             metadata = {
                 "modelId": self.model_id,
@@ -192,10 +193,10 @@ class ModelAdapter:
                 "prompts": self.callback_handler.prompts,
                 "original_prompt": user_prompt,  # Store the original prompt
             }
-            print('callback', self.callback_handler.prompts)
+            #print('callback', self.callback_handler.prompts)
 
             self.chat_history.add_metadata(metadata)
-            print('callback handler', self.callback_handler.prompts))
+            #print('callback handler', self.callback_handler.prompts))
             #print('chat', self.chat_history.add_metadata(metadata))
 
             return {

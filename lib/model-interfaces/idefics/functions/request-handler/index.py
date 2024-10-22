@@ -76,7 +76,7 @@ def handle_run(record):
     )
 
     mlm_response = model.handle_run(prompt=prompt_template, model_kwargs=model_kwargs)
-
+    console.log('adapter.user_prompt', adapter.user_prompt)
     metadata = {
         "provider": provider,
         "modelId": model_id,
@@ -85,10 +85,11 @@ def handle_run(record):
         "sessionId": session_id,
         "userId": user_id,
         "prompts": [model.clean_prompt(prompt_template)],
+        "original_prompt": adapter.user_prompt,
     }
     if files:
         metadata["files"] = files
-    print('before added to chat history', prompt)
+    console.log('orig prompt', prompt)
     chat_history.add_user_message(prompt)
     chat_history.add_metadata(metadata)
     chat_history.add_ai_message(mlm_response)

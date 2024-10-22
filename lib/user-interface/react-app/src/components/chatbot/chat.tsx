@@ -99,10 +99,11 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
               .map((x) => ({
                 type: x!.type as ChatBotMessageType,
                 metadata: JSON.parse(x!.metadata!),
+                og_message: x.metadata, 
                 content: x!.content,
               }))
           );
-
+// UPDATED IN CHAT MESSAGE 
           window.scrollTo({
             top: 0,
             behavior: "instant",

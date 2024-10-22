@@ -397,7 +397,8 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
     let dateTime = new Date();
 
-    let value = state.value + " For more context current date and time is: " + dateTime.toLocaleString();
+    let value = state.value 
+    //+ " For more context current date and time is: " + dateTime.toLocaleString();
     
 
     value = value.trim()

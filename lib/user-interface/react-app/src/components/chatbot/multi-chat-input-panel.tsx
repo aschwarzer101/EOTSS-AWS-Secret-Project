@@ -100,7 +100,8 @@ export default function MultiChatInputPanel(props: MultiChatInputPanelProps) {
               if (e.key == "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 let dateTime = new Date().toLocaleString();
-                props.onSendMessage(value+ "\n\nFor more context here is the current date and time: " + dateTime);
+                props.onSendMessage(value);
+                // fix this: "\n\nFor more context here is the current date and time: " + dateTime
                 setValue("");
               }
             }}

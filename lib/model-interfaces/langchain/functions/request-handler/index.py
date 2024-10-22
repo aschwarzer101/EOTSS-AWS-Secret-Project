@@ -124,7 +124,6 @@ def handle_run(record):
         }
     )
 
-
 @tracer.capture_method
 def record_handler(record: SQSRecord):
     payload: str = record.body

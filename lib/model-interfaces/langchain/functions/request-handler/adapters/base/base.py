@@ -100,10 +100,9 @@ class ModelAdapter:
         print('running get_enhanced_prompt')
         llm = self.get_llm({"streaming": False})
 
-        # Enhanced prompt template
         base_prompt = f"""Prompt Enhancement Task:
 
-        Context: You are tasked with enhancing a user prompt using the provided chat history, initial question, and initial documents to create a more detailed, contextually rich prompt for further processing.
+        Context: Enhance the user prompt using information from the chat history and initial question to make it clearer and more detailed. Focus on providing enough context for further processing, but do not exaggerate or overstate the user's request.
 
         Chat History:
         {chat_history}
@@ -111,7 +110,7 @@ class ModelAdapter:
         User Prompt:
         {user_prompt}
 
-        Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output."""
+        Task: Create a clear, contextually rich prompt that stands alone and is understandable without the chat history. Reformulate the prompt using relevant details from the conversation while staying true to the user's intent. Do NOT provide an answer—return only the enhanced prompt."""
         print('base_prompt', base_prompt)
 
         # Call the LLM to get the enhanced prompt on Sonnet 3.5

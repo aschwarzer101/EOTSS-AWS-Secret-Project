@@ -99,12 +99,14 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
               .map((x) => {
                 const metadata = JSON.parse(x!.metadata!);
                 const og_message = metadata.original_prompt;
+                const content = x!.content;
+                console.log('content', content);  
                 console.log('og message', og_message);
                 return {
                   type: x!.type as ChatBotMessageType,
                   metadata: metadata,
                   og_message: og_message,
-                  content: x!.content,
+                  content: content,
                 };
               })
           );

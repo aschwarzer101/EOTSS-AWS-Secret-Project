@@ -55,6 +55,7 @@ export default function TaskPlayground() {
   console.log("task found in playground :)" + prompt)
   const instructions = taskName.instructions; 
   const apiPrompt = taskName.prompt;
+  console.log("apiPrompt" + apiPrompt);
   const sendPromptOnlyOnce = taskName.sendPromptOnlyOnce;
 
   const cbTask3: ChatBotTask = {

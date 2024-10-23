@@ -64,6 +64,7 @@ export default function TaskPlayground() {
     apiPrompt: apiPrompt,
     sendPromptOnlyOnce: sendPromptOnlyOnce
   }; 
+  console.log("cbTask3" + cbTask3);
   
   
 

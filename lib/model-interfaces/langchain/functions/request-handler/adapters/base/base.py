@@ -112,7 +112,9 @@ class ModelAdapter:
         User Prompt:
         {user_prompt}
 
-        Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output."""
+        Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output.
+Also remember to keep the prompt length under 900 tokens."""
+
         print('base_prompt', base_prompt)
 
         # Call the LLM to get the enhanced prompt on Sonnet 3.5
@@ -122,7 +124,7 @@ class ModelAdapter:
                 modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 999,
+                    "max_tokens": 900,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )

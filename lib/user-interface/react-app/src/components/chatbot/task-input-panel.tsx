@@ -413,6 +413,7 @@ import { Auth } from "aws-amplify";
 
       let dateTime = new Date().toLocaleString();
       value = value + "\n\nFor more context here is the current date and time: " + dateTime;
+      console.log('value after datetime', value);
 
       const request: ChatBotRunRequest = {
         action: ChatBotAction.Run,
@@ -444,6 +445,7 @@ import { Auth } from "aws-amplify";
         },
       };
       console.log(request);
+      console.log('value', value);
       setState((state) => ({
         ...state,
         value: "",
@@ -506,14 +508,24 @@ import { Auth } from "aws-amplify";
       ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
     ];
 
+     // Extract the part after "Text:"
+     // sarah testing
+    let extractedPrompt = value;
+    const textIndex = value.indexOf("Text:");
+    if (textIndex !== -1) {
+      extractedPrompt = value.substring(textIndex + 5).trim();
+    }
+    console.log("extractedPrompt" + extractedPrompt);
+
     // State to keep track of the selected language
+    // {props.initialPrompt}
 
     //  console.log("Selected Language:" , detail.selectedOption.label); 
     // const shouldDisplaySelect = props.task.name.includes('translate');
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-            {props.initialPrompt}
+            {extractedPrompt}
         </div>
        
           {props.task.name === "translate" && (<Select

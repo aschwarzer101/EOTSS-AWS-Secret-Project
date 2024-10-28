@@ -38,7 +38,7 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
     loading: typeof props.sessionId !== "undefined",
   });
    const [initialPrompt, setInitialPrompt] = useState(props.prompt); // is called later and given apiPrompt to set prompt as
-
+  console.log("initialPrompt" + initialPrompt);
   // configuration could do the auto sending for me 
   const [configuration, setConfiguration] = useState<ChatBotConfiguration>(
     () => ({
@@ -68,9 +68,21 @@ useEffect(() => {
   // THIS WORKED REINTRO PT1
   const queryParams = new URLSearchParams(window.location.search); 
   const urlPrompt = queryParams.get('prompt') || " "; 
+  console.log("urlPrompt" + urlPrompt);
   const decodedPrompt = decodeURIComponent(urlPrompt);
+  console.log("decodedPrompt" + decodedPrompt);
 
+  // // Extract the part after "text:"
+  // let extractedPrompt = decodedPrompt;
+  // const textIndex = decodedPrompt.indexOf("Text:");
+  // if (textIndex !== -1) {
+  //   extractedPrompt = decodedPrompt.substring(textIndex + 5).trim();
+  // }
+  // console.log("extractedPrompt" + extractedPrompt);
+  console.log("before setting" + apiPrompt);
+  console.log("props.prompt before" + props.prompt);
   setInitialPrompt(apiPrompt);
+  console.log('apiPrompt' + apiPrompt);
 
   (async () => {
     if (!props.sessionId) {

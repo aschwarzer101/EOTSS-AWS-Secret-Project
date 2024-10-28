@@ -59,6 +59,7 @@ import {
   import { Utils } from "../../common/utils";
 import { languageList } from "../../common/constants";
 import { Auth } from "aws-amplify";
+import { valueFromAST } from "graphql";
 
   
   export interface TaskInputPanelProps {
@@ -151,7 +152,7 @@ import { Auth } from "aws-amplify";
             const data = value.data!.receiveMessages?.data;
             if (data !== undefined && data !== null) {
               const response: ChatBotMessageResponse = JSON.parse(data);
-              console.log("message data", response.data);
+              //console.log("message data", response.data);
               if (response.action === ChatBotAction.Heartbeat) {
                 console.log("Heartbeat pong!");
                 return;
@@ -161,12 +162,13 @@ import { Auth } from "aws-amplify";
                 messageHistoryRef.current,
                 response
               );
+              console.log('message history current input panel', messageHistoryRef.current);
   
               if (
                 response.action === ChatBotAction.FinalResponse ||
                 response.action === ChatBotAction.Error
               ) {
-                // console.log("Final message received");
+                console.log("Final message received");
                 props.setRunning(false);
               }
               props.setMessageHistory([...messageHistoryRef.current]);
@@ -217,7 +219,7 @@ import { Auth } from "aws-amplify";
       };
       // eslint-disable-next-line
     }, [props.session.id]);
-  
+    // from microphone
     useEffect(() => {
       if (transcript) {
         setState((state) => ({ ...state, value: transcript }));
@@ -407,10 +409,11 @@ import { Auth } from "aws-amplify";
       if (props.messageHistory.length < 1){
         value = props.task.name + " - " + value;
       }
-      console.log(value)
+      console.log('value after task and message length', value)
       // if the selected lanuage is not null then append it here
       // props.initialPrompt;
 
+      // adding curent date for context 
       let dateTime = new Date().toLocaleString();
       value = value + "\n\nFor more context here is the current date and time: " + dateTime;
       console.log('value after datetime', value);
@@ -427,7 +430,7 @@ import { Auth } from "aws-amplify";
             : (state.selectedModelMetadata!.interface as ModelInterface),
         data: {
           mode: ChatBotMode.Chain,
-          text: value, // ALAYNA TRY THIS NEXT
+          text: value, // includes all of the prompt (even hardcoded)
           files: props.configuration.files ?? [],
           modelName: "Smart Model",
           // modelName: name,
@@ -445,12 +448,16 @@ import { Auth } from "aws-amplify";
         },
       };
       console.log(request);
-      console.log('value', value);
+      console.log('value within data', value);
+      const newValue = value.match(/Text:\s*(.*)/)?.[1] || '';
+      console.log('new value', newValue);
+      // adds user input to state 
       setState((state) => ({
         ...state,
         value: "",
       }));
       setFiles([]);
+      console.log('state', state); 
   
       props.setConfiguration({
         ...props.configuration,
@@ -462,8 +469,8 @@ import { Auth } from "aws-amplify";
         ...messageHistoryRef.current,
   
         {
-          type: ChatBotMessageType.Human,
-           content:  value ,
+          type: ChatBotMessageType.Human, //runniing the chatbot conversation
+           content:  newValue , // testing - SARAH 
           //content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
           metadata: {
             ...props.configuration,
@@ -522,6 +529,8 @@ import { Auth } from "aws-amplify";
 
     //  console.log("Selected Language:" , detail.selectedOption.label); 
     // const shouldDisplaySelect = props.task.name.includes('translate');
+    //console.log('initial prompt', props.initialPrompt); - instructions 
+    //console.log('value after', state.value); - empty 
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
@@ -586,6 +595,7 @@ import { Auth } from "aws-amplify";
             
             <TextareaAutosize
               className={styles.input_textarea}
+              // maybe try here - SARAH
               value={state.value} // added here so the value in the  component is bound to state 
               // readOnly={isReadOnly}
               maxRows={6}

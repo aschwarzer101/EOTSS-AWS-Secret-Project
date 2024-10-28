@@ -53,9 +53,9 @@ export default function TaskPlayground() {
 
   }
   console.log("task found in playground :)" + prompt) //prompt here is the name of the task
-  const instructions = taskName.instructions; 
-  const apiPrompt = taskName.prompt;
-  console.log("apiPrompt" + apiPrompt);
+  const instructions = taskName.instructions; //what the user is told to input
+  const apiPrompt = taskName.prompt; //what the ai is told to enhance the prompt 
+  //console.log("apiPrompt" + apiPrompt);
   const sendPromptOnlyOnce = taskName.sendPromptOnlyOnce;
 
   const cbTask3: ChatBotTask = {
@@ -64,7 +64,7 @@ export default function TaskPlayground() {
     apiPrompt: apiPrompt,
     sendPromptOnlyOnce: sendPromptOnlyOnce
   }; 
-  console.log("cbTask3" + cbTask3);
+  //console.log("cbTask3" + cbTask3);
   
   
 

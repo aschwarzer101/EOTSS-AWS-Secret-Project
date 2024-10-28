@@ -18,6 +18,7 @@ import TaskInputPanel, { TaskInputPanelProps } from "./task-input-panel";
 import { AppContext } from "../../common/app-context";
 import { ApiClient } from "../../common/api-client/api-client";
 // MANIAC IDEA 
+// could we inport state to grab the orig prompt 
 
 export default function TaskChat(props: {sessionId?: string, prompt?: string, taskOb?: ChatBotTask}) {
   // constants for taskObject
@@ -26,7 +27,7 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
   const apiPrompt = props.taskOb.apiPrompt;
   console.log("apiPrompt" + apiPrompt); 
   const instructions = props.taskOb.instructions; 
-  console.log("instructions" + instructions);
+  //console.log("instructions" + instructions);
   const sendPromptOnlyOnce = props.taskOb.sendPromptOnlyOnce;
   console.log("sendPromptOnlyOnce" + sendPromptOnlyOnce);
   
@@ -38,7 +39,7 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
     loading: typeof props.sessionId !== "undefined",
   });
    const [initialPrompt, setInitialPrompt] = useState(props.prompt); // is called later and given apiPrompt to set prompt as
-  console.log("initialPrompt" + initialPrompt);
+  //console.log("initialPrompt" + initialPrompt);
   // configuration could do the auto sending for me 
   const [configuration, setConfiguration] = useState<ChatBotConfiguration>(
     () => ({
@@ -68,9 +69,9 @@ useEffect(() => {
   // THIS WORKED REINTRO PT1
   const queryParams = new URLSearchParams(window.location.search); 
   const urlPrompt = queryParams.get('prompt') || " "; 
-  console.log("urlPrompt" + urlPrompt);
+  //console.log("urlPrompt" + urlPrompt);
   const decodedPrompt = decodeURIComponent(urlPrompt);
-  console.log("decodedPrompt" + decodedPrompt);
+  //console.log("decodedPrompt" + decodedPrompt);
 
   // // Extract the part after "text:"
   // let extractedPrompt = decodedPrompt;
@@ -79,10 +80,10 @@ useEffect(() => {
   //   extractedPrompt = decodedPrompt.substring(textIndex + 5).trim();
   // }
   // console.log("extractedPrompt" + extractedPrompt);
-  console.log("before setting" + apiPrompt);
-  console.log("props.prompt before" + props.prompt);
+  //console.log("before setting" + apiPrompt);
+  //console.log("props.prompt before" + props.prompt);
   setInitialPrompt(apiPrompt);
-  console.log('apiPrompt' + apiPrompt);
+  //console.log('apiPrompt' + apiPrompt);
 
   (async () => {
     if (!props.sessionId) {
@@ -113,7 +114,7 @@ useEffect(() => {
         console.log(result.data.getSession);
         ChatScrollState.skipNextHistoryUpdate = true;
         ChatScrollState.skipNextScrollEvent = true;
-        // console.log("History", result.data.getSession.history);
+        console.log("get sessionsHistory", result.data.getSession.history);
         setMessageHistory(
           result
             .data!.getSession!.history.filter((x) => x !== null)
@@ -124,6 +125,8 @@ useEffect(() => {
               
             }))
         );
+        console.log("messageHistory" + messageHistory);
+        console.log('message', messageHistory.message);
         
         window.scrollTo({
           top: 0,

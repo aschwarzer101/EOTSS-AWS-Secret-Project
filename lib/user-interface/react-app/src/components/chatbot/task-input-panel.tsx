@@ -510,12 +510,12 @@ import { Auth } from "aws-amplify";
 
      // Extract the part after "Text:"
      // sarah testing
-    let extractedPrompt = value;
-    const textIndex = value.indexOf("Text:");
-    if (textIndex !== -1) {
-      extractedPrompt = value.substring(textIndex + 5).trim();
-    }
-    console.log("extractedPrompt" + extractedPrompt);
+    // let extractedPrompt = value;
+    // const textIndex = value.indexOf("Text:");
+    // if (textIndex !== -1) {
+    //   extractedPrompt = value.substring(textIndex + 5).trim();
+    // }
+    // console.log("extractedPrompt" + extractedPrompt);
 
     // State to keep track of the selected language
     // {props.initialPrompt}
@@ -525,7 +525,7 @@ import { Auth } from "aws-amplify";
     return (
       <SpaceBetween direction="vertical" size="l">
         <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-            {extractedPrompt}
+            {props.initialPrompt}
         </div>
        
           {props.task.name === "translate" && (<Select

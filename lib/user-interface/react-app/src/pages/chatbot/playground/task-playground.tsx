@@ -52,7 +52,7 @@ export default function TaskPlayground() {
     console.log("Task not found")
 
   }
-  console.log("task found in playground :)" + prompt)
+  console.log("task found in playground :)" + prompt) //prompt here is the name of the task
   const instructions = taskName.instructions; 
   const apiPrompt = taskName.prompt;
   console.log("apiPrompt" + apiPrompt);

@@ -84,6 +84,7 @@ export default function ChatMessage(props: ChatMessageProps) {
         props.message.content && props.message.content.length > 0
             ? props.message.content
             : props.message.tokens?.map((v) => v.value).join("");
+    console.log('chat message content', content);
 
     return (
         <div>

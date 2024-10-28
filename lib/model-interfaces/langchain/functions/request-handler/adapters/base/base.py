@@ -171,6 +171,9 @@ Also remember to keep the prompt length under 900 tokens."""
             print('chat_history', chat_history)
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
             print('enhanced', enhanced_prompt)
+            # adding user prompt to the end of enhanced prompt (SARAH TEST)
+            enhanced_prompt = enhanced_prompt + "Text:" + user_prompt
+            
             
 
             # call the llm with user prompt and get response 

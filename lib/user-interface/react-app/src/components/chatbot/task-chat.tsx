@@ -114,16 +114,24 @@ useEffect(() => {
         console.log(result.data.getSession);
         ChatScrollState.skipNextHistoryUpdate = true;
         ChatScrollState.skipNextScrollEvent = true;
-        console.log("get sessionsHistory", result.data.getSession.history);
-        setMessageHistory(
+        console.log("get sessionsHistory", result.data.getSession.history); //prompt being saved here --> but when reloaded it reverts to original
+        setMessageHistory( //THIS IS IT!!!!
           result
             .data!.getSession!.history.filter((x) => x !== null)
-            .map((x) => ({
-              type: x!.type as ChatBotMessageType,
-              metadata: JSON.parse(x!.metadata!),
-              content: x!.content,
+            .map((x) => {
+              const contentMatch = x!.content.match(/Text:\s*(.*)/);
+              const parsedContent = contentMatch ? contentMatch[1] : x!.content;
+              return {
+                type: x!.type as ChatBotMessageType,
+                metadata: JSON.parse(x!.metadata!),
+                content: parsedContent,
+            };
+            // .map((x) => ({
+            //   type: x!.type as ChatBotMessageType,
+            //   metadata: JSON.parse(x!.metadata!),
+            //   content: x!.content,
               
-            }))
+            })
         );
         console.log("messageHistory here" + messageHistory);
         //console.log('message', messageHistory.message);

@@ -36,6 +36,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
   const [messageHistory, setMessageHistory] = useState<ChatBotHistoryItem[]>(
     []
   );
+  console.log('chat.tsk chat history', messageHistory)
   
 
   useEffect(() => {

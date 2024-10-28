@@ -125,8 +125,8 @@ useEffect(() => {
               
             }))
         );
-        console.log("messageHistory" + messageHistory);
-        console.log('message', messageHistory.message);
+        console.log("messageHistory here" + messageHistory);
+        //console.log('message', messageHistory.message);
         
         window.scrollTo({
           top: 0,

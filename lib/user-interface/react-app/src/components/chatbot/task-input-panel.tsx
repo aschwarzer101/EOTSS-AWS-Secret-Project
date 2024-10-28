@@ -448,7 +448,7 @@ import { valueFromAST } from "graphql";
         },
       };
       console.log(request);
-      console.log('value within data', value);
+      console.log('value within data', value); // this has users attached
       const newValue = value.match(/Text:\s*(.*)/)?.[1] || '';
       console.log('new value', newValue);
       // adds user input to state 
@@ -467,7 +467,7 @@ import { valueFromAST } from "graphql";
       props.setRunning(true);
       messageHistoryRef.current = [
         ...messageHistoryRef.current,
-  
+
         {
           type: ChatBotMessageType.Human, //runniing the chatbot conversation
            content:  newValue , // testing - SARAH 
@@ -596,7 +596,7 @@ import { valueFromAST } from "graphql";
             <TextareaAutosize
               className={styles.input_textarea}
               // maybe try here - SARAH
-              value={state.value} // added here so the value in the  component is bound to state 
+              value={state.value} // added here so the value in the  component is bound to state
               // readOnly={isReadOnly}
               maxRows={6}
               minRows={1}

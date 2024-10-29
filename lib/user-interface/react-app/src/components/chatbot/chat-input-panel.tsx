@@ -468,6 +468,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
         },
       },
     };
+    //adding prompt to state 
     console.log(request);
     setState((state) => ({
       ...state,
@@ -479,7 +480,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       ...props.configuration,
       files: [],
     });
-
+    console.log('chat-input state', state)
     props.setRunning(true);
     messageHistoryRef.current = [
       ...messageHistoryRef.current,
@@ -502,6 +503,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     ];
 
     props.setMessageHistory(messageHistoryRef.current);
+    console.log('chat-input-panel.tsx', messageHistoryRef.current);
     firstTimeRef.current = false;
     if (messageHistoryRef.current.length < 3) {
       firstTimeRef.current = true;

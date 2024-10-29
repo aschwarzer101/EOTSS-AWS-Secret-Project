@@ -148,7 +148,7 @@ Also remember to keep the prompt length under 900 tokens."""
 
     def is_first_question(self):
         # Check if the chat history is empty or has only one entry
-        chat_history = self.chat_history.messages()
+        chat_history = self.chat_history.messages
         return len(chat_history) <= 1
     
     def get_qa_prompt_without_history(self):

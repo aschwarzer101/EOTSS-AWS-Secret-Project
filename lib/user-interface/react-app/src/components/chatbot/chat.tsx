@@ -100,7 +100,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
               .map((x) => {
                 const metadata = JSON.parse(x!.metadata!);
                 const og_message = metadata.original_prompt;
-                //const content = x!.content;
+                //this makes it so the user is only displayed their prompt!
                 const contentMatch = x!.content.match(/Text:\s*(.*)/);
                 const parsedContent = contentMatch ? contentMatch[1] : x!.content;
                 return {

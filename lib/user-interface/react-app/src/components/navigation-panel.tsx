@@ -33,11 +33,22 @@ export default function NavigationPanel() {
             if (username && needsRefresh) {
                 const fetchedSessions = await apiClient.sessions.getSessions();
                 if (fetchedSessions.data && fetchedSessions.data.listSessions) {
-                    const sortedSessions = fetchedSessions.data.listSessions.sort((a, b) =>
+                    const processedSessions = fetchedSessions.data.listSessions.map(session => {
+                        const titleParts = session.title.split("Text:");
+                        return {
+                            ...session,
+                            title: titleParts.length > 1 ? titleParts[1].trim() : session.title
+                        };
+                    });
+                    console.log('processed sessions', processedSessions);
+
+                    const sortedSessions = processedSessions.sort((a, b) =>
                         new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
                     );
+                    console.log('sorted sessions', sortedSessions);
                     const listedSessions = sortedSessions.slice(0, 5);
                     setSessions(listedSessions);
+                    console.log('listed sessions', listedSessions);
                 } else {
                     setSessions([]);
                 }

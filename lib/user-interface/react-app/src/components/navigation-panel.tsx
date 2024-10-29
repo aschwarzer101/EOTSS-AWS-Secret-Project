@@ -59,7 +59,6 @@ export default function NavigationPanel() {
 
         loadSessions();
     }, [needsRefresh]);
-
     function truncateText(text, charLimit) {
         let cleanText = text.replace(/[^a-zA-Z0-9\s]/g, '');
         cleanText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1);

@@ -113,7 +113,7 @@ class ModelAdapter:
         {user_prompt}
 
         Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output.
-Also remember to keep the prompt length under 900 tokens."""
+        Also remember to keep the prompt length under 1000 characters."""
 
         print('base_prompt', base_prompt)
 
@@ -124,7 +124,7 @@ Also remember to keep the prompt length under 900 tokens."""
                 modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 900,
+                    "max_tokens": 100,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )

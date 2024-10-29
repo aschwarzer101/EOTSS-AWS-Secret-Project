@@ -146,20 +146,20 @@ class ModelAdapter:
                 f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
             return None
 
-    def is_first_question(self):
-        # Check if the chat history is empty or has only one entry
-        chat_history = self.chat_history.messages
-        return len(chat_history) <= 1
+    # def is_first_question(self):
+    #     # Check if the chat history is empty or has only one entry
+    #     chat_history = self.chat_history.messages
+    #     return len(chat_history) <= 1
     
-    def get_qa_prompt_without_history(self):
-        # Define a prompt template that does not include previous context history
-        return """
-        You are an AI assistant. Answer the following question based on your knowledge and understanding.
+    # def get_qa_prompt_without_history(self):
+    #     # Define a prompt template that does not include previous context history
+    #     return """
+    #     You are an AI assistant. Answer the following question based on your knowledge and understanding.
 
-        Question: {question}
+    #     Question: {question}
 
-        Provide a clear and concise answer.
-        """
+    #     Provide a clear and concise answer.
+    #     """
     
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
@@ -175,9 +175,7 @@ class ModelAdapter:
                 condense_question_llm=self.get_llm({"streaming": False}),
                 condense_question_prompt=self.get_condense_question_prompt(),
                 combine_docs_chain_kwargs={
-                    "prompt": self.get_qa_prompt() if not self.is_first_question() 
-                    else self.get_qa_prompt_without_history()
-                                           },
+                    "prompt": self.get_qa_prompt()},
                 return_source_documents=True,
                 memory=self.get_memory(output_key="answer", return_messages=True),
                 verbose=True,

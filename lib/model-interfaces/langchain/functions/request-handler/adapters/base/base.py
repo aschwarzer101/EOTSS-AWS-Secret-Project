@@ -99,21 +99,20 @@ class ModelAdapter:
     def get_enhanced_prompt(self, user_prompt, chat_history):
         print('running get_enhanced_prompt')
         llm = self.get_llm({"streaming": False})
-        chat_history = chat_history[-3:] #limiting to last 3 messages
+        chat_history = chat_history[-3:]  #limiting to last 3 messages
 
         # Enhanced prompt template
         base_prompt = f"""Prompt Enhancement Task:
 
-        Context: You are tasked with enhancing a user prompt using the provided chat history, initial question, and initial documents to create a more detailed, contextually rich prompt for further processing.
+                Context: Extract specific keywords and phrases from the chat history and user prompt that best capture the user's intent and context for optimal semantic search.
 
-        Chat History:
-        {chat_history}
+                Chat History:
+                {chat_history}
 
-        User Prompt:
-        {user_prompt}
+                User Prompt:
+                {user_prompt}
 
-        Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output.
-        Also remember to keep the prompt length under 500 characters."""
+                Task: Generate a list of search-optimized keywords and key phrases relevant to the user prompt and chat history, formatted as a comma-separated list. Limit the response to essential terms only, focusing on Kendra search optimization, and keep it under 150 characters."""
 
         print('base_prompt', base_prompt)
 
@@ -124,7 +123,7 @@ class ModelAdapter:
                 modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 1, # SARAH - Testing here 100,
+                    "max_tokens": 1,  # SARAH - Testing here 100,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
@@ -136,11 +135,11 @@ class ModelAdapter:
             content_list = result.get("content", [])
             if content_list:
                 enhanced_prompt = content_list[0].get("text", "")
-                
-                # Ensure the enhanced prompt is a substring if the length is greater than 1000
-                if len(enhanced_prompt) > 1000:
-                    enhanced_prompt = enhanced_prompt[:1000]
-                
+
+                # # Ensure the enhanced prompt is a substring if the length is greater than 1000
+                # if len(enhanced_prompt) > 1000:
+                #     enhanced_prompt = enhanced_prompt[:980]
+
                 print("Enhanced Prompt Text:", enhanced_prompt)  # Print only the text from content
                 return enhanced_prompt
 
@@ -162,7 +161,7 @@ class ModelAdapter:
     #     # Check if the chat history is empty or has only one entry
     #     chat_history = self.chat_history.messages
     #     return len(chat_history) <= 1
-    
+
     # def get_qa_prompt_without_history(self):
     #     # Define a prompt template that does not include previous context history
     #     return """
@@ -172,7 +171,7 @@ class ModelAdapter:
 
     #     Provide a clear and concise answer.
     #     """
-    
+
     def run_with_chain(self, user_prompt, workspace_id=None):
         if not self.llm:
             raise ValueError("llm must be set")
@@ -200,9 +199,16 @@ class ModelAdapter:
             enhanced_prompt = self.get_enhanced_prompt(user_prompt, chat_history)
             print('enhanced', enhanced_prompt)
             # adding user prompt to the end of enhanced prompt (SARAH TEST)
+
+            len_user_prompt = len(user_prompt)
+            len_enhanced_prompt = len(enhanced_prompt)
+            if len_user_prompt + len_enhanced_prompt > 1000:
+                enhanced_prompt = enhanced_prompt[:1000 - len_user_prompt]  # Truncate enhanced prompt to fit
+
             enhanced_prompt = enhanced_prompt + "Text:" + user_prompt
-            
-            
+
+            enhanced_prompt = enhanced_prompt.strip()  # Remove leading/trailing whitespace
+            enhanced_prompt = enhanced_prompt[:1000]  # Ensure the total length is within 1000 characters
 
             # call the llm with user prompt and get response 
             result = conversation({"question": enhanced_prompt})

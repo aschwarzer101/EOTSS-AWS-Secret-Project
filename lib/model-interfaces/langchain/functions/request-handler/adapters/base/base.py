@@ -203,9 +203,9 @@ class ModelAdapter:
             len_user_prompt = len(str(user_prompt))
             len_enhanced_prompt = len(str(enhanced_prompt))
             if len_user_prompt + len_enhanced_prompt > 1000:
-                enhanced_prompt = enhanced_prompt[:1000 - len_user_prompt]  # Truncate enhanced prompt to fit
+                enhanced_prompt = enhanced_prompt[:1000 - len_user_prompt - 10]  # Truncate enhanced prompt to fit
 
-            enhanced_prompt = enhanced_prompt + "Text:" + user_prompt
+            enhanced_prompt = enhanced_prompt + "sk:" + user_prompt
 
             enhanced_prompt = enhanced_prompt.strip()  # Remove leading/trailing whitespace
             enhanced_prompt = enhanced_prompt[:1000]  # Ensure the total length is within 1000 characters

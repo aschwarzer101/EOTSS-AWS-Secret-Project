@@ -101,7 +101,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
                 const metadata = JSON.parse(x!.metadata!);
                 const og_message = metadata.original_prompt;
                 //this makes it so the user is only displayed their prompt!
-                const contentMatch = x!.content.match(/Text:\s*(.*)/);
+                const contentMatch = x!.content.match(/sk:\s*(.*)/);
                 const parsedContent = contentMatch ? contentMatch[1] : x!.content;
                 return {
                   type: x!.type as ChatBotMessageType,

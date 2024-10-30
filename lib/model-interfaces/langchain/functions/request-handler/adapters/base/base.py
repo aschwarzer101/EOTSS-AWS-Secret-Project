@@ -200,8 +200,8 @@ class ModelAdapter:
             print('enhanced', enhanced_prompt)
             # adding user prompt to the end of enhanced prompt (SARAH TEST)
 
-            len_user_prompt = len(user_prompt)
-            len_enhanced_prompt = len(enhanced_prompt)
+            len_user_prompt = len(str(user_prompt))
+            len_enhanced_prompt = len(str(enhanced_prompt))
             if len_user_prompt + len_enhanced_prompt > 1000:
                 enhanced_prompt = enhanced_prompt[:1000 - len_user_prompt]  # Truncate enhanced prompt to fit
 

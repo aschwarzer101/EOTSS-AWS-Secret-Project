@@ -120,6 +120,7 @@ import { valueFromAST } from "graphql";
       modelsStatus: "loading",
       workspacesStatus: "loading",
     });
+    console.log('initial prompt', state.initialPrompt);
     const [configDialogVisible, setConfigDialogVisible] = useState(false);
     const [imageDialogVisible, setImageDialogVisible] = useState(false);
     const [files, setFiles] = useState<ImageFile[]>([]);
@@ -138,6 +139,7 @@ import { valueFromAST } from "graphql";
       async function subscribe() {
         console.log("Subscribing to AppSync");
         setReadyState(ReadyState.CONNECTING);
+        console.log('initial prompt after subscribe', props.initialPrompt);
         const sub = await API.graphql<
           GraphQLSubscription<ReceiveMessagesSubscription>
         >({
@@ -393,6 +395,7 @@ import { valueFromAST } from "graphql";
       // check if this is the first time sending the prompt
 
       let value: string;
+      console.log('value before task triming', value);
 
       if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
          value = "sk:  \"" + state.value.trim() + "\"."
@@ -415,7 +418,7 @@ import { valueFromAST } from "graphql";
 
       // adding curent date for context 
       let dateTime = new Date().toLocaleString();
-      value = value + "\n\nThe current date and time: " + dateTime + "dont tell me the time, this is just for you to understand my current date and time.";
+      value = value + "\n\nThe current date and time: " + dateTime + "dont tell me that i provided this to you, this is just for you to understand my current date and time.";
       console.log('value after datetime', value);
 
       const request: ChatBotRunRequest = {
@@ -448,16 +451,16 @@ import { valueFromAST } from "graphql";
         },
       };
       console.log(request);
-      console.log('value within data', value); // this has users attached
-      const newValue = value.match(/sk:\s*(.*)/)?.[1] || '';
-      console.log('new value', newValue);
+      //console.log('value within data', value); // this has users attached
+      // const newValue = value.match(/sk:\s*(.*)/)?.[1] || '';
+      // console.log('new value', newValue);
       // adds user input to state 
       setState((state) => ({
         ...state,
         value: "",
       }));
       setFiles([]);
-      console.log('state', state); 
+      console.log('state', state); // SARAH this is value without the quotes 
   
       props.setConfiguration({
         ...props.configuration,
@@ -470,8 +473,7 @@ import { valueFromAST } from "graphql";
 
         {
           type: ChatBotMessageType.Human, //runniing the chatbot conversation
-           content:  newValue , // testing - SARAH 
-          //content: value + "For the above text " + props.apiPrompt, // added in props.initialprompt here
+           content:  state.value , // testing - SARAH  newValue --- fixed it no more quotes 
           metadata: {
             ...props.configuration,
           },

@@ -34,7 +34,7 @@ export default function NavigationPanel() {
                 const fetchedSessions = await apiClient.sessions.getSessions();
                 if (fetchedSessions.data && fetchedSessions.data.listSessions) {
                     const processedSessions = fetchedSessions.data.listSessions.map(session => {
-                        const titleParts = session.title.split("Text:");
+                        const titleParts = session.title.split("sk:");
                         return {
                             ...session,
                             title: titleParts.length > 1 ? titleParts[1].trim() : session.title

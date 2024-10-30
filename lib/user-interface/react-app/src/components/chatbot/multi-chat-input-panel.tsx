@@ -113,7 +113,7 @@ export default function MultiChatInputPanel(props: MultiChatInputPanelProps) {
               disabled={!props.enabled || value.trim().length === 0}
               onClick={() => {
                 let dateTime = new Date().toLocaleString();
-                props.onSendMessage(value+ "\n\nThe current date and time: " + dateTime + "dont tell me the time, this is just for you to understand my current date and time.");
+                props.onSendMessage(value+ "\n\nThe current date and time: " + dateTime + "dont tell me that i provided this to you, this is just for you to understand my current date and time.");
                 setValue("");
               }}
               iconAlign="right"

@@ -69,9 +69,9 @@ useEffect(() => {
   // THIS WORKED REINTRO PT1
   const queryParams = new URLSearchParams(window.location.search); 
   const urlPrompt = queryParams.get('prompt') || " "; 
-  //console.log("urlPrompt" + urlPrompt);
+  console.log("urlPrompt" + urlPrompt);
   const decodedPrompt = decodeURIComponent(urlPrompt);
-  //console.log("decodedPrompt" + decodedPrompt);
+  console.log("decodedPrompt" + decodedPrompt);
 
   // // Extract the part after "text:"
   // let extractedPrompt = decodedPrompt;
@@ -119,12 +119,13 @@ useEffect(() => {
           result
             .data!.getSession!.history.filter((x) => x !== null)
             .map((x) => {
-              const contentMatch = x!.content.match(/Text:\s*(.*)/);
+              const contentMatch = x!.content.match(/sk:\s*(.*)/);
               const parsedContent = contentMatch ? contentMatch[1] : x!.content;
+              const strippedContent = parsedContent.replace(/['"]/g, ''); // Strip quotation marks
               return {
                 type: x!.type as ChatBotMessageType,
                 metadata: JSON.parse(x!.metadata!),
-                content: parsedContent,
+                content: strippedContent,
             };
             // .map((x) => ({
             //   type: x!.type as ChatBotMessageType,
@@ -199,8 +200,7 @@ return (
     </SpaceBetween>
     <div className={styles.welcome_text}>
       {messageHistory.length == 0 && !session?.loading && (
-        <center>{CHATBOT_NAME}</center>
-      )}
+          <><center>{CHATBOT_NAME}</center><center style={{ fontSize: 'smaller' }}>{taskName}</center></>        )}
       {session?.loading && (
         <center>
           <StatusIndicator type="loading">Loading session</StatusIndicator>

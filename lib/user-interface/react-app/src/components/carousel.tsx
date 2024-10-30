@@ -114,7 +114,7 @@ const CarouselNext = ({theme}: CarouselNextProps) => {
             />
             <TaskCard
                 name="documentFormatting"
-                cardTitle="Need help with formatting your document?"
+                cardTitle="Document Formatting"
                 taskDescription="Save time and have AI assist in formatting your document."
                 instructions="Upload or paste the document text here, and specify any formatting guidelines:"
                 url={`/chatbot/task-playground/${uuidv4()}/documentFormatting`}

@@ -698,7 +698,7 @@ import { valueFromAST } from "graphql";
               options={modelsOptions}
             />
 
-            {appContext?.config.rag_enabled && (
+            {/* {appContext?.config.rag_enabled && ( SARAH - im hididng this right now bc workspaces dont work in tasks
               <Select
                 disabled={
                   props.running || !state.selectedModelMetadata?.ragSupported
@@ -725,7 +725,7 @@ import { valueFromAST } from "graphql";
                 }}
                 empty={"No Workspaces available"}
               />
-            )}
+            )} */}
           </div>
           <div className={styles.input_controls_right}>
             <SpaceBetween direction="horizontal" size="xxs" alignItems="center">

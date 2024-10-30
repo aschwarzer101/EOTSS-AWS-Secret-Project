@@ -395,14 +395,14 @@ import { valueFromAST } from "graphql";
       let value: string;
 
       if(props.task.sendPromptOnlyOnce && props.messageHistory.length > 0){
-         value = "Text:  \"" + state.value.trim() + "\"."
+         value = "sk:  \"" + state.value.trim() + "\"."
       }
       else {
         if(props.task.name === "translate"){
-         value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
+         value = props.apiPrompt + "sk:  \"" + state.value.trim() + "\"\n" + "\n Translate the above text too [Target Language]: \"" + selectedLanguage.label + "\"."
       }
       else{
-        value = props.apiPrompt + "Text:  \"" + state.value.trim() + "\"."
+        value = props.apiPrompt + "sk:  \"" + state.value.trim() + "\"."
         }
       }
 
@@ -415,7 +415,7 @@ import { valueFromAST } from "graphql";
 
       // adding curent date for context 
       let dateTime = new Date().toLocaleString();
-      value = value + "\n\nFor more context here is the current date and time: " + dateTime;
+      value = value + "\n\nThe current date and time: " + dateTime + "dont tell me the time, this is just for you to understand my current date and time.";
       console.log('value after datetime', value);
 
       const request: ChatBotRunRequest = {
@@ -449,7 +449,7 @@ import { valueFromAST } from "graphql";
       };
       console.log(request);
       console.log('value within data', value); // this has users attached
-      const newValue = value.match(/Text:\s*(.*)/)?.[1] || '';
+      const newValue = value.match(/sk:\s*(.*)/)?.[1] || '';
       console.log('new value', newValue);
       // adds user input to state 
       setState((state) => ({

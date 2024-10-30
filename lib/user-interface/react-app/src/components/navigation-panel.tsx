@@ -157,6 +157,11 @@ export default function NavigationPanel() {
                     },
                     {
                         type: "link",
+                        text: "Policy Clarification",
+                        href: `/chatbot/task-playground/${uuidv4()}/policyClarification`
+                    },
+                    {
+                        type: "link",
                         text: "Need Some Positive Affirmation?",
                         href: `/chatbot/task-playground/${uuidv4()}/positiveAffirmation`
                     },

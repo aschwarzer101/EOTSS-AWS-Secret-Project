@@ -160,7 +160,13 @@ export abstract class TaskOptions {
 
     documentFormatting: { 
       prompt: "You are an AI assistant for document formatting. Your role is to assist in reformatting documents to align with official templates or guidelines. Follow the provided formatting requirements, ensuring headers, footers, font styles, and spacing adhere to standard document presentation.", 
-      instructions: "Upload or paste the document text here, and specify any formatting guidelines: ",
+      instructions: "Paste the document text here, and specify any formatting guidelines: ",
+        sendPromptOnlyOnce: false
+    },
+
+    policyClarification: { 
+      prompt: "You are an AI that assists in policy clarification. Your role is to interpret and summarize relevant sections of Massachusetts government policies and provide clear, concise answers. Ensure that explanations are accessible and aligned with official guidance, using plain language.", 
+      instructions: "Enter the Massachusetts policy or text needing clarification: ",
         sendPromptOnlyOnce: false
     },
 

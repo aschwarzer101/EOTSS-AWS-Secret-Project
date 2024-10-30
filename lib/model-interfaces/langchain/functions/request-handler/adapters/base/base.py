@@ -123,7 +123,7 @@ class ModelAdapter:
                 modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 1,  # SARAH - Testing here 100,
+                    "max_tokens": 50,  # SARAH - Testing here 100,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )

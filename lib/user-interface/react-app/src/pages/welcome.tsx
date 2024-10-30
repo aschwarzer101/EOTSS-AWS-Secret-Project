@@ -55,7 +55,7 @@ export default function Welcome({theme}) {
                                 </RouterButton>
                             }
                         >
-                            GENIE Home
+                            Welcome to GENIE
                         </Header>
                     }
                 >

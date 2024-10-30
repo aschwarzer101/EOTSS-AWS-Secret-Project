@@ -187,8 +187,7 @@ export default function Chat(props: { sessionId?: string, prompt?: string}) {
       </SpaceBetween>
       <div className={styles.welcome_text}>
         {messageHistory.length == 0 && !session?.loading && (
-          <center>{CHATBOT_NAME}</center>
-        )}
+          <><center>{CHATBOT_NAME}</center><center style={{ fontSize: 'smaller' }}>What can I help you with today?</center></>        )}
         {session?.loading && (
           <center>
             <StatusIndicator type="loading">Loading session</StatusIndicator>

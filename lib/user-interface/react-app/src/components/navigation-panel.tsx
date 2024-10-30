@@ -152,6 +152,11 @@ export default function NavigationPanel() {
                     },
                     {
                         type: "link",
+                        text: "Document Formatting",
+                        href: `/chatbot/task-playground/${uuidv4()}/documentFormatting`
+                    },
+                    {
+                        type: "link",
                         text: "Need Some Positive Affirmation?",
                         href: `/chatbot/task-playground/${uuidv4()}/positiveAffirmation`
                     },

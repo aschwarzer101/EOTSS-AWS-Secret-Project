@@ -113,7 +113,7 @@ class ModelAdapter:
         {user_prompt}
 
         Task: Generate a standalone, contextually rich prompt that can be understood without requiring the chat history. Use relevant keywords and context from the chat history to reformulate the user prompt if needed, but do NOT answer the question. Only return the enhanced prompt as the output.
-        Also remember to keep the prompt length under 1000 characters."""
+        Also remember to keep the prompt length under 500 characters."""
 
         print('base_prompt', base_prompt)
 
@@ -124,7 +124,7 @@ class ModelAdapter:
                 modelId="anthropic.claude-3-5-sonnet-20240620-v1:0",  # Change for different model
                 body=json.dumps({
                     "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": 100,
+                    "max_tokens": 1, # SARAH - Testing here 100,
                     "messages": [{"role": "user", "content": base_prompt}],
                 })
             )
@@ -136,14 +136,26 @@ class ModelAdapter:
             content_list = result.get("content", [])
             if content_list:
                 enhanced_prompt = content_list[0].get("text", "")
+                
+                # Ensure the enhanced prompt is a substring if the length is greater than 1000
+                if len(enhanced_prompt) > 1000:
+                    enhanced_prompt = enhanced_prompt[:1000]
+                
                 print("Enhanced Prompt Text:", enhanced_prompt)  # Print only the text from content
                 return enhanced_prompt
+
+            # # Extract and print the enhanced prompt from the content list
+            # content_list = result.get("content", [])
+            # if content_list:
+            #     enhanced_prompt = content_list[0].get("text", "")
+            #     print("Enhanced Prompt Text:", enhanced_prompt)  # Print only the text from content
+            #     return enhanced_prompt
             else:
                 print("No content found in the response.")
                 return None
         except ClientError as err:
             logger.error(
-                f"Couldn't invoke model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
+                f"Couldn't invoke prompt enhancement model. Error: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
             return None
 
     # def is_first_question(self):

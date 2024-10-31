@@ -102,7 +102,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   // const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
 
   const [state, setState] = useState<ChatInputState>({
-
+    taskName: null,
     // have it so the value of the input is either the primer or mt string
     // value:  " ", CHANGE HERE IF YOU MESS IT UP
     // props.initialPrompt +

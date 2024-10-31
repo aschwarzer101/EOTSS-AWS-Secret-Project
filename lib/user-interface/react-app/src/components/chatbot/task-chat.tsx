@@ -20,6 +20,8 @@ import { ApiClient } from "../../common/api-client/api-client";
 // MANIAC IDEA 
 // could we inport state to grab the orig prompt 
 
+
+
 export default function TaskChat(props: {sessionId?: string, prompt?: string, taskOb?: ChatBotTask}) {
   // constants for taskObject
   const taskName = props.taskOb.name;
@@ -30,7 +32,10 @@ export default function TaskChat(props: {sessionId?: string, prompt?: string, ta
   //console.log("instructions" + instructions);
   const sendPromptOnlyOnce = props.taskOb.sendPromptOnlyOnce;
   console.log("sendPromptOnlyOnce" + sendPromptOnlyOnce);
-  
+
+ // Retrieve taskTitle from TaskOptions
+  const taskTitle = TaskOptions.taskPromptMap[taskName]?.taskTitle || "Unknown Task";
+  console.log("taskTitle" + taskTitle);
   
   const appContext = useContext(AppContext); 
   const [running, setRunning] = useState<boolean>(false);
@@ -200,7 +205,7 @@ return (
     </SpaceBetween>
     <div className={styles.welcome_text}>
       {messageHistory.length == 0 && !session?.loading && (
-          <><center>{CHATBOT_NAME}</center><center style={{ fontSize: 'smaller' }}>{taskName}</center></>        )}
+          <><center>{CHATBOT_NAME}</center><center style={{ fontSize: 'smaller' }}>{taskTitle}</center></>        )}
       {session?.loading && (
         <center>
           <StatusIndicator type="loading">Loading session</StatusIndicator>

@@ -104,12 +104,10 @@ import { valueFromAST } from "graphql";
       useSpeechRecognition();
     const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
   
-    const [state, setState] = useState<ChatInputState>({
+    const [state, setState] = useState<ChatInputState>({ //this becomes the state value - SARAH adding in the name of the task
       // have it so the value of the input is either the primer or mt string 
       value:  " ", 
-      // + "For the above text" + props.apiPrompt, 
-      // props.initialPrompt +
-     // initialPrompt: props.initialPrompt, 
+      taskName: props.task.name, //come back to 
       initialPrompt: props.task.apiPrompt, 
       instructions: props.task.instructions, 
       apiPrompt: props.task.instructions,
@@ -120,6 +118,7 @@ import { valueFromAST } from "graphql";
       modelsStatus: "loading",
       workspacesStatus: "loading",
     });
+    console.log('task name', state.taskName);
     console.log('initial prompt', state.initialPrompt);
     const [configDialogVisible, setConfigDialogVisible] = useState(false);
     const [imageDialogVisible, setImageDialogVisible] = useState(false);
@@ -244,7 +243,7 @@ import { valueFromAST } from "graphql";
         let workspaces: Workspace[] = [];
         let workspacesStatus: LoadingStatus = "finished";
         let modelsResult: GraphQLResult<any>;
-        let workspacesResult: GraphQLResult<any>;
+        let workspacesResult: GraphQLResult<any>; //SARAH - could i hardcode workspaceDefaultOptions[0] here?
         try {
           let username = "";
           username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
@@ -276,9 +275,10 @@ import { valueFromAST } from "graphql";
             models,
             selectedModelOption
           );
-          const selectedWorkspaceOption = appContext?.config.rag_enabled
-            ? getSelectedWorkspaceOption(workspaces)
-            : workspaceDefaultOptions[0];
+          const selectedWorkspaceOption = workspaceDefaultOptions[0];
+          //const selectedWorkspaceOption = appContext?.config.rag_enabled
+            // ? getSelectedWorkspaceOption(workspaces) //SARAH - getting seleted workspace option from array 
+            // : workspaceDefaultOptions[0]; // if false it uses the defautl 
   
           setState((state) => ({
             ...state,

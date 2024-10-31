@@ -15,6 +15,7 @@ export interface ChatInputState {
   value: string;
   workspaces?: Workspace[];
   models?: Model[];
+  taskName: string; // SARAH -- adding name of task
   initialPrompt?: string; // NEW ADDED HERE
   apiPrompt?: string; 
   instructions?: string,
@@ -26,7 +27,7 @@ export interface ChatInputState {
   workspacesStatus: LoadingStatus;
 }
 
-export interface ChatBotTask {
+export interface ChatBotTask { 
   name: string; 
   instructions: string; 
   apiPrompt: string; 

@@ -152,8 +152,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     // };
 
     const workspaceName = `doc-upload-${workspaceCount}`;
+    let newWorkspaceCount;
     console.log('workspace')
-    setWorkspaceCount((prev) => prev + 1); // Increment for unique workspaces
+    setWorkspaceCount((prev) => {
+      newWorkspaceCount = prev + 1;
+      return newWorkspaceCount;
+    }); // Increment for unique workspaces
 
     try {
       const username = await Auth.currentAuthenticatedUser().then((user) => user.username);

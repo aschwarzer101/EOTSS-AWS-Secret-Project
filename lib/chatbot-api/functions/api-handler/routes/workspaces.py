@@ -287,6 +287,7 @@ def _create_workspace_kendra(request: CreateWorkspaceKendraRequest, config: dict
     if kendra_index is None:
         raise genai_core.types.CommonError("Kendra index not found")
 
+
     return _convert_workspace(
         genai_core.workspaces.create_workspace_kendra(
             workspace_name=workspace_name,

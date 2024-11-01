@@ -100,6 +100,10 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   // const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
+  // SARAH TEST
+  const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
+  const [globalError, setGlobalError] = useState<string | undefined>(undefined);
+
 
   const [state, setState] = useState<ChatInputState>({
     taskName: null,
@@ -123,9 +127,35 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const firstTimeRef = useRef<boolean>(false);
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
 
-    // const taskRouter = TaskPriming(props.initialPrompt);
-    // const apiPrompt = taskRouter.prompt;
-    // const userInstrucions = taskRouter.instructions;
+  //SARAH doc upload
+  const handleUploadDocument = async () => {
+    if (!appContext) return;
+
+    const apiClient = new ApiClient(appContext);
+    const workspaceName = `doc-upload-${workspaceCount}`;
+    console.log('workspace')
+    setWorkspaceCount((prev) => prev + 1); // Increment for unique workspaces
+
+    try {
+      const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+
+      // Create the workspace
+      await apiClient.workspaces.createKendraWorkspace({
+        name: workspaceName,
+        kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // Replace with your actual index ID
+        useAllData: true, // Set as needed
+        createdBy: username,
+      });
+      console.log('workspace created')
+
+      // Navigate to the newly created workspace
+      navigate(`/rag/workspaces/${workspaceName}`);
+      console.log('navigated')
+    } catch (error) {
+      console.error(error);
+      setGlobalError("An error occurred while creating the workspace.");
+    }
+  };
 
 
   useEffect(() => {
@@ -538,19 +568,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      {/* {props.initialPrompt.trim() ? (
-        <>
-        <Alert
-          statusIconAriaLabel="Info"
-          header="">
-          Feature is currently in development.
-        </Alert>
-        <div className={styles.non_editable_prompt} aria-readonly={isReadOnly}>
-          {props.initialPrompt}
-        </div></>
-      ) : null} */}
-       
-      
       <Container>
         <div className={styles.input_textarea_container}>
           <SpaceBetween size="xxs" direction="horizontal" alignItems="center">
@@ -729,6 +746,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
             />
           )}
         </div>
+
         <div className={styles.input_controls_right}>
           <SpaceBetween direction="horizontal" size="xxs" alignItems="center">
             <div style={{ paddingTop: "1px" }}>
@@ -745,6 +763,16 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
+
+            {/* SARAH New Upload Document Button */}
+            <Button
+              onClick={handleUploadDocument}
+              variant="primary"
+              iconName="upload"
+            >
+              Upload Document
+            </Button>
+
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN

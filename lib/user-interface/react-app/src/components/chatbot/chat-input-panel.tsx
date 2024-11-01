@@ -132,6 +132,25 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     if (!appContext) return;
 
     const apiClient = new ApiClient(appContext);
+    // // Fetch existing workspaces
+    // const existingWorkspaces = await apiClient.workspaces.listWorkspaces();
+
+    // // Function to check if a workspace exists
+    // const checkWorkspaceExists = (name: string, workspaces: string[]): boolean => {
+    //   return workspaces.includes(name);
+    // };
+
+    // // Function to create a unique workspace name
+    // const createUniqueWorkspaceName = (baseName: string, workspaces: string[]): string => {
+    //   let count = 0;
+    //   let uniqueName = `${baseName}-${count}`;
+    //   while (checkWorkspaceExists(uniqueName, workspaces)) {
+    //     count++;
+    //     uniqueName = `${baseName}-${count}`;
+    //   }
+    //   return uniqueName;
+    // };
+
     const workspaceName = `doc-upload-${workspaceCount}`;
     console.log('workspace')
     setWorkspaceCount((prev) => prev + 1); // Increment for unique workspaces
@@ -140,17 +159,26 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
       const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
 
       // Create the workspace
-      await apiClient.workspaces.createKendraWorkspace({
+      const result = await apiClient.workspaces.createKendraWorkspace({
         name: workspaceName,
         kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // Replace with your actual index ID
         useAllData: true, // Set as needed
         createdBy: username,
       });
       console.log('workspace created')
+      console.log('workspace name', workspaceName)
+      
+      // Extract the workspace ID from the result
+      const workspaceId = result.data?.createKendraWorkspace?.id;
+      console.log('workspace id', workspaceId)
 
-      // Navigate to the newly created workspace
-      navigate(`/rag/workspaces/${workspaceName}`);
-      console.log('navigated')
+      if (workspaceId) {
+        // Navigate to the newly created workspace
+        navigate(`/rag/workspaces/${workspaceId}`);
+        console.log('navigated');
+      } else {
+        console.error('Workspace ID not found in the result');
+      }
     } catch (error) {
       console.error(error);
       setGlobalError("An error occurred while creating the workspace.");

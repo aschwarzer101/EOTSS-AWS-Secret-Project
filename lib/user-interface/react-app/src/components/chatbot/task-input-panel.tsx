@@ -86,7 +86,7 @@ import { valueFromAST } from "graphql";
   
   const workspaceDefaultOptions: SelectProps.Option[] = [
     {
-      label: "No workspace (RAG data source)",
+      label: "Basic Chat [No Workspace]",//"No workspace (RAG data source)",
       value: "",
       iconName: "close",
     },

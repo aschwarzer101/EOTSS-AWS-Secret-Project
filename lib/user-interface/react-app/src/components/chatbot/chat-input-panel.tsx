@@ -29,7 +29,9 @@ import { AppContext } from "../../common/app-context";
 import { OptionsHelper } from "../../common/helpers/options-helper";
 import { StorageHelper } from "../../common/helpers/storage-helper";
 import { API } from "aws-amplify";
-import { GraphQLSubscription, GraphQLResult } from "@aws-amplify/api";
+import { GraphQLSubscription, GraphQLResult, graphqlOperation } from "@aws-amplify/api";
+import { listWorkspaces } from "../../graphql/queries";
+import { ListWorkspacesQuery, ListWorkspacesQueryVariables } from "../../API";
 import { Model, ReceiveMessagesSubscription, Workspace } from "../../API";
 import { LoadingStatus, ModelInterface } from "../../common/types";
 import styles from "../../styles/chat.module.scss";
@@ -82,7 +84,7 @@ export abstract class ChatScrollState {
 
 const workspaceDefaultOptions: SelectProps.Option[] = [
   {
-    label: "No workspace (RAG data source)",
+    label: "Basic Chat [No Workspace]",//"No workspace (RAG data source)",
     value: "",
     iconName: "close",
   },
@@ -99,12 +101,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const {needsRefresh, setNeedsRefresh} = useContext(SessionRefreshContext);
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-  // const [isReadOnly, setIsReadOnly] = useState<boolean>(!!props.initialPrompt);
-  // SARAH TEST
-  const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
-  const [globalError, setGlobalError] = useState<string | undefined>(undefined);
-
-
   const [state, setState] = useState<ChatInputState>({
     taskName: null,
     // have it so the value of the input is either the primer or mt string
@@ -127,67 +123,142 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   const firstTimeRef = useRef<boolean>(false);
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
 
-  //SARAH doc upload
-  const handleUploadDocument = async () => {
-    if (!appContext) return;
+ // SARAH workspaces
+ const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
+ const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+ const [loading, setLoading] = useState(true);
+ const [error, setError] = useState<string | null>(null);
+ const [globalError, setGlobalError] = useState<string | undefined>(undefined);
 
-    const apiClient = new ApiClient(appContext);
-    // // Fetch existing workspaces
-    // const existingWorkspaces = await apiClient.workspaces.listWorkspaces();
+ useEffect(() => {
+   if (!appContext) return;
 
-    // // Function to check if a workspace exists
-    // const checkWorkspaceExists = (name: string, workspaces: string[]): boolean => {
-    //   return workspaces.includes(name);
-    // };
+   (async () => {
+     const apiClient = new ApiClient(appContext);
+     let workspaces: Workspace[] = [];
+     let workspacesStatus: LoadingStatus = "finished";
+     let modelsResult: GraphQLResult<any>;
+     let workspacesResult: GraphQLResult<any>;
+     try {
+       let username = "";
+       username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+       if (appContext?.config.rag_enabled) {
+         [modelsResult, workspacesResult] = await Promise.all([
+           apiClient.models.getModels(),
+           apiClient.workspaces.getWorkspaces(username),
+         ]);
+         workspaces = workspacesResult.data?.listWorkspaces;
+         workspacesStatus =
+           workspacesResult.errors === undefined ? "finished" : "error";
+       } else {
+         modelsResult = await apiClient.models.getModels();
+       }
 
-    // // Function to create a unique workspace name
-    // const createUniqueWorkspaceName = (baseName: string, workspaces: string[]): string => {
-    //   let count = 0;
-    //   let uniqueName = `${baseName}-${count}`;
-    //   while (checkWorkspaceExists(uniqueName, workspaces)) {
-    //     count++;
-    //     uniqueName = `${baseName}-${count}`;
-    //   }
-    //   return uniqueName;
-    // };
+       const models = modelsResult.data ? modelsResult.data.listModels : [];
 
-    const workspaceName = `doc-upload-${workspaceCount}`;
-    let newWorkspaceCount;
-    console.log('workspace')
-    setWorkspaceCount((prev) => {
-      newWorkspaceCount = prev + 1;
-      return newWorkspaceCount;
-    }); // Increment for unique workspaces
+       // save meta model data to local storage as default
+       let defaultModel = '';
+       if (models.length) {
+         const smartModel = models.find((m) => m.name === "Smart Model");
+         if (smartModel) {
+           defaultModel = smartModel.id;
+         }
+       }
 
-    try {
-      const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+       setState((prevState) => ({
+         ...prevState,
+         models,
+         workspaces,
+         workspacesStatus,
+         selectedModel: {
+           label: defaultModel,
+           value: defaultModel,
+         },
+       }));
+     } catch (error) {
+       console.error('Error fetching models or workspaces:', error);
+       setError('An error occurred while fetching models or workspaces.');
+     } finally {
+       setLoading(false);
+     }
+   })();
+ }, [appContext]);
 
-      // Create the workspace
-      const result = await apiClient.workspaces.createKendraWorkspace({
-        name: workspaceName,
-        kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // Replace with your actual index ID
-        useAllData: true, // Set as needed
-        createdBy: username,
-      });
-      console.log('workspace created')
-      console.log('workspace name', workspaceName)
-      
-      // Extract the workspace ID from the result
-      const workspaceId = result.data?.createKendraWorkspace?.id;
-      console.log('workspace id', workspaceId)
+//  // Function to check if a workspace exists
+//  const checkWorkspaceExists = (name: string, workspaces: Workspace[]): boolean => {
+//    return workspaces.some(workspace => workspace.name === name);
+//  };
 
-      if (workspaceId) {
-        // Navigate to the newly created workspace
-        navigate(`/rag/workspaces/${workspaceId}`);
-        console.log('navigated');
-      } else {
-        console.error('Workspace ID not found in the result');
-      }
-    } catch (error) {
-      console.error(error);
-      setGlobalError("An error occurred while creating the workspace.");
+// Function to check if a workspace exists in Kendra
+const checkWorkspaceExists = async (name: string): Promise<boolean> => {
+  try {
+    const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+    const variables: ListWorkspacesQueryVariables = { username };
+    const result = await API.graphql(graphqlOperation(listWorkspaces, variables)) as { data: ListWorkspacesQuery };
+
+    if (result.data?.listWorkspaces) {
+      return result.data.listWorkspaces.some(workspace => workspace.name === name);
+    } else {
+      console.error('No workspaces found');
+      return false;
     }
-  };
+  } catch (error) {
+    console.error('Error checking workspace existence:', error);
+    return false;
+  }
+};
+
+ // Function to create a unique workspace name
+ const createUniqueWorkspaceName = async (baseName: string, workspaces: Workspace[]): Promise<string> => {
+   let count = 0;
+   let uniqueName = `${baseName}-${count}`;
+   while (await checkWorkspaceExists(uniqueName)) {
+     count++;
+     uniqueName = `${baseName}-${count}`;
+   }
+   return uniqueName;
+ };
+
+ // SARAH doc upload
+ const handleUploadDocument = async () => {
+   if (!appContext) return;
+
+   const apiClient = new ApiClient(appContext);
+
+   try {
+     const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+
+     // Create a unique workspace name
+     const baseName = `doc-upload`;
+     const uniqueWorkspaceName = await createUniqueWorkspaceName(baseName, workspaces);
+
+     // Create the workspace
+     const result = await apiClient.workspaces.createKendraWorkspace({
+       name: uniqueWorkspaceName,
+       kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // Replace with your actual index ID
+       useAllData: true, // Set as needed
+       createdBy: username,
+     });
+
+     // Extract the workspace ID from the result
+     const workspaceId = result.data?.createKendraWorkspace?.id;
+
+     if (workspaceId) {
+       // Navigate to the newly created workspace
+       navigate(`/rag/workspaces/${workspaceId}`);
+       console.log('Navigated to the new workspace');
+     } else {
+       console.error('Workspace ID not found in the result');
+     }
+
+     // Update the workspace count and state
+     setWorkspaceCount(workspaceCount + 1);
+     setWorkspaces([...workspaces, { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }]);
+   } catch (error) {
+     console.error('Error creating workspace:', error);
+     // Handle error appropriately, e.g., set a global error state
+   }
+ };
 
 
   useEffect(() => {

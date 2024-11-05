@@ -266,14 +266,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
   }, [props.messageHistory]);
 
 
-  // ALAYNA U PUT IT HERE
-//   useEffect(() => {
-//     //  send the initial prompt if it's not empty and the model is selected
-//     if (props.initialPrompt && state.selectedModel) {
-//         handleSendMessage();
-//     }
-// }, [props.initialPrompt, state.selectedModel]);
-
 
   useEffect(() => {
     async function subscribe() {
@@ -326,7 +318,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       return sub;
     }
 
-
+    
 
     const sub = subscribe();
     sub

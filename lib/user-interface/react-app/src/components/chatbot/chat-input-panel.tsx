@@ -1,3 +1,4 @@
+
 import {
   Alert,
   Button,
@@ -37,7 +38,6 @@ import { LoadingStatus, ModelInterface } from "../../common/types";
 import styles from "../../styles/chat.module.scss";
 import ConfigDialog from "./config-dialog";
 import ImageDialog from "./image-dialog";
-
 import {
   ChabotInputModality,
   ChatBotHeartbeatRequest,
@@ -63,28 +63,23 @@ import { Utils } from "../../common/utils";
 import { TaskOptions } from "../../common/constants";
 import {SessionRefreshContext} from "../../common/session-refresh-context"
 import { Auth } from "aws-amplify";
-
 export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
   session: { id: string; loading: boolean };
-  // initialPrompt: string;
-  // taskPrompt: TaskOptions;
   messageHistory: ChatBotHistoryItem[];
   setMessageHistory: (history: ChatBotHistoryItem[]) => void;
   configuration: ChatBotConfiguration;
   setConfiguration: Dispatch<React.SetStateAction<ChatBotConfiguration>>;
 }
-
 export abstract class ChatScrollState {
   static userHasScrolled = false;
   static skipNextScrollEvent = false;
   static skipNextHistoryUpdate = false;
 }
-
 const workspaceDefaultOptions: SelectProps.Option[] = [
   {
-    label: "Basic Chat [No Workspace]",//"No workspace (RAG data source)",
+    label: "Basic Chat [No Workspace]", //"No workspace (RAG data source)",
     value: "",
     iconName: "close",
   },
@@ -94,7 +89,6 @@ const workspaceDefaultOptions: SelectProps.Option[] = [
     iconName: "add-plus",
   },
 ];
-
 export default function ChatInputPanel(props: ChatInputPanelProps) {
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
@@ -107,7 +101,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
     // value:  " ", CHANGE HERE IF YOU MESS IT UP
     // props.initialPrompt +
     value: " ",
-    // initialPrompt: props.initialPrompt,
     selectedModel: null,
     selectedModelMetadata: null,
     selectedWorkspace: workspaceDefaultOptions[0],
@@ -122,17 +115,17 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   );
   const firstTimeRef = useRef<boolean>(false);
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
-
  // SARAH workspaces
  const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState<string | null>(null);
  const [globalError, setGlobalError] = useState<string | undefined>(undefined);
+ const [navigatedToWorkspace, setNavigatedToWorkspace] = useState(false); // Track navigation to new workspace
+ const [newWorkspace, setNewWorkspace] = useState<Workspace | null>(null); // Track the newly created workspace
 
  useEffect(() => {
    if (!appContext) return;
-
    (async () => {
      const apiClient = new ApiClient(appContext);
      let workspaces: Workspace[] = [];
@@ -153,9 +146,7 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
        } else {
          modelsResult = await apiClient.models.getModels();
        }
-
        const models = modelsResult.data ? modelsResult.data.listModels : [];
-
        // save meta model data to local storage as default
        let defaultModel = '';
        if (models.length) {
@@ -164,7 +155,6 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
            defaultModel = smartModel.id;
          }
        }
-
        setState((prevState) => ({
          ...prevState,
          models,
@@ -183,19 +173,12 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
      }
    })();
  }, [appContext]);
-
-//  // Function to check if a workspace exists
-//  const checkWorkspaceExists = (name: string, workspaces: Workspace[]): boolean => {
-//    return workspaces.some(workspace => workspace.name === name);
-//  };
-
 // Function to check if a workspace exists in Kendra
 const checkWorkspaceExists = async (name: string): Promise<boolean> => {
   try {
     const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
     const variables: ListWorkspacesQueryVariables = { username };
     const result = await API.graphql(graphqlOperation(listWorkspaces, variables)) as { data: ListWorkspacesQuery };
-
     if (result.data?.listWorkspaces) {
       return result.data.listWorkspaces.some(workspace => workspace.name === name);
     } else {
@@ -207,7 +190,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     return false;
   }
 };
-
  // Function to create a unique workspace name
  const createUniqueWorkspaceName = async (baseName: string, workspaces: Workspace[]): Promise<string> => {
    let count = 0;
@@ -218,39 +200,41 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
    }
    return uniqueName;
  };
-
  // SARAH doc upload
  const handleUploadDocument = async () => {
    if (!appContext) return;
-
    const apiClient = new ApiClient(appContext);
-
    try {
      const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
-
      // Create a unique workspace name
      const baseName = `doc-upload`;
      const uniqueWorkspaceName = await createUniqueWorkspaceName(baseName, workspaces);
-
      // Create the workspace
      const result = await apiClient.workspaces.createKendraWorkspace({
        name: uniqueWorkspaceName,
-       kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // Replace with your actual index ID
-       useAllData: true, // Set as needed
+       kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // SARAH HARDCODED NOW 
+       useAllData: true, 
        createdBy: username,
      });
-
+     
      // Extract the workspace ID from the result
      const workspaceId = result.data?.createKendraWorkspace?.id;
-
      if (workspaceId) {
-       // Navigate to the newly created workspace
+      
+      // Update the workspace count and state
+      setWorkspaceCount(workspaceCount + 1);
+      const newWorkspace = { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+      setWorkspaces([...workspaces, { ...newWorkspace, __typename: "Workspace" }]);
+      setNewWorkspace({ ...newWorkspace, __typename: "Workspace" }); // Set the newly created workspace
+       
+      // Navigate to the newly created workspace
        navigate(`/rag/workspaces/${workspaceId}`);
        console.log('Navigated to the new workspace');
+       setNavigatedToWorkspace(true); // Set the state to indicate navigation
      } else {
        console.error('Workspace ID not found in the result');
      }
-
+     
      // Update the workspace count and state
      setWorkspaceCount(workspaceCount + 1);
      setWorkspaces([...workspaces, { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }]);
@@ -259,14 +243,34 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
      // Handle error appropriately, e.g., set a global error state
    }
  };
+ 
+ const handleNavigateBack = () => {
+  if (newWorkspace) {
+    setState((prevState) => ({
+      ...prevState,
+      selectedWorkspace: {
+        label: newWorkspace.name,
+        value: newWorkspace.id,
+      },
+    }));
+  }
+  navigate(-1); // Navigate back to the previous page
+  setNavigatedToWorkspace(false); // Reset the state
+};
 
-
+if (loading) {
+  return <div>Loading...</div>;
+}
+if (error) {
+  return <div>{error + "here"}</div>;
+}
+ 
+// setting message history to the ref
   useEffect(() => {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
-
-
-
+  
+  // starting appsync and retrieving message hisotry 
   useEffect(() => {
     async function subscribe() {
       console.log("Subscribing to AppSync");
@@ -277,7 +281,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         query: receiveMessages,
         variables: {
           sessionId: props.session.id,
-          // initialPrompt: props.initialPrompt
         },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       }).subscribe({
@@ -302,7 +305,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             if (
               response.action === ChatBotAction.FinalResponse ||
               response.action === ChatBotAction.Error
-
             ) {
               console.log("Final message received");
               props.setRunning(false);
@@ -317,8 +319,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       });
       return sub;
     }
-
-    
 
     const sub = subscribe();
     sub
@@ -358,7 +358,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     };
     // eslint-disable-next-line
   }, [props.session.id]);
-
+  
   useEffect(() => {
     if (transcript) {
       setState((state) => ({ ...state, value: transcript }));
@@ -372,10 +372,8 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
   // }, [props.initialPrompt]);
 
 
-
   useEffect(() => {
     if (!appContext) return;
-
     (async () => {
       const apiClient = new ApiClient(appContext);
       let workspaces: Workspace[] = [];
@@ -396,9 +394,8 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         } else {
           modelsResult = await apiClient.models.getModels();
         }
-
         const models = modelsResult.data ? modelsResult.data.listModels : [];
-
+        
         // save meta model data to local storage as default
         let defaultModel = '';
         if(models.length){
@@ -413,10 +410,10 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           models,
           selectedModelOption
         );
+
         const selectedWorkspaceOption = appContext?.config.rag_enabled
           ? getSelectedWorkspaceOption(workspaces)
           : workspaceDefaultOptions[0];
-
         setState((state) => ({
           ...state,
           models,
@@ -427,51 +424,46 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           modelsStatus: "finished",
           workspacesStatus: workspacesStatus,
         }));
+
       } catch (error) {
         console.log(Utils.getErrorMessage(error));
         setState((state) => ({
           ...state,
           modelsStatus: "error",
         }));
-
       }
     })();
   }, [appContext, state.modelsStatus]);
-
   useEffect(() => {
     const onWindowScroll = () => {
       if (ChatScrollState.skipNextScrollEvent) {
         ChatScrollState.skipNextScrollEvent = false;
         return;
       }
-
       const isScrollToTheEnd =
         Math.abs(
           window.innerHeight +
             window.scrollY -
             document.documentElement.scrollHeight
         ) <= 10;
-
       if (!isScrollToTheEnd) {
         ChatScrollState.userHasScrolled = true;
       } else {
         ChatScrollState.userHasScrolled = false;
       }
     };
-
+    
     window.addEventListener("scroll", onWindowScroll);
-
     return () => {
       window.removeEventListener("scroll", onWindowScroll);
     };
   }, []);
-
+  
   useLayoutEffect(() => {
     if (ChatScrollState.skipNextHistoryUpdate) {
       ChatScrollState.skipNextHistoryUpdate = false;
       return;
     }
-
     if (!ChatScrollState.userHasScrolled && props.messageHistory.length > 0) {
       ChatScrollState.skipNextScrollEvent = true;
       window.scrollTo({
@@ -492,7 +484,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             url: signedUrl,
           });
         }
-
         setFiles(files);
       }
     };
@@ -518,54 +509,16 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     if (props.running) return;
     if (readyState !== ReadyState.OPEN) return;
     ChatScrollState.userHasScrolled = false;
-
     const { name, provider } = OptionsHelper.parseValue(
       state.selectedModel.value
     );
-
     let dateTime = new Date();
-
     let value = state.value 
     //+ " For more context current date and time is: " + dateTime.toLocaleString();
     
-
     value = value.trim()
     if (!value) return;
-    // if (props.initialPrompt) {
-    //   props.setRunning(true);
-    //   const request = {
-    //     action: ChatBotAction.Run,
-    //     modelInterface: state.selectedModelMetadata!.interface as ModelInterface,
-    //     data: {
-    //         mode: ChatBotMode.Chain,
-    //         text: props.initialPrompt,
-    //         modelName: name,
-    //         modelId: "anthropic.claude-3-haiku-20240307-v1:0",
-    //         provider: "anthropic",
-    //         sessionId: props.session.id,
-    //         workspaceId: state.selectedWorkspace?.value,
-    //         modelKwargs: {
-    //           streaming: props.configuration.streaming,
-    //           maxTokens: props.configuration.maxTokens,
-    //           temperature: props.configuration.temperature,
-    //           topP: props.configuration.topP,
-    //         },
-    //     },
-    //   };
-
-    //   // setState((prevState) => ({ ...prevState, value: ""}));
-
-
-    //   API.graphql({
-    //     query: sendQuery,
-    //     variables: {
-    //       data: JSON.stringify(request),
-    //     },
-    //   });
-
-    //   setState((prevState) => ({ ...prevState, value: ""}));
-    // };
-    // props.initialPrompt;
+    
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
       modelInterface:
@@ -593,23 +546,24 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         },
       },
     };
+
     //adding prompt to state 
     console.log(request);
     setState((state) => ({
       ...state,
       value: "",
     }));
-    setFiles([]);
 
+    setFiles([]);
     props.setConfiguration({
       ...props.configuration,
       files: [],
     });
+
     console.log('chat-input state', state)
     props.setRunning(true);
     messageHistoryRef.current = [
       ...messageHistoryRef.current,
-
       {
         type: ChatBotMessageType.Human,
         content: value, 
@@ -639,13 +593,12 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         data: JSON.stringify(request),
       },
     });
-
     // change here to set readonly to false after sending 
   //   if (isReadOnly) {
   //     setIsReadOnly(false);  // Allow editing after the first send
   //  }
   };
-
+  
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
     [ReadyState.OPEN]: "Open",
@@ -655,7 +608,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
   }[readyState];
 
   const modelsOptions = OptionsHelper.getSelectOptionGroups(state.models ?? []);
-
+  
   const workspaceOptions = [
     ...workspaceDefaultOptions,
     ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
@@ -831,7 +784,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                     ...state,
                     selectedWorkspace: detail.selectedOption,
                   }));
-
                   StorageHelper.setSelectedWorkspaceId(
                     detail.selectedOption?.value ?? ""
                   );
@@ -841,7 +793,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             />
           )}
         </div>
-
         <div className={styles.input_controls_right}>
           <SpaceBetween direction="horizontal" size="xxs" alignItems="center">
             <div style={{ paddingTop: "1px" }}>
@@ -858,7 +809,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
-
             {/* SARAH New Upload Document Button */}
             <Button
               onClick={handleUploadDocument}
@@ -867,7 +817,15 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             >
               Upload Document
             </Button>
-
+            {navigatedToWorkspace && (
+              <Button
+                onClick={handleNavigateBack}
+                variant="normal"
+                iconName="arrow-left"
+              >
+                Go Back
+              </Button>
+            )}
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN
@@ -886,38 +844,30 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     </SpaceBetween>
   );
 }
-
 function getSelectedWorkspaceOption(
   workspaces: Workspace[]
 ): SelectProps.Option | null {
   let selectedWorkspaceOption: SelectProps.Option | null = null;
-
   const savedWorkspaceId = StorageHelper.getSelectedWorkspaceId();
   if (savedWorkspaceId) {
     const targetWorkspace = workspaces.find((w) => w.id === savedWorkspaceId);
-
     if (targetWorkspace) {
       selectedWorkspaceOption = OptionsHelper.getSelectOptions([
         targetWorkspace,
       ])[0];
     }
   }
-
   if (!selectedWorkspaceOption) {
     selectedWorkspaceOption = workspaceDefaultOptions[0];
   }
-
   return selectedWorkspaceOption;
 }
-
 function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
   let selectedModelOption: SelectProps.Option | null = null;
   let savedModel = StorageHelper.getSelectedLLM();
-
   if(defaultModel){
     savedModel = defaultModel;
   }
-
   if (savedModel) {
     const savedModelDetails = OptionsHelper.parseValue(savedModel);
     const targetModel = models.find(
@@ -925,59 +875,48 @@ function getSelectedModelOption(models: Model[], defaultModel:string = ''): Sele
         m.name === savedModelDetails.name &&
         m.provider === savedModelDetails.provider
     );
-
     if (targetModel) {
       selectedModelOption = OptionsHelper.getSelectOptionGroups([
         targetModel,
       ])[0].options[0];
     }
   }
-
   let candidate: Model | undefined = undefined;
   if (!selectedModelOption) {
     const bedrockModels = models.filter((m) => m.provider === "bedrock");
     const sageMakerModels = models.filter((m) => m.provider === "sagemaker");
     const openAIModels = models.filter((m) => m.provider === "openai");
-
     candidate = bedrockModels.find((m) => m.name === "anthropic.claude-v2");
     if (!candidate) {
       candidate = bedrockModels.find((m) => m.name === "anthropic.claude-v1");
     }
-
     // CHANGE IN HERE FOR DEFAULT TO BE SMART MODEL 
     if (!candidate) {
       candidate = bedrockModels.find(
         (m) => m.name === "amazon.titan-tg1-large"
       );
     }
-
     if (!candidate) {
       candidate = bedrockModels.find((m) => m.name.startsWith("amazon.titan-"));
     }
-
     if (!candidate && sageMakerModels.length > 0) {
       candidate = sageMakerModels[0];
     }
-
     if (openAIModels.length > 0) {
       if (!candidate) {
         candidate = openAIModels.find((m) => m.name === "gpt-4");
       }
-
       if (!candidate) {
         candidate = openAIModels.find((m) => m.name === "gpt-3.5-turbo-16k");
       }
     }
-
     if (!candidate && bedrockModels.length > 0) {
       candidate = bedrockModels[0];
     }
-
     if (candidate) {
       selectedModelOption = OptionsHelper.getSelectOptionGroups([candidate])[0]
         .options[0];
     }
   }
-
   return selectedModelOption;
 }

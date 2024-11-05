@@ -1,4 +1,3 @@
-
 import {
   Alert,
   Button,
@@ -61,8 +60,9 @@ import {
 import { receiveMessages } from "../../graphql/subscriptions";
 import { Utils } from "../../common/utils";
 import { TaskOptions } from "../../common/constants";
-import {SessionRefreshContext} from "../../common/session-refresh-context"
+import { SessionRefreshContext } from "../../common/session-refresh-context";
 import { Auth } from "aws-amplify";
+
 export interface ChatInputPanelProps {
   running: boolean;
   setRunning: Dispatch<SetStateAction<boolean>>;
@@ -72,14 +72,16 @@ export interface ChatInputPanelProps {
   configuration: ChatBotConfiguration;
   setConfiguration: Dispatch<React.SetStateAction<ChatBotConfiguration>>;
 }
+
 export abstract class ChatScrollState {
   static userHasScrolled = false;
   static skipNextScrollEvent = false;
   static skipNextHistoryUpdate = false;
 }
+
 const workspaceDefaultOptions: SelectProps.Option[] = [
   {
-    label: "Basic Chat [No Workspace]", //"No workspace (RAG data source)",
+    label: "Basic Chat [No Workspace]",
     value: "",
     iconName: "close",
   },
@@ -89,17 +91,15 @@ const workspaceDefaultOptions: SelectProps.Option[] = [
     iconName: "add-plus",
   },
 ];
+
 export default function ChatInputPanel(props: ChatInputPanelProps) {
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
-  const {needsRefresh, setNeedsRefresh} = useContext(SessionRefreshContext);
+  const { needsRefresh, setNeedsRefresh } = useContext(SessionRefreshContext);
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
   const [state, setState] = useState<ChatInputState>({
     taskName: null,
-    // have it so the value of the input is either the primer or mt string
-    // value:  " ", CHANGE HERE IF YOU MESS IT UP
-    // props.initialPrompt +
     value: " ",
     selectedModel: null,
     selectedModelMetadata: null,
@@ -115,158 +115,160 @@ export default function ChatInputPanel(props: ChatInputPanelProps) {
   );
   const firstTimeRef = useRef<boolean>(false);
   const messageHistoryRef = useRef<ChatBotHistoryItem[]>([]);
- // SARAH workspaces
- const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
- const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
- const [loading, setLoading] = useState(true);
- const [error, setError] = useState<string | null>(null);
- const [globalError, setGlobalError] = useState<string | undefined>(undefined);
- const [navigatedToWorkspace, setNavigatedToWorkspace] = useState(false); // Track navigation to new workspace
- const [newWorkspace, setNewWorkspace] = useState<Workspace | null>(null); // Track the newly created workspace
 
- useEffect(() => {
-   if (!appContext) return;
-   (async () => {
-     const apiClient = new ApiClient(appContext);
-     let workspaces: Workspace[] = [];
-     let workspacesStatus: LoadingStatus = "finished";
-     let modelsResult: GraphQLResult<any>;
-     let workspacesResult: GraphQLResult<any>;
-     try {
-       let username = "";
-       username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
-       if (appContext?.config.rag_enabled) {
-         [modelsResult, workspacesResult] = await Promise.all([
-           apiClient.models.getModels(),
-           apiClient.workspaces.getWorkspaces(username),
-         ]);
-         workspaces = workspacesResult.data?.listWorkspaces;
-         workspacesStatus =
-           workspacesResult.errors === undefined ? "finished" : "error";
-       } else {
-         modelsResult = await apiClient.models.getModels();
-       }
-       const models = modelsResult.data ? modelsResult.data.listModels : [];
-       // save meta model data to local storage as default
-       let defaultModel = '';
-       if (models.length) {
-         const smartModel = models.find((m) => m.name === "Smart Model");
-         if (smartModel) {
-           defaultModel = smartModel.id;
-         }
-       }
-       setState((prevState) => ({
-         ...prevState,
-         models,
-         workspaces,
-         workspacesStatus,
-         selectedModel: {
-           label: defaultModel,
-           value: defaultModel,
-         },
-       }));
-     } catch (error) {
-       console.error('Error fetching models or workspaces:', error);
-       setError('An error occurred while fetching models or workspaces.');
-     } finally {
-       setLoading(false);
-     }
-   })();
- }, [appContext]);
-// Function to check if a workspace exists in Kendra
-const checkWorkspaceExists = async (name: string): Promise<boolean> => {
-  try {
-    const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
-    const variables: ListWorkspacesQueryVariables = { username };
-    const result = await API.graphql(graphqlOperation(listWorkspaces, variables)) as { data: ListWorkspacesQuery };
-    if (result.data?.listWorkspaces) {
-      return result.data.listWorkspaces.some(workspace => workspace.name === name);
-    } else {
-      console.error('No workspaces found');
+  // SARAH workspaces
+  const [workspaceCount, setWorkspaceCount] = useState(1); // Track workspace count
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [globalError, setGlobalError] = useState<string | undefined>(undefined);
+  const [navigatedToWorkspace, setNavigatedToWorkspace] = useState(false); // Track navigation to new workspace
+  const [newWorkspace, setNewWorkspace] = useState<Workspace | null>(null); // Track the newly created workspace
+
+  useEffect(() => {
+    if (!appContext) return;
+    (async () => {
+      const apiClient = new ApiClient(appContext);
+      let workspaces: Workspace[] = [];
+      let workspacesStatus: LoadingStatus = "finished";
+      let modelsResult: GraphQLResult<any>;
+      let workspacesResult: GraphQLResult<any>;
+      try {
+        let username = "";
+        username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+        if (appContext?.config.rag_enabled) {
+          [modelsResult, workspacesResult] = await Promise.all([
+            apiClient.models.getModels(),
+            apiClient.workspaces.getWorkspaces(username),
+          ]);
+          workspaces = workspacesResult.data?.listWorkspaces;
+          workspacesStatus =
+            workspacesResult.errors === undefined ? "finished" : "error";
+        } else {
+          modelsResult = await apiClient.models.getModels();
+        }
+        const models = modelsResult.data ? modelsResult.data.listModels : [];
+        // save meta model data to local storage as default
+        let defaultModel = '';
+        if (models.length) {
+          const smartModel = models.find((m) => m.name === "Smart Model");
+          if (smartModel) {
+            defaultModel = smartModel.id;
+          }
+        }
+        setState((prevState) => ({
+          ...prevState,
+          models,
+          workspaces,
+          workspacesStatus,
+          selectedModel: {
+            label: defaultModel,
+            value: defaultModel,
+          },
+        }));
+      } catch (error) {
+        console.error('Error fetching models or workspaces:', error);
+        setError('An error occurred while fetching models or workspaces.');
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [appContext]);
+
+  // Function to check if a workspace exists in Kendra
+  const checkWorkspaceExists = async (name: string): Promise<boolean> => {
+    try {
+      const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+      const variables: ListWorkspacesQueryVariables = { username };
+      const result = await API.graphql(graphqlOperation(listWorkspaces, variables)) as { data: ListWorkspacesQuery };
+      if (result.data?.listWorkspaces) {
+        return result.data.listWorkspaces.some(workspace => workspace.name === name);
+      } else {
+        console.error('No workspaces found');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error checking workspace existence:', error);
       return false;
     }
-  } catch (error) {
-    console.error('Error checking workspace existence:', error);
-    return false;
-  }
-};
- // Function to create a unique workspace name
- const createUniqueWorkspaceName = async (baseName: string, workspaces: Workspace[]): Promise<string> => {
-   let count = 0;
-   let uniqueName = `${baseName}-${count}`;
-   while (await checkWorkspaceExists(uniqueName)) {
-     count++;
-     uniqueName = `${baseName}-${count}`;
-   }
-   return uniqueName;
- };
- // SARAH doc upload
- const handleUploadDocument = async () => {
-   if (!appContext) return;
-   const apiClient = new ApiClient(appContext);
-   try {
-     const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
-     // Create a unique workspace name
-     const baseName = `doc-upload`;
-     const uniqueWorkspaceName = await createUniqueWorkspaceName(baseName, workspaces);
-     // Create the workspace
-     const result = await apiClient.workspaces.createKendraWorkspace({
-       name: uniqueWorkspaceName,
-       kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // SARAH HARDCODED NOW 
-       useAllData: true, 
-       createdBy: username,
-     });
-     
-     // Extract the workspace ID from the result
-     const workspaceId = result.data?.createKendraWorkspace?.id;
-     if (workspaceId) {
-      
-      // Update the workspace count and state
-      setWorkspaceCount(workspaceCount + 1);
-      const newWorkspace = { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-      setWorkspaces([...workspaces, { ...newWorkspace, __typename: "Workspace" }]);
-      setNewWorkspace({ ...newWorkspace, __typename: "Workspace" }); // Set the newly created workspace
-       
-      // Navigate to the newly created workspace
-       navigate(`/rag/workspaces/${workspaceId}`);
-       console.log('Navigated to the new workspace');
-       setNavigatedToWorkspace(true); // Set the state to indicate navigation
-     } else {
-       console.error('Workspace ID not found in the result');
-     }
-     
-     // Update the workspace count and state
-     setWorkspaceCount(workspaceCount + 1);
-     setWorkspaces([...workspaces, { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }]);
-   } catch (error) {
-     console.error('Error creating workspace:', error);
-     // Handle error appropriately, e.g., set a global error state
-   }
- };
- 
-//  const handleNavigateBack = () => {
-//   if (newWorkspace) {
-//     console.log('newworkspace found', newWorkspace);
-//     setState((prevState) => ({
-//       ...prevState,
-//       selectedWorkspace: {
-//         label: newWorkspace.name,
-//         value: newWorkspace.id,
-//       },
-//       console.log('state after newworkspace found', prevState)
-//     }));
-//   }
-//   navigate(-1); // Navigate back to the previous page
-//   setNavigatedToWorkspace(false); // Reset the state
-// };
+  };
 
- 
-// setting message history to the ref
+  // Function to create a unique workspace name
+  const createUniqueWorkspaceName = async (baseName: string, workspaces: Workspace[]): Promise<string> => {
+    let count = 0;
+    let uniqueName = `${baseName}-${count}`;
+    while (await checkWorkspaceExists(uniqueName)) {
+      count++;
+      uniqueName = `${baseName}-${count}`;
+    }
+    return uniqueName;
+  };
+
+  // SARAH doc upload
+  const handleUploadDocument = async () => {
+    if (!appContext) return;
+    const apiClient = new ApiClient(appContext);
+    try {
+      const username = await Auth.currentAuthenticatedUser().then((user) => user.username);
+      // Create a unique workspace name
+      const baseName = `doc-upload`;
+      const uniqueWorkspaceName = await createUniqueWorkspaceName(baseName, workspaces);
+      // Create the workspace
+      const result = await apiClient.workspaces.createKendraWorkspace({
+        name: uniqueWorkspaceName,
+        kendraIndexId: "a53fde4c-3044-4cce-9ac8-f3fc1267b0b6", // SARAH HARDCODED NOW 
+        useAllData: true, 
+        createdBy: username,
+      });
+      // Extract the workspace ID from the result
+      const workspaceId = result.data?.createKendraWorkspace?.id;
+      if (workspaceId) {
+        // Update the workspace count and state
+        setWorkspaceCount(workspaceCount + 1);
+        const newWorkspace = { id: workspaceId, name: uniqueWorkspaceName, __typename: "Workspace", engine: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+        setWorkspaces([...workspaces, { ...newWorkspace, __typename: "Workspace" }]);
+        setNewWorkspace({ ...newWorkspace, __typename: "Workspace" }); // Set the newly created workspace
+        // Navigate to the newly created workspace
+        navigate(`/rag/workspaces/${workspaceId}`);
+        console.log('Navigated to the new workspace');
+        setNavigatedToWorkspace(true); // Set the state to indicate navigation
+      } else {
+        console.error('Workspace ID not found in the result');
+      }
+    } catch (error) {
+      console.error('Error creating workspace:', error);
+      // Handle error appropriately, e.g., set a global error state
+    }
+  };
+
+  const handleNavigateBack = () => {
+    if (newWorkspace) {
+      setState((prevState) => ({
+        ...prevState,
+        selectedWorkspace: {
+          label: newWorkspace.name,
+          value: newWorkspace.id,
+        },
+      }));
+    }
+    navigate(-1); // Navigate back to the previous page
+    setNavigatedToWorkspace(false); // Reset the state
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error + "here"}</div>;
+  }
+
+  // setting message history to the ref
   useEffect(() => {
     messageHistoryRef.current = props.messageHistory;
   }, [props.messageHistory]);
-  
-  // starting appsync and retrieving message hisotry 
+
+  // starting appsync and retrieving message history 
   useEffect(() => {
     async function subscribe() {
       console.log("Subscribing to AppSync");
@@ -297,7 +299,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
               messageHistoryRef.current,
               response
             );
-
             if (
               response.action === ChatBotAction.FinalResponse ||
               response.action === ChatBotAction.Error
@@ -326,7 +327,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           modelInterface: ChatBotModelInterface.Langchain,
           data: {
             sessionId: props.session.id,
-            // initialPrompt: props.initialPrompt
           },
         };
         const result = API.graphql({
@@ -343,7 +343,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         console.log(err);
         setReadyState(ReadyState.CLOSED);
       });
-
     return () => {
       sub
         .then((s) => {
@@ -352,21 +351,13 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         })
         .catch((err) => console.log(err));
     };
-    // eslint-disable-next-line
   }, [props.session.id]);
-  
+
   useEffect(() => {
     if (transcript) {
       setState((state) => ({ ...state, value: transcript }));
     }
   }, [transcript]);
-  // useEffect(() => {
-  //   if (props.initialPrompt) {
-  //     console.log("got to prompts use affect")
-  //     setState((prevState) => ({ ...prevState, value: props.initialPrompt + " " }));
-  //   }
-  // }, [props.initialPrompt]);
-
 
   useEffect(() => {
     if (!appContext) return;
@@ -377,8 +368,8 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       let modelsResult: GraphQLResult<any>;
       let workspacesResult: GraphQLResult<any>;
       try {
-         let username = "";
-         username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
+        let username = "";
+        username = await Auth.currentAuthenticatedUser().then((value) => username = value.username);
         if (appContext?.config.rag_enabled) {
           [modelsResult, workspacesResult] = await Promise.all([
             apiClient.models.getModels(),
@@ -391,22 +382,19 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           modelsResult = await apiClient.models.getModels();
         }
         const models = modelsResult.data ? modelsResult.data.listModels : [];
-        
         // save meta model data to local storage as default
         let defaultModel = '';
-        if(models.length){
+        if (models.length) {
           const smartModel = models.find((m) => m.name === "Smart Model");
-          if (smartModel)  {
+          if (smartModel) {
             defaultModel = "bedrock::Smart Model";
           }
         }
-
         const selectedModelOption = getSelectedModelOption(models, defaultModel);
         const selectedModelMetadata = getSelectedModelMetadata(
           models,
           selectedModelOption
         );
-
         const selectedWorkspaceOption = appContext?.config.rag_enabled
           ? getSelectedWorkspaceOption(workspaces)
           : workspaceDefaultOptions[0];
@@ -420,14 +408,12 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           modelsStatus: "finished",
           workspacesStatus: workspacesStatus,
         }));
-
       } catch (error) {
         console.log(Utils.getErrorMessage(error));
         setState((state) => ({
           ...state,
           modelsStatus: "error",
         }));
-
       }
     })();
   }, [appContext, state.modelsStatus]);
@@ -438,27 +424,24 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         ChatScrollState.skipNextScrollEvent = false;
         return;
       }
-
       const isScrollToTheEnd =
         Math.abs(
           window.innerHeight +
             window.scrollY -
             document.documentElement.scrollHeight
         ) <= 10;
-
       if (!isScrollToTheEnd) {
         ChatScrollState.userHasScrolled = true;
       } else {
         ChatScrollState.userHasScrolled = false;
       }
     };
-    
     window.addEventListener("scroll", onWindowScroll);
     return () => {
       window.removeEventListener("scroll", onWindowScroll);
     };
   }, []);
-  
+
   useLayoutEffect(() => {
     if (ChatScrollState.skipNextHistoryUpdate) {
       ChatScrollState.skipNextHistoryUpdate = false;
@@ -487,7 +470,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         setFiles(files);
       }
     };
-
     if (props.configuration.files?.length) {
       getSignedUrls();
     }
@@ -513,17 +495,15 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       state.selectedModel.value
     );
     let dateTime = new Date();
-    let value = state.value 
-    //+ " For more context current date and time is: " + dateTime.toLocaleString();
-    
-    value = value.trim()
+    let value = state.value.trim();
     if (!value) return;
-    
+
     const request: ChatBotRunRequest = {
       action: ChatBotAction.Run,
       modelInterface:
         (props.configuration.files && props.configuration.files.length > 0) ||
         (hasImagesInChatHistory() &&
+         
           state.selectedModelMetadata?.inputModalities.includes(
             ChabotInputModality.Image
           ))
@@ -546,24 +526,23 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         },
       },
     };
-
     //adding prompt to state 
     console.log(request);
     setState((state) => ({
       ...state,
       value: "",
     }));
-
     setFiles([]);
+
     props.setConfiguration({
       ...props.configuration,
       files: [],
     });
-
     console.log('chat-input state', state)
     props.setRunning(true);
     messageHistoryRef.current = [
       ...messageHistoryRef.current,
+
       {
         type: ChatBotMessageType.Human,
         content: value, 
@@ -593,12 +572,13 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         data: JSON.stringify(request),
       },
     });
+
     // change here to set readonly to false after sending 
   //   if (isReadOnly) {
   //     setIsReadOnly(false);  // Allow editing after the first send
   //  }
   };
-  
+
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
     [ReadyState.OPEN]: "Open",
@@ -662,9 +642,10 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             configuration={props.configuration}
             setConfiguration={props.setConfiguration}
           />
+          
           <TextareaAutosize
             className={styles.input_textarea}
-            value={state.value} // added here so the value in the component is bound to state
+            value={state.value} // added here so the value in the  component is bound to state 
             // readOnly={isReadOnly}
             maxRows={6}
             minRows={1}
@@ -679,6 +660,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 handleSendMessage();
               }
             }}
+            
             placeholder={listening ? "Listening..." : "Send a message"}
           />
           <div style={{ marginLeft: "8px" }}>
@@ -782,6 +764,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                     ...state,
                     selectedWorkspace: detail.selectedOption,
                   }));
+
                   StorageHelper.setSelectedWorkspaceId(
                     detail.selectedOption?.value ?? ""
                   );
@@ -791,6 +774,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             />
           )}
         </div>
+
         <div className={styles.input_controls_right}>
           <SpaceBetween direction="horizontal" size="xxs" alignItems="center">
             <div style={{ paddingTop: "1px" }}>
@@ -807,7 +791,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
-  
+
             {/* SARAH New Upload Document Button */}
             <Button
               onClick={handleUploadDocument}
@@ -816,7 +800,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             >
               Upload Document
             </Button>
-  
+
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN
@@ -834,31 +818,39 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       </div>
     </SpaceBetween>
   );
+}
 
 function getSelectedWorkspaceOption(
   workspaces: Workspace[]
 ): SelectProps.Option | null {
   let selectedWorkspaceOption: SelectProps.Option | null = null;
+
   const savedWorkspaceId = StorageHelper.getSelectedWorkspaceId();
   if (savedWorkspaceId) {
     const targetWorkspace = workspaces.find((w) => w.id === savedWorkspaceId);
+
     if (targetWorkspace) {
       selectedWorkspaceOption = OptionsHelper.getSelectOptions([
         targetWorkspace,
       ])[0];
     }
   }
+
   if (!selectedWorkspaceOption) {
     selectedWorkspaceOption = workspaceDefaultOptions[0];
   }
+
   return selectedWorkspaceOption;
 }
+
 function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
   let selectedModelOption: SelectProps.Option | null = null;
   let savedModel = StorageHelper.getSelectedLLM();
+
   if(defaultModel){
     savedModel = defaultModel;
   }
+
   if (savedModel) {
     const savedModelDetails = OptionsHelper.parseValue(savedModel);
     const targetModel = models.find(
@@ -866,48 +858,59 @@ function getSelectedModelOption(models: Model[], defaultModel:string = ''): Sele
         m.name === savedModelDetails.name &&
         m.provider === savedModelDetails.provider
     );
+
     if (targetModel) {
       selectedModelOption = OptionsHelper.getSelectOptionGroups([
         targetModel,
       ])[0].options[0];
     }
   }
+
   let candidate: Model | undefined = undefined;
   if (!selectedModelOption) {
     const bedrockModels = models.filter((m) => m.provider === "bedrock");
     const sageMakerModels = models.filter((m) => m.provider === "sagemaker");
     const openAIModels = models.filter((m) => m.provider === "openai");
+
     candidate = bedrockModels.find((m) => m.name === "anthropic.claude-v2");
     if (!candidate) {
       candidate = bedrockModels.find((m) => m.name === "anthropic.claude-v1");
     }
+
     // CHANGE IN HERE FOR DEFAULT TO BE SMART MODEL 
     if (!candidate) {
       candidate = bedrockModels.find(
         (m) => m.name === "amazon.titan-tg1-large"
       );
     }
+
     if (!candidate) {
       candidate = bedrockModels.find((m) => m.name.startsWith("amazon.titan-"));
     }
+
     if (!candidate && sageMakerModels.length > 0) {
       candidate = sageMakerModels[0];
     }
+
     if (openAIModels.length > 0) {
       if (!candidate) {
         candidate = openAIModels.find((m) => m.name === "gpt-4");
       }
+
       if (!candidate) {
         candidate = openAIModels.find((m) => m.name === "gpt-3.5-turbo-16k");
       }
     }
+
     if (!candidate && bedrockModels.length > 0) {
       candidate = bedrockModels[0];
     }
+
     if (candidate) {
       selectedModelOption = OptionsHelper.getSelectOptionGroups([candidate])[0]
         .options[0];
     }
   }
+
   return selectedModelOption;
 }

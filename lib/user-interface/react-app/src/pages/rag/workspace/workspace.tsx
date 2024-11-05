@@ -1,5 +1,6 @@
 import {
   BreadcrumbGroup,
+  Button,
   ContentLayout,
   Flashbar,
   Header,
@@ -59,6 +60,11 @@ export default function WorkspacePane() {
   const showTabs = !workspace?.kendraIndexExternal;
   const disabledTabs =
     workspace?.engine === "kendra" ? ["qna", "website", "rssfeed"] : [];
+  
+  // SARAH testing
+  const handleNavigateBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   return (
     <BaseAppLayout
@@ -93,6 +99,13 @@ export default function WorkspacePane() {
               variant="h1"
               actions={
                 <SpaceBetween direction="horizontal" size="xs">
+                  <Button
+                    onClick={handleNavigateBack}
+                    variant="normal"
+                    iconName="arrow-left"
+                  >
+                    Go Back
+                  </Button>
                   <RouterButton
                     href={`/rag/semantic-search?workspaceId=${workspaceId}`}
                   >

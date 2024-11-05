@@ -244,26 +244,22 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
    }
  };
  
- const handleNavigateBack = () => {
-  if (newWorkspace) {
-    setState((prevState) => ({
-      ...prevState,
-      selectedWorkspace: {
-        label: newWorkspace.name,
-        value: newWorkspace.id,
-      },
-    }));
-  }
-  navigate(-1); // Navigate back to the previous page
-  setNavigatedToWorkspace(false); // Reset the state
-};
+//  const handleNavigateBack = () => {
+//   if (newWorkspace) {
+//     console.log('newworkspace found', newWorkspace);
+//     setState((prevState) => ({
+//       ...prevState,
+//       selectedWorkspace: {
+//         label: newWorkspace.name,
+//         value: newWorkspace.id,
+//       },
+//       console.log('state after newworkspace found', prevState)
+//     }));
+//   }
+//   navigate(-1); // Navigate back to the previous page
+//   setNavigatedToWorkspace(false); // Reset the state
+// };
 
-if (loading) {
-  return <div>Loading...</div>;
-}
-if (error) {
-  return <div>{error + "here"}</div>;
-}
  
 // setting message history to the ref
   useEffect(() => {
@@ -431,21 +427,25 @@ if (error) {
           ...state,
           modelsStatus: "error",
         }));
+
       }
     })();
   }, [appContext, state.modelsStatus]);
+
   useEffect(() => {
     const onWindowScroll = () => {
       if (ChatScrollState.skipNextScrollEvent) {
         ChatScrollState.skipNextScrollEvent = false;
         return;
       }
+
       const isScrollToTheEnd =
         Math.abs(
           window.innerHeight +
             window.scrollY -
             document.documentElement.scrollHeight
         ) <= 10;
+
       if (!isScrollToTheEnd) {
         ChatScrollState.userHasScrolled = true;
       } else {
@@ -608,7 +608,7 @@ if (error) {
   }[readyState];
 
   const modelsOptions = OptionsHelper.getSelectOptionGroups(state.models ?? []);
-  
+
   const workspaceOptions = [
     ...workspaceDefaultOptions,
     ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
@@ -631,7 +631,7 @@ if (error) {
               />
             ) : (
               <Icon name="microphone-off" variant="disabled" />
-            )}
+
             {state.selectedModelMetadata?.inputModalities.includes(
               ChabotInputModality.Image
             ) && (
@@ -810,22 +810,13 @@ if (error) {
               />
             </div>
             {/* SARAH New Upload Document Button */}
-            <Button
-              onClick={handleUploadDocument}
-              variant="primary"
-              iconName="upload"
-            >
-              Upload Document
-            </Button>
-            {navigatedToWorkspace && (
-              <Button
-                onClick={handleNavigateBack}
-                variant="normal"
-                iconName="arrow-left"
-              >
-                Go Back
-              </Button>
-            )}
+          <Button
+            onClick={handleUploadDocument}
+            variant="primary"
+            iconName="upload"
+          >
+            Upload Document
+          </Button>
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN

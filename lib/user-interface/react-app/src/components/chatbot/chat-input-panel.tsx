@@ -631,7 +631,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
               />
             ) : (
               <Icon name="microphone-off" variant="disabled" />
-
+            )}
             {state.selectedModelMetadata?.inputModalities.includes(
               ChabotInputModality.Image
             ) && (
@@ -662,10 +662,9 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             configuration={props.configuration}
             setConfiguration={props.setConfiguration}
           />
-          
           <TextareaAutosize
             className={styles.input_textarea}
-            value={state.value} // added here so the value in the  component is bound to state 
+            value={state.value} // added here so the value in the component is bound to state
             // readOnly={isReadOnly}
             maxRows={6}
             minRows={1}
@@ -680,7 +679,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 handleSendMessage();
               }
             }}
-            
             placeholder={listening ? "Listening..." : "Send a message"}
           />
           <div style={{ marginLeft: "8px" }}>
@@ -809,14 +807,16 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
+  
             {/* SARAH New Upload Document Button */}
-          <Button
-            onClick={handleUploadDocument}
-            variant="primary"
-            iconName="upload"
-          >
-            Upload Document
-          </Button>
+            <Button
+              onClick={handleUploadDocument}
+              variant="primary"
+              iconName="upload"
+            >
+              Upload Document
+            </Button>
+  
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN
@@ -834,7 +834,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       </div>
     </SpaceBetween>
   );
-}
+
 function getSelectedWorkspaceOption(
   workspaces: Workspace[]
 ): SelectProps.Option | null {

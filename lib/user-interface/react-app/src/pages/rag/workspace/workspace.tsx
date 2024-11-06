@@ -1,5 +1,6 @@
 import {
   BreadcrumbGroup,
+  Button,
   ContentLayout,
   Flashbar,
   Header,
@@ -34,6 +35,9 @@ export default function WorkspacePane() {
   const [workspace, setWorkspace] = useState<Workspace | undefined | null>(
     null
   );
+  // Sarah testing
+  const [sessions, setSessions] = useState<any[]>([]); // Assuming sessions is an array of session objects
+
 
   const getWorkspace = useCallback(async () => {
     if (!appContext || !workspaceId) return;
@@ -59,6 +63,53 @@ export default function WorkspacePane() {
   const showTabs = !workspace?.kendraIndexExternal;
   const disabledTabs =
     workspace?.engine === "kendra" ? ["qna", "website", "rssfeed"] : [];
+
+  function truncateText(text, charLimit) {
+      let cleanText = text.replace(/[^a-zA-Z0-9\s]/g, '');
+      cleanText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1);
+      if (cleanText.length > charLimit) {
+          return cleanText.substring(0, charLimit) + ' [...]';
+      }
+      return cleanText;
+  }
+  
+  // SARAH testing
+  const handleNavigateBack = () => {
+    if (sessions.length > 0) {
+      const mostRecentSession = sessions.reduce((latest, session) => {
+        return new Date(session.startTime) > new Date(latest.startTime) ? session : latest;
+      }, sessions[0]);
+      navigate(`/chatbot/playground/${mostRecentSession.id}`);
+    } else {
+      navigate('/default-chat');
+    }
+  };
+
+  const items = loading
+    ? [{ type: "link", text: "Loading...", href: "#" }]
+    : sessions.length > 0
+    ? sessions.map((session) => ({
+        type: "link",
+        text: `${truncateText(session.title || 'Untitled Session', 35)} - ${new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        }).format(new Date(session.startTime))}`,
+        href: `/chatbot/playground/${session.id}`,
+        tooltip: `Time Created: ${new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        }).format(new Date(session.startTime))}`
+      }))
+    : [{ type: "link", text: "No sessions available", href: "#" }];
+
 
   return (
     <BaseAppLayout
@@ -93,6 +144,13 @@ export default function WorkspacePane() {
               variant="h1"
               actions={
                 <SpaceBetween direction="horizontal" size="xs">
+                  <Button
+                    onClick={handleNavigateBack}
+                    variant="normal"
+                    iconName="arrow-left"
+                  >
+                    Go Back
+                  </Button>
                   <RouterButton
                     href={`/rag/semantic-search?workspaceId=${workspaceId}`}
                   >

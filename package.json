@@ -60,5 +60,8 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.6.1"
+  },
+  "resolutions": {
+    "aws-cdk-lib": "2.162.1"
   }
 }

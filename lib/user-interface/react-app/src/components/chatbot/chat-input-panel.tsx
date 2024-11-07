@@ -833,6 +833,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       </div>
     </SpaceBetween>
   );
+}
 
 function getSelectedWorkspaceOption(
   workspaces: Workspace[]
@@ -852,6 +853,7 @@ function getSelectedWorkspaceOption(
   }
   return selectedWorkspaceOption;
 }
+
 function getSelectedModelOption(models: Model[], defaultModel:string = ''): SelectProps.Option | null {
   let selectedModelOption: SelectProps.Option | null = null;
   let savedModel = StorageHelper.getSelectedLLM();

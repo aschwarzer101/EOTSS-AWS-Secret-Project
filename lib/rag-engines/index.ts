@@ -18,7 +18,7 @@ import path = require("path");
 import { S3EventSource } from "aws-cdk-lib/aws-lambda-event-sources";
 
 export interface RagEnginesProps {
-  readonly uploadBucket: s3.Bucket;
+  // readonly uploadBucket: s3.Bucket;
   readonly config: SystemConfig;
   readonly shared: Shared;
 }
@@ -39,7 +39,7 @@ export class RagEngines extends Construct {
   public readonly websiteCrawlingWorkflow?: sfn.StateMachine;
   public readonly deleteWorkspaceWorkflow?: sfn.StateMachine;
   public readonly dataImport: DataImport;
-  metadataHandlerFunction: lambda.Function;
+  // metadataHandlerFunction: lambda.Function;
 
   constructor(scope: Construct, id: string, props: RagEnginesProps) {
     super(scope, id);
@@ -108,43 +108,43 @@ export class RagEngines extends Construct {
       kendraRetrieval: kendraRetrieval ?? undefined,
     });
 
-    const metadataHandlerFunction = new lambda.Function(scope, 'MetadataHandlerFunction', {
-      runtime: lambda.Runtime.PYTHON_3_12,
-      code: lambda.Code.fromAsset(path.join(__dirname, 'metadata-handler')),
-      handler: 'lambda_function.lambda_handler',
-      timeout: cdk.Duration.seconds(30),
-      environment: {
-        "BUCKET": props.uploadBucket.bucketName,
-        // "KB_ID": props.uploadBucket.attrKnowledgeBaseId
-      },
-  });
+//     const metadataHandlerFunction = new lambda.Function(scope, 'MetadataHandlerFunction', {
+//       runtime: lambda.Runtime.PYTHON_3_12,
+//       code: lambda.Code.fromAsset(path.join(__dirname, 'metadata-handler')),
+//       handler: 'lambda_function.lambda_handler',
+//       timeout: cdk.Duration.seconds(30),
+//       environment: {
+//         "BUCKET": props.uploadBucket.bucketName,
+//         // "KB_ID": props.uploadBucket.attrKnowledgeBaseId
+//       },
+//   });
 
 
 
-    metadataHandlerFunction.addToRolePolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        's3:*' ,// Grants full access to all S3 actions (read, write, delete, etc.)
-        'bedrock:InvokeModel',
-        'bedrock:Retrieve',
-      ],
-      resources: [
-        props.uploadBucket.bucketArn,               // Grants access to the bucket itself (for actions like ListBucket)
-        props.uploadBucket.bucketArn + "/*" ,        // Grants access to all objects within the bucket
-        'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0',  // Add the Bedrock model resource explicitly
+//     metadataHandlerFunction.addToRolePolicy(new iam.PolicyStatement({
+//       effect: iam.Effect.ALLOW,
+//       actions: [
+//         's3:*' ,// Grants full access to all S3 actions (read, write, delete, etc.)
+//         'bedrock:InvokeModel',
+//         'bedrock:Retrieve',
+//       ],
+//       resources: [
+//         props.uploadBucket.bucketArn,               // Grants access to the bucket itself (for actions like ListBucket)
+//         props.uploadBucket.bucketArn + "/*" ,        // Grants access to all objects within the bucket
+//         'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0',  // Add the Bedrock model resource explicitly
 
 
-      ]
-    }));
+//       ]
+//     }));
 
 
-// Trigger the lambda function when a document is uploaded
+// // Trigger the lambda function when a document is uploaded
 
-    this.metadataHandlerFunction = metadataHandlerFunction;
+//     this.metadataHandlerFunction = metadataHandlerFunction;
 
-      metadataHandlerFunction.addEventSource(new S3EventSource(props.uploadBucket, {
-        events: [s3.EventType.OBJECT_CREATED],
-      }));
+//       metadataHandlerFunction.addEventSource(new S3EventSource(props.uploadBucket, {
+//         events: [s3.EventType.OBJECT_CREATED],
+//       }));
 
     this.auroraPgVector = auroraPgVector;
     this.openSearchVector = openSearchVector;

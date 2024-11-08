@@ -74,14 +74,29 @@ export default function WorkspacePane() {
   }
   
   // SARAH testing
-  const handleNavigateBack = () => {
-    if (sessions.length > 0) {
-      const mostRecentSession = sessions.reduce((latest, session) => {
-        return new Date(session.startTime) > new Date(latest.startTime) ? session : latest;
-      }, sessions[0]);
-      navigate(`/chatbot/playground/${mostRecentSession.id}`);
-    } else {
-      navigate('/default-chat');
+  const handleNavigateBack = async () => {
+    console.log('nav back');
+    
+    try {
+      const apiClient = new ApiClient(appContext);
+      const fetchedSessions = await apiClient.sessions.getSessions();
+      const sessions = fetchedSessions.data?.listSessions || [];
+      console.log('fetched within workspace sessions', sessions);
+      
+      if (sessions.length > 0) {
+        console.log('within session length');
+        console.log('sessions', sessions);
+        const mostRecentSession = sessions.reduce((latest, session) => {
+          return new Date(session.startTime) > new Date(latest.startTime) ? session : latest;
+        }, sessions[0]);
+        navigate(`/chatbot/playground/${mostRecentSession.id}`);
+        console.log('navigating to most recent session');
+      } else {
+        navigate('/chatbot/playground');
+      }
+    } catch (error) {
+      console.error('Error fetching sessions:', error);
+      navigate('/chatbot/playground');
     }
   };
 

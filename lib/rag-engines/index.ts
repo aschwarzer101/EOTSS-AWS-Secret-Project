@@ -12,10 +12,6 @@ import { OpenSearchVector } from "./opensearch-vector";
 import { RagDynamoDBTables } from "./rag-dynamodb-tables";
 import { SageMakerRagModels } from "./sagemaker-rag-models";
 import { Workspaces } from "./workspaces";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as cdk from "aws-cdk-lib";
-import path = require("path");
-import { S3EventSource } from "aws-cdk-lib/aws-lambda-event-sources";
 
 export interface RagEnginesProps {
   // readonly uploadBucket: s3.Bucket;

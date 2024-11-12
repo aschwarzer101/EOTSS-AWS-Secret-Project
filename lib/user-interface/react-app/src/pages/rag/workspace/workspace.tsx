@@ -23,6 +23,7 @@ import OpenSearchWorkspaceSettings from "./open-search-workspace-settings";
 import KendraWorkspaceSettings from "./kendra-workspace-settings";
 import { CHATBOT_NAME } from "../../../common/constants";
 import { Workspace } from "../../../API";
+import { v4 as uuidv4 } from 'uuid'; //sarah testing
 
 export default function WorkspacePane() {
   const appContext = useContext(AppContext);
@@ -76,29 +77,34 @@ export default function WorkspacePane() {
   // SARAH testing
   const handleNavigateBack = async () => {
     console.log('nav back');
-    
-    try {
-      const apiClient = new ApiClient(appContext);
-      const fetchedSessions = await apiClient.sessions.getSessions();
-      const sessions = fetchedSessions.data?.listSessions || [];
-      console.log('fetched within workspace sessions', sessions);
-      
-      if (sessions.length > 0) {
-        console.log('within session length');
-        console.log('sessions', sessions);
-        const mostRecentSession = sessions.reduce((latest, session) => {
-          return new Date(session.startTime) > new Date(latest.startTime) ? session : latest;
-        }, sessions[0]);
-        navigate(`/chatbot/playground/${mostRecentSession.id}`);
-        console.log('navigating to most recent session');
-      } else {
-        navigate('/chatbot/playground');
-      }
-    } catch (error) {
-      console.error('Error fetching sessions:', error);
-      navigate('/chatbot/playground');
-    }
+    navigate(`/chatbot/playground`);
+    console.log('navigating to playground');
   };
+
+
+    // SARAH -- this navigates back to the most recent session
+    // try {
+    //   const apiClient = new ApiClient(appContext);
+    //   const fetchedSessions = await apiClient.sessions.getSessions();
+    //   const sessions = fetchedSessions.data?.listSessions || [];
+    //   console.log('fetched within workspace sessions', sessions);
+      
+    //   if (sessions.length > 0) {
+    //     console.log('within session length');
+    //     console.log('sessions', sessions);
+    //     const mostRecentSession = sessions.reduce((latest, session) => {
+    //       return new Date(session.startTime) > new Date(latest.startTime) ? session : latest;
+    //     }, sessions[0]);
+    //     navigate(`/chatbot/playground/${mostRecentSession.id}`);
+    //     console.log('navigating to most recent session');
+    //   } else {
+    //     navigate('/chatbot/playground');
+    //   }
+    // } catch (error) {
+    //   console.error('Error fetching sessions:', error);
+    //   navigate('/chatbot/playground');
+    // }
+  //};
 
   const items = loading
     ? [{ type: "link", text: "Loading...", href: "#" }]

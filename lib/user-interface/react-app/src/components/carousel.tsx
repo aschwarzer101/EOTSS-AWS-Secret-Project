@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TaskCard } from "./caro-card";
-import { Grid, Button, Box } from "@cloudscape-design/components";
+import { Grid, Button } from "@cloudscape-design/components";
 import { Mode } from "@cloudscape-design/global-styles";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +14,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const taskCards = [
         {
             name: "summarize",
-            cardTitle: "Summarize",
+            cardTitle: "Summarize!",
             taskDescription: "Summarize meeting notes, articles, memos.",
             instructions: "Paste your text below",
             url: `/chatbot/task-playground/${uuidv4()}/summarize`,
@@ -86,43 +86,29 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
         },
     ];
 
-    // Show the first 6 cards initially and expand to show all cards
-    const visibleCards = showAll ? taskCards : taskCards.slice(0, 6);
+    // Show the first 3 cards initially and expand to show all cards
+    const visibleCards = showAll ? taskCards : taskCards.slice(0, 3);
 
     return (
-        <Box margin={{ vertical: "m", horizontal: "l" }}>
+        <div>
+            {/* Grid layout using AWS Cloudscape */}
             <Grid
                 gridDefinition={[
-                    { colspan: 4 }, // Three cards per row on large screens
-                    { colspan: 6 }, // Two cards per row on medium screens
-                    { colspan: 12 }, // One card per row on small screens
+                    { colspan: 4 }, // Default: Three cards per row
+                    { colspan: { xxs: 12, s: 6, m: 4 } }, // Responsive for small screens (2 cards for 's', 3 cards for 'm')
                 ]}
             >
                 {visibleCards.map((task) => (
-                    <div
+                    <TaskCard
                         key={task.name}
-                        style={{
-                            height: "200px", // Ensures consistent card height
-                            backgroundColor: "var(--awsui-color-background-secondary)", // Matches the purple boxes above
-                            borderRadius: "8px",
-                            padding: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
-                        }}
-                    >
-                        <TaskCard
-                            name={task.name}
-                            cardTitle={task.cardTitle}
-                            taskDescription={task.taskDescription}
-                            instructions={task.instructions}
-                            url={task.url}
-                            apiPrompt={task.apiPrompt}
-                            theme={theme}
-                        />
-                    </div>
+                        name={task.name}
+                        cardTitle={task.cardTitle}
+                        taskDescription={task.taskDescription}
+                        instructions={task.instructions}
+                        url={task.url}
+                        apiPrompt={task.apiPrompt}
+                        theme={theme}
+                    />
                 ))}
             </Grid>
 
@@ -132,13 +118,11 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     {showAll ? "Show Less" : "Show More"}
                 </Button>
             </div>
-        </Box>
+        </div>
     );
 };
 
 export default CarouselNext;
-
-
 
 
 

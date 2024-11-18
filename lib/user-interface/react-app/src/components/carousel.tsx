@@ -99,6 +99,14 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
+            {/* Header or description */}
+            <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
+                Tasks
+            </h2>
+            <p style={{ textAlign: "center", marginBottom: "2rem" }}>
+                Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information.
+            </p>
+    
             {/* Flexbox layout for cards */}
             <div
                 style={{
@@ -148,8 +156,10 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                 </Button>
             </div>
         </div>
-    );
-    
+    );    
+};    
+
+export default CarouselNext;
 
 
 

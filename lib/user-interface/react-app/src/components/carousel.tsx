@@ -99,22 +99,16 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-            {/* Header or description */}
-            <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                Tasks
-            </h2>
-            <p style={{ textAlign: "center", marginBottom: "2rem" }}>
-                Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information.
-            </p>
     
             {/* Flexbox layout for cards */}
             <div
                 style={{
-                    display: "flex", // Use flexbox for layout
-                    justifyContent: "space-evenly", // Evenly space out cards
-                    alignItems: "stretch", // Ensure cards are the same height
-                    flexWrap: "wrap", // Wrap to next row on smaller screens
-                    gap: "1rem", // Add spacing between cards
+                    display: "flex", // Flexbox layout
+                    justifyContent: "space-between", // Evenly space out cards
+                    alignItems: "flex-start", // Align items to the top
+                    flexWrap: "wrap", // Wrap to the next row if necessary
+                    gap: "1.5rem", // Add spacing between cards
+                    padding: "1rem", // Optional padding around the layout
                 }}
             >
                 {visibleCards.map((task) => (
@@ -124,16 +118,15 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             flex: "1 0 30%", // Each card takes up 30% of the row
                             maxWidth: "30%", // Prevents growing too large
                             minWidth: "250px", // Ensures proper size on smaller screens
-                            border: "1px solid #ccc", // Subtle border for clarity
-                            borderRadius: "8px", // Rounded corners
-                            padding: "1rem", // Padding inside the card
-                            textAlign: "center", // Center-align text
                             height: "200px", // Equal height for all cards
                             display: "flex", // Flex layout for card content
                             flexDirection: "column", // Stack content vertically
                             justifyContent: "space-between", // Space out content
-                            backgroundColor: "#f9f9f9", // Lighter background for cards
-                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Subtle shadow
+                            backgroundColor: "transparent", // Remove white background
+                            border: "none", // No borders
+                            boxShadow: "none", // Remove box shadows
+                            margin: "0", // Remove unnecessary margins
+                            padding: "0", // Remove extra padding
                         }}
                     >
                         <TaskCard
@@ -144,6 +137,11 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             url={task.url}
                             apiPrompt={task.apiPrompt}
                             theme={theme}
+                            style={{
+                                backgroundColor: "transparent", // Ensure TaskCard has no background
+                                boxShadow: "none", // Ensure no box shadow on TaskCard
+                                margin: "0", // Prevent TaskCard from adding extra spacing
+                            }}
                         />
                     </div>
                 ))}
@@ -156,7 +154,8 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                 </Button>
             </div>
         </div>
-    );    
+    );
+    
 };    
 
 export default CarouselNext;

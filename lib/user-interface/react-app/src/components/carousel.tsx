@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TaskCard } from "./caro-card";
-import { Grid, Button, Container } from "@cloudscape-design/components";
+import { Grid, Button, Box } from "@cloudscape-design/components";
 import { Mode } from "@cloudscape-design/global-styles";
 import { v4 as uuidv4 } from "uuid";
 
@@ -86,61 +86,58 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
         },
     ];
 
-    // Show the first 3 cards initially and expand to show all cards
-    const visibleCards = showAll ? taskCards : taskCards.slice(0, 3);
+    // Show the first 6 cards initially and expand to show all cards
+    const visibleCards = showAll ? taskCards : taskCards.slice(0, 6);
 
     return (
-        <Container>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "16px",
-                }}
+        <Box margin={{ vertical: "m", horizontal: "l" }}>
+            <Grid
+                gridDefinition={[
+                    { colspan: 4 }, // Three cards per row on large screens
+                    { colspan: 6 }, // Two cards per row on medium screens
+                    { colspan: 12 }, // One card per row on small screens
+                ]}
             >
-                <Grid
-                    gridDefinition={[
-                        { colspan: 4 }, // Three cards per row on large screens
-                    ]}
-                >
-                    {visibleCards.map((task) => (
-                        <div
-                            key={task.name}
-                            style={{
-                                height: "150px", // Ensure consistent height
-                                padding: "16px",
-                                borderRadius: "8px",
-                                backgroundColor: "var(--awsui-color-background-secondary)", // Matches Cloudscape's secondary color
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                textAlign: "center",
-                            }}
-                        >
-                            <TaskCard
-                                name={task.name}
-                                cardTitle={task.cardTitle}
-                                taskDescription={task.taskDescription}
-                                instructions={task.instructions}
-                                url={task.url}
-                                apiPrompt={task.apiPrompt}
-                                theme={theme}
-                            />
-                        </div>
-                    ))}
-                </Grid>
+                {visibleCards.map((task) => (
+                    <div
+                        key={task.name}
+                        style={{
+                            height: "200px", // Ensures consistent card height
+                            backgroundColor: "var(--awsui-color-background-secondary)", // Matches the purple boxes above
+                            borderRadius: "8px",
+                            padding: "16px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
+                        }}
+                    >
+                        <TaskCard
+                            name={task.name}
+                            cardTitle={task.cardTitle}
+                            taskDescription={task.taskDescription}
+                            instructions={task.instructions}
+                            url={task.url}
+                            apiPrompt={task.apiPrompt}
+                            theme={theme}
+                        />
+                    </div>
+                ))}
+            </Grid>
 
-                <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                    <Button onClick={() => setShowAll(!showAll)} variant="primary">
-                        {showAll ? "Show Less" : "Show More"}
-                    </Button>
-                </div>
+            {/* Show More / Show Less Button */}
+            <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                <Button onClick={() => setShowAll(!showAll)} variant="primary">
+                    {showAll ? "Show Less" : "Show More"}
+                </Button>
             </div>
-        </Container>
+        </Box>
     );
 };
 
 export default CarouselNext;
+
 
 
 

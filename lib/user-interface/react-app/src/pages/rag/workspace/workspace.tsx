@@ -74,12 +74,14 @@ export default function WorkspacePane() {
       return cleanText;
   }
   
-  // SARAH testing
+  // SARAH testing 
   const handleNavigateBack = async () => {
     console.log('nav back');
     navigate(`/chatbot/playground`);
     console.log('navigating to playground');
   };
+
+  // SARAH - note: this works but now we want to initialize the session with the recently created workspace
 
 
     // SARAH -- this navigates back to the most recent session

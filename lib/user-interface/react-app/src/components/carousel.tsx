@@ -99,7 +99,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-    
+
             {/* Flexbox layout for cards */}
             <div
                 style={{
@@ -129,6 +129,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             padding: "0", // Remove extra padding
                         }}
                     >
+                        {/* TaskCard remains unchanged */}
                         <TaskCard
                             name={task.name}
                             cardTitle={task.cardTitle}
@@ -137,11 +138,6 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             url={task.url}
                             apiPrompt={task.apiPrompt}
                             theme={theme}
-                            style={{
-                                backgroundColor: "transparent", // Ensure TaskCard has no background
-                                boxShadow: "none", // Ensure no box shadow on TaskCard
-                                margin: "0", // Prevent TaskCard from adding extra spacing
-                            }}
                         />
                     </div>
                 ))}
@@ -155,6 +151,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             </div>
         </div>
     );
+    
     
 };    
 

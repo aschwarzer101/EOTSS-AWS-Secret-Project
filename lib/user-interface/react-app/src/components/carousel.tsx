@@ -14,7 +14,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const taskCards = [
         {
             name: "summarize",
-            cardTitle: "Summarize!",
+            cardTitle: "Summarize",
             taskDescription: "Summarize meeting notes, articles, memos.",
             instructions: "Paste your text below",
             url: `/chatbot/task-playground/${uuidv4()}/summarize`,
@@ -94,21 +94,32 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             {/* Grid layout using AWS Cloudscape */}
             <Grid
                 gridDefinition={[
-                    { colspan: 4 }, // Default: Three cards per row
-                    { colspan: { xxs: 12, s: 6, m: 4 } }, // Responsive for small screens (2 cards for 's', 3 cards for 'm')
+                    { colspan: { default: 4 } }, // Three cards per row on large screens
                 ]}
+                style={{
+                    gap: "16px", // Adjust spacing between cards
+                }}
             >
                 {visibleCards.map((task) => (
-                    <TaskCard
+                    <div
                         key={task.name}
-                        name={task.name}
-                        cardTitle={task.cardTitle}
-                        taskDescription={task.taskDescription}
-                        instructions={task.instructions}
-                        url={task.url}
-                        apiPrompt={task.apiPrompt}
-                        theme={theme}
-                    />
+                        style={{
+                            height: "150px", // Ensure consistent height
+                            padding: "16px",
+                            borderRadius: "8px",
+                            backgroundColor: "var(--awsui-color-background-secondary)", // Matches Cloudscape's secondary color
+                        }}
+                    >
+                        <TaskCard
+                            name={task.name}
+                            cardTitle={task.cardTitle}
+                            taskDescription={task.taskDescription}
+                            instructions={task.instructions}
+                            url={task.url}
+                            apiPrompt={task.apiPrompt}
+                            theme={theme}
+                        />
+                    </div>
                 ))}
             </Grid>
 

@@ -148,10 +148,8 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                 </Button>
             </div>
         </div>
-    );    
-};    
-
-export default CarouselNext;
+    );
+    
 
 
 

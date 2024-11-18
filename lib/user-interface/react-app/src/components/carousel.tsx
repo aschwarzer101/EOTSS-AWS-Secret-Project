@@ -91,36 +91,64 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-            {/* Grid layout using AWS Cloudscape */}
-            <Grid
-                gridDefinition={[
-                    { colspan: 4 }, // Default: Three cards per row
-                    { colspan: { xxs: 12, s: 6, m: 4 } }, // Responsive for small screens (2 cards for 's', 3 cards for 'm')
-                ]}
+            {/* Header or description */}
+            <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
+                Tasks
+            </h2>
+            <p style={{ textAlign: "center", marginBottom: "2rem" }}>
+                Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information.
+            </p>
+    
+            {/* Flexbox layout for cards */}
+            <div
+                style={{
+                    display: "flex", // Use flexbox for layout
+                    justifyContent: "space-between", // Even spacing between cards
+                    alignItems: "center", // Center vertically
+                    flexWrap: "wrap", // Wrap cards on smaller screens
+                    gap: "1rem", // Space between cards
+                }}
             >
                 {visibleCards.map((task) => (
-                    <TaskCard
+                    <div
                         key={task.name}
-                        name={task.name}
-                        cardTitle={task.cardTitle}
-                        taskDescription={task.taskDescription}
-                        instructions={task.instructions}
-                        url={task.url}
-                        apiPrompt={task.apiPrompt}
-                        theme={theme}
-                    />
+                        style={{
+                            flex: "1 0 30%", // Each card takes up 30% of the row
+                            maxWidth: "30%", // Prevents growing too large
+                            minWidth: "250px", // Ensures proper size on smaller screens
+                            backgroundColor: "#e0f7fa", // Light blue background
+                            borderRadius: "8px", // Rounded corners
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Subtle shadow
+                            padding: "1rem", // Padding inside the card
+                            textAlign: "center", // Center-align text
+                            height: "200px", // Equal height for all cards
+                            display: "flex", // Flex layout for card content
+                            flexDirection: "column", // Stack content vertically
+                            justifyContent: "space-between", // Space out content
+                        }}
+                    >
+                        <TaskCard
+                            name={task.name}
+                            cardTitle={task.cardTitle}
+                            taskDescription={task.taskDescription}
+                            instructions={task.instructions}
+                            url={task.url}
+                            apiPrompt={task.apiPrompt}
+                            theme={theme}
+                        />
+                    </div>
                 ))}
-            </Grid>
-
+            </div>
+    
             {/* Show More / Show Less Button */}
-            <div style={{ textAlign: "center", marginTop: "1rem" }}>
+            <div style={{ textAlign: "center", marginTop: "2rem" }}>
                 <Button onClick={() => setShowAll(!showAll)} variant="primary">
                     {showAll ? "Show Less" : "Show More"}
                 </Button>
             </div>
         </div>
     );
-};
+};    
 
 export default CarouselNext;
 

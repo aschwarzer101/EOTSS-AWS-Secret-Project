@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Cards, Button, Header } from "@cloudscape-design/components";
+import { TaskCard } from "./caro-card";
+import { Grid, Button, Box } from "@cloudscape-design/components";
+import { Mode } from "@cloudscape-design/global-styles";
 import { v4 as uuidv4 } from "uuid";
 
 interface CarouselNextProps {
-    theme: string; // Replace with your actual theme type if necessary
+    theme: Mode;
 }
 
 const CarouselNext = ({ theme }: CarouselNextProps) => {
@@ -12,7 +14,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const taskCards = [
         {
             name: "summarize",
-            cardTitle: "Summarize!",
+            cardTitle: "Summarize",
             taskDescription: "Summarize meeting notes, articles, memos.",
             instructions: "Paste your text below",
             url: `/chatbot/task-playground/${uuidv4()}/summarize`,
@@ -84,52 +86,60 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
         },
     ];
 
-    // Determine the visible cards
+    // Show the first 6 cards initially and expand to show all cards
     const visibleCards = showAll ? taskCards : taskCards.slice(0, 6);
 
     return (
-        <div>
-            <Header
-                variant="h2"
-                description="Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information."
+        <Box margin={{ vertical: "m", horizontal: "l" }}>
+            <Grid
+                gridDefinition={[
+                    { colspan: 4 }, // Three cards per row on large screens
+                    { colspan: 6 }, // Two cards per row on medium screens
+                    { colspan: 12 }, // One card per row on small screens
+                ]}
             >
-                Tasks
-            </Header>
-            <Cards
-                cardDefinition={{
-                    header: (item) => item.cardTitle,
-                    sections: [
-                        {
-                            content: (item) => <div>{item.taskDescription}</div>,
-                        },
-                        {
-                            content: (item) => (
-                                <Button
-                                    href={item.url}
-                                    variant="link"
-                                    iconAlign="right"
-                                    iconName="external"
-                                >
-                                    Try it →
-                                </Button>
-                            ),
-                        },
-                    ],
-                }}
-                cardsPerRow={[{ cards: 1 }, { minWidth: 700, cards: 3 }]} // Responsive layout
-                items={visibleCards}
-            />
+                {visibleCards.map((task) => (
+                    <div
+                        key={task.name}
+                        style={{
+                            height: "220px", // Ensures consistent height
+                            width: "300px", // Defines a consistent width
+                            backgroundColor: "var(--awsui-color-background-secondary)", // Matches the purple boxes above
+                            borderRadius: "8px",
+                            padding: "16px",
+                            margin: "8px auto", // Adds spacing between cards
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
+                        }}
+                    >
+                        <TaskCard
+                            name={task.name}
+                            cardTitle={task.cardTitle}
+                            taskDescription={task.taskDescription}
+                            instructions={task.instructions}
+                            url={task.url}
+                            apiPrompt={task.apiPrompt}
+                            theme={theme}
+                        />
+                    </div>
+                ))}
+            </Grid>
+
             {/* Show More / Show Less Button */}
             <div style={{ textAlign: "center", marginTop: "1rem" }}>
                 <Button onClick={() => setShowAll(!showAll)} variant="primary">
                     {showAll ? "Show Less" : "Show More"}
                 </Button>
             </div>
-        </div>
+        </Box>
     );
 };
 
 export default CarouselNext;
+
 
 
 

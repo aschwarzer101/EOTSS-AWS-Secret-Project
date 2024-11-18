@@ -14,7 +14,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const taskCards = [
         {
             name: "summarize",
-            cardTitle: "Summarize",
+            cardTitle: "Summarize!",
             taskDescription: "Summarize meeting notes, articles, memos.",
             instructions: "Paste your text below",
             url: `/chatbot/task-playground/${uuidv4()}/summarize`,
@@ -94,9 +94,8 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             {/* Grid layout using AWS Cloudscape */}
             <Grid
                 gridDefinition={[
-                    { colspan: { default: 4, xs: 12, sm: 6 } }, // Default: 3 cards per row, responsive for small screens
-                    { colspan: { default: 4, xs: 12, sm: 6 } },
-                    { colspan: { default: 4, xs: 12, sm: 6 } },
+                    { colspan: 4 }, // Default: Three cards per row
+                    { colspan: { xxs: 12, s: 6, m: 4 } }, // Responsive for small screens (2 cards for 's', 3 cards for 'm')
                 ]}
             >
                 {visibleCards.map((task) => (
@@ -124,6 +123,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 };
 
 export default CarouselNext;
+
 
 
 

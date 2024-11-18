@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TaskCard } from "./caro-card";
-import { Grid, Button } from "@cloudscape-design/components";
+import { Grid, Button, Container } from "@cloudscape-design/components";
 import { Mode } from "@cloudscape-design/global-styles";
 import { v4 as uuidv4 } from "uuid";
 
@@ -90,50 +90,58 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const visibleCards = showAll ? taskCards : taskCards.slice(0, 3);
 
     return (
-        <div>
-            {/* Grid layout using AWS Cloudscape */}
-            <Grid
-                gridDefinition={[
-                    { colspan: { default: 4 } }, // Three cards per row on large screens
-                ]}
+        <Container>
+            <div
                 style={{
-                    gap: "16px", // Adjust spacing between cards
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "16px",
                 }}
             >
-                {visibleCards.map((task) => (
-                    <div
-                        key={task.name}
-                        style={{
-                            height: "150px", // Ensure consistent height
-                            padding: "16px",
-                            borderRadius: "8px",
-                            backgroundColor: "var(--awsui-color-background-secondary)", // Matches Cloudscape's secondary color
-                        }}
-                    >
-                        <TaskCard
-                            name={task.name}
-                            cardTitle={task.cardTitle}
-                            taskDescription={task.taskDescription}
-                            instructions={task.instructions}
-                            url={task.url}
-                            apiPrompt={task.apiPrompt}
-                            theme={theme}
-                        />
-                    </div>
-                ))}
-            </Grid>
+                <Grid
+                    gridDefinition={[
+                        { colspan: 4 }, // Three cards per row on large screens
+                    ]}
+                >
+                    {visibleCards.map((task) => (
+                        <div
+                            key={task.name}
+                            style={{
+                                height: "150px", // Ensure consistent height
+                                padding: "16px",
+                                borderRadius: "8px",
+                                backgroundColor: "var(--awsui-color-background-secondary)", // Matches Cloudscape's secondary color
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                textAlign: "center",
+                            }}
+                        >
+                            <TaskCard
+                                name={task.name}
+                                cardTitle={task.cardTitle}
+                                taskDescription={task.taskDescription}
+                                instructions={task.instructions}
+                                url={task.url}
+                                apiPrompt={task.apiPrompt}
+                                theme={theme}
+                            />
+                        </div>
+                    ))}
+                </Grid>
 
-            {/* Show More / Show Less Button */}
-            <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                <Button onClick={() => setShowAll(!showAll)} variant="primary">
-                    {showAll ? "Show Less" : "Show More"}
-                </Button>
+                <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                    <Button onClick={() => setShowAll(!showAll)} variant="primary">
+                        {showAll ? "Show Less" : "Show More"}
+                    </Button>
+                </div>
             </div>
-        </div>
+        </Container>
     );
 };
 
 export default CarouselNext;
+
 
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TaskCard } from "./caro-card";
+import { Grid, Button } from "@cloudscape-design/components";
 import { Mode } from "@cloudscape-design/global-styles";
-import { Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 interface CarouselNextProps {
@@ -91,7 +91,14 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-            <div className="task-card-grid">
+            {/* Grid layout using AWS Cloudscape */}
+            <Grid
+                gridDefinition={[
+                    { colspan: { default: 4, xs: 12, sm: 6 } }, // Default: 3 cards per row, responsive for small screens
+                    { colspan: { default: 4, xs: 12, sm: 6 } },
+                    { colspan: { default: 4, xs: 12, sm: 6 } },
+                ]}
+            >
                 {visibleCards.map((task) => (
                     <TaskCard
                         key={task.name}
@@ -104,13 +111,11 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                         theme={theme}
                     />
                 ))}
-            </div>
+            </Grid>
+
+            {/* Show More / Show Less Button */}
             <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                <Button
-                    onClick={() => setShowAll(!showAll)}
-                    variant="primary"
-                    size="lg"
-                >
+                <Button onClick={() => setShowAll(!showAll)} variant="primary">
                     {showAll ? "Show Less" : "Show More"}
                 </Button>
             </div>

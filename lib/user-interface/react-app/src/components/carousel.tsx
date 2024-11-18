@@ -61,6 +61,14 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             apiPrompt: "You are an AI assistant designed to optimize daily planning...",
         },
         {
+            name: "toneCustomization",
+            cardTitle: "Tone Customization",
+            taskDescription: "Choose what tone you want GENIE to respond in.",
+            instructions: "Choose what tone you want GENIE to respond in.",
+            url: `/chatbot/task-playground/${uuidv4()}/toneCustomization`,
+            apiPrompt: "You are an AI language model that specializes in tailoring your responses to match a specific tone...",
+        },
+        {
             name: "documentFormatting",
             cardTitle: "Document Formatting",
             taskDescription: "Have AI assist you in formatting your text or document.",
@@ -91,22 +99,14 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-            {/* Header or description */}
-            <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                Tasks
-            </h2>
-            <p style={{ textAlign: "center", marginBottom: "2rem" }}>
-                Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information.
-            </p>
-    
             {/* Flexbox layout for cards */}
             <div
                 style={{
                     display: "flex", // Use flexbox for layout
-                    justifyContent: "space-between", // Even spacing between cards
-                    alignItems: "center", // Center vertically
-                    flexWrap: "wrap", // Wrap cards on smaller screens
-                    gap: "1rem", // Space between cards
+                    justifyContent: "space-evenly", // Evenly space out cards
+                    alignItems: "stretch", // Ensure cards are the same height
+                    flexWrap: "wrap", // Wrap to next row on smaller screens
+                    gap: "1rem", // Add spacing between cards
                 }}
             >
                 {visibleCards.map((task) => (
@@ -116,15 +116,16 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             flex: "1 0 30%", // Each card takes up 30% of the row
                             maxWidth: "30%", // Prevents growing too large
                             minWidth: "250px", // Ensures proper size on smaller screens
-                            backgroundColor: "#e0f7fa", // Light blue background
+                            border: "1px solid #ccc", // Subtle border for clarity
                             borderRadius: "8px", // Rounded corners
-                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Subtle shadow
                             padding: "1rem", // Padding inside the card
                             textAlign: "center", // Center-align text
                             height: "200px", // Equal height for all cards
                             display: "flex", // Flex layout for card content
                             flexDirection: "column", // Stack content vertically
                             justifyContent: "space-between", // Space out content
+                            backgroundColor: "#f9f9f9", // Lighter background for cards
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Subtle shadow
                         }}
                     >
                         <TaskCard
@@ -147,7 +148,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                 </Button>
             </div>
         </div>
-    );
+    );    
 };    
 
 export default CarouselNext;

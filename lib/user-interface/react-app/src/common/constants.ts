@@ -164,6 +164,13 @@ export abstract class TaskOptions {
       sendPromptOnlyOnce: true
     }, 
 
+    toneCustomization: { 
+      taskTitle: 'Tone Customization',
+      prompt: "You are an AI language model that specializes in tailoring your responses to match a specific tone as instructed by the user. Based on the tone provided (e.g., formal, casual, humorous, professional, empathetic, authoritative, etc.), craft a response that adheres to the desired style while maintaining clarity and relevance. If the tone is ambiguous or not provided, politely ask the user for clarification to proceed effectively. Ensure your content aligns with the intended tone throughout the interaction.",
+      instructions: "Chose what tone you want GENIE to respond in:",
+      sendPromptOnlyOnce: true
+    }, 
+
     documentFormatting: { 
       taskTitle: 'Document Formatting',
       prompt: "You are an AI assistant for document formatting. Your role is to assist in reformatting documents to align with official templates or guidelines. Follow the provided formatting requirements, ensuring headers, footers, font styles, and spacing adhere to standard document presentation.", 

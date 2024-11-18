@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { TaskCard } from "./caro-card";
-import { Grid, Button } from "@cloudscape-design/components";
-import { Mode } from "@cloudscape-design/global-styles";
+import { Cards, Button, Header } from "@cloudscape-design/components";
 import { v4 as uuidv4 } from "uuid";
 
 interface CarouselNextProps {
-    theme: Mode;
+    theme: string; // Replace with your actual theme type if necessary
 }
 
 const CarouselNext = ({ theme }: CarouselNextProps) => {
@@ -86,32 +84,41 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
         },
     ];
 
-    // Show the first 3 cards initially and expand to show all cards
-    const visibleCards = showAll ? taskCards : taskCards.slice(0, 3);
+    // Determine the visible cards
+    const visibleCards = showAll ? taskCards : taskCards.slice(0, 6);
 
     return (
         <div>
-            {/* Grid layout using AWS Cloudscape */}
-            <Grid
-                gridDefinition={[
-                    { colspan: 4 }, // Default: Three cards per row
-                    { colspan: { xxs: 12, s: 6, m: 4 } }, // Responsive for small screens (2 cards for 's', 3 cards for 'm')
-                ]}
+            <Header
+                variant="h2"
+                description="Automate daily tasks with AI-driven solutions. Optimize how you summarize, draft, and extract information."
             >
-                {visibleCards.map((task) => (
-                    <TaskCard
-                        key={task.name}
-                        name={task.name}
-                        cardTitle={task.cardTitle}
-                        taskDescription={task.taskDescription}
-                        instructions={task.instructions}
-                        url={task.url}
-                        apiPrompt={task.apiPrompt}
-                        theme={theme}
-                    />
-                ))}
-            </Grid>
-
+                Tasks
+            </Header>
+            <Cards
+                cardDefinition={{
+                    header: (item) => item.cardTitle,
+                    sections: [
+                        {
+                            content: (item) => <div>{item.taskDescription}</div>,
+                        },
+                        {
+                            content: (item) => (
+                                <Button
+                                    href={item.url}
+                                    variant="link"
+                                    iconAlign="right"
+                                    iconName="external"
+                                >
+                                    Try it →
+                                </Button>
+                            ),
+                        },
+                    ],
+                }}
+                cardsPerRow={[{ cards: 1 }, { minWidth: 700, cards: 3 }]} // Responsive layout
+                items={visibleCards}
+            />
             {/* Show More / Show Less Button */}
             <div style={{ textAlign: "center", marginTop: "1rem" }}>
                 <Button onClick={() => setShowAll(!showAll)} variant="primary">
@@ -123,6 +130,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 };
 
 export default CarouselNext;
+
 
 
 

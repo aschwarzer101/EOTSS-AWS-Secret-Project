@@ -21,17 +21,6 @@ import {StorageHelper} from "../common/helpers/storage-helper.ts";
 import {Mode} from "@cloudscape-design/global-styles";
 import { useState, useEffect } from "react";
 
-// actions={
-//     <RouterButton
-//         iconAlign="right"
-//         iconName="contact"
-//         variant="primary"
-//         href="/chatbot/playground"
-//     >
-//         Getting Started
-//     </RouterButton>
-// }
-
 
 export default function Welcome({theme}) {
     const onFollow = useOnFollow();
@@ -55,6 +44,16 @@ export default function Welcome({theme}) {
                         <Header
                             variant="h1"
                             description="Experiment and chat with different models. Compare and contrast their responses for your target uses."
+                            actions={
+                                <RouterButton
+                                    iconAlign="right"
+                                    iconName="contact"
+                                    variant="primary"
+                                    href="/chatbot/playground"
+                                >
+                                    Getting Started
+                                </RouterButton>
+                            }
                         >
                             Welcome to GENIE
                         </Header>

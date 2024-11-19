@@ -24,7 +24,7 @@ import WorkspacePane from "./pages/rag/workspace/workspace";
 import Workspaces from "./pages/rag/workspaces/workspaces";
 import Welcome from "./pages/welcome";
 import TaskPlayground from "./pages/chatbot/playground/task-playground";
-import Documentation from "./pages/documentation/doc";
+// import Documentation from "./pages/documentation/doc";
 import "./styles/app.scss";
 import SessionPage from "./pages/chatbot/sessions/sessions";
 import {StorageHelper} from "./common/helpers/storage-helper.ts";

@@ -125,7 +125,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             backgroundColor: "transparent", // Remove white background
                             border: "none", // No borders
                             boxShadow: "none", // Remove box shadows
-                            margin: "0.5rem", // Remove unnecessary margins
+                            margin: "0.25rem", // Remove unnecessary margins
                             padding: "0.5rem", // Remove extra padding
                         }}
                     >

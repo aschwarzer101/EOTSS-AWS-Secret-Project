@@ -106,9 +106,9 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     display: "flex", // Flexbox layout
                     flexWrap: "wrap", // Allow wrapping to the next row
                     gap: "0.5rem", // Add some spacing between cards
-                    padding: "1rem", // Padding around the layout
+                    padding: "0rem", // Padding around the layout
                     width: "100%", // Ensure container stretches fully
-                    boxSizing: "border-box", // Include padding in width calculation
+                    //boxSizing: "border-box", // Include padding in width calculation
                 }}
             >
                 {visibleCards.map((task) => (
@@ -126,7 +126,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             backgroundColor: "transparent",
                             border: "none",
                             boxShadow: "none",
-                            margin: "0.25rem", // Add spacing around each card
+                            margin: "0.5rem", // Add spacing around each card
                             padding: "1rem",
                             overflow: "hidden",
                             textOverflow: "ellipsis",

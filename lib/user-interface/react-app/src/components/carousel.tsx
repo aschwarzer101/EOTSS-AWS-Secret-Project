@@ -105,7 +105,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                 style={{
                     display: "flex", // Flexbox layout
                     flexWrap: "wrap", // Allow wrapping to the next row
-                    gap: "1rem", // Add some spacing between cards
+                    gap: "0.5rem", // Add some spacing between cards
                     padding: "1rem", // Padding around the layout
                     width: "100%", // Ensure container stretches fully
                     boxSizing: "border-box", // Include padding in width calculation
@@ -126,7 +126,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             backgroundColor: "transparent",
                             border: "none",
                             boxShadow: "none",
-                            margin: "0.5rem", // Add spacing around each card
+                            margin: "0.25rem", // Add spacing around each card
                             padding: "1rem",
                             overflow: "hidden",
                             textOverflow: "ellipsis",

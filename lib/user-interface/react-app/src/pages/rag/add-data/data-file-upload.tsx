@@ -6,6 +6,7 @@ import {
   FlashbarProps,
   Form,
   FormField,
+  Modal,
   ProgressBar,
   ProgressBarProps,
   SpaceBetween,
@@ -62,6 +63,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
   const [currentFileName, setCurrentFileName] = useState<string>("");
   const [uploadPanelDismissed, setUploadPanelDismissed] =
     useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const onSetFiles = (files: File[]) => {
     const errors: string[] = [];
@@ -150,19 +152,23 @@ export default function DataFileUpload(props: DataFileUploadProps) {
       setUploadingStatus("success");
       setFilesToUpload([]);
       setFiles([]);
+      setShowModal(true); // Show modal after successful upload
     }
   };
 
-  const getProgressbarStatus = (): ProgressBarProps.Status => {
-    if (uploadingStatus === "error") return "error";
-    if (uploadingStatus === "success") return "success";
-    return "in-progress";
-  };
+  const startKendraSync = async () => {
+    if (!appContext || !props.data.workspace?.value) return;
 
-  const hasReadyWorkspace =
-    typeof props.data.workspace?.value !== "undefined" &&
-    typeof props.selectedWorkspace !== "undefined" &&
-    props.selectedWorkspace.status === "ready";
+    try {
+      const apiClient = new ApiClient(appContext);
+      await apiClient.kendra.startKendraDataSync(props.data.workspace?.value);
+      console.log("Kendra Data Sync started.");
+    } catch (error) {
+      console.error("Error starting Kendra Data Sync:", error);
+    }
+
+    setShowModal(false);
+  };
 
   return (
     <Form
@@ -174,7 +180,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
             disabled={
               filesToUpload.length === 0 ||
               uploadingStatus === "in-progress" ||
-              !hasReadyWorkspace
+              !props.data.workspace?.value
             }
             onClick={onUpload}
           >
@@ -191,15 +197,6 @@ export default function DataFileUpload(props: DataFileUploadProps) {
               <FileUpload
                 onChange={({ detail }) => onSetFiles(detail.value)}
                 value={files}
-                i18nStrings={{
-                  uploadButtonText: (e) => (e ? "Choose files" : "Choose file"),
-                  dropzoneText: (e) =>
-                    e ? "Drop files to upload" : "Drop file to upload",
-                  removeFileAriaLabel: (e) => `Remove file ${e + 1}`,
-                  limitShowFewer: "Show fewer files",
-                  limitShowMore: "Show more files",
-                  errorIconAriaLabel: "Error",
-                }}
                 multiple
                 showFileLastModified
                 showFileSize
@@ -214,47 +211,22 @@ export default function DataFileUpload(props: DataFileUploadProps) {
             </FormField>
           </SpaceBetween>
         </Container>
-        {uploadingStatus !== "info" && !uploadPanelDismissed && (
-          <Flashbar
-            items={[
-              {
-                content: (
-                  <ProgressBar
-                    value={uploadProgress}
-                    variant="flash"
-                    description={
-                      uploadingStatus === "success" ||
-                      uploadingStatus === "error"
-                        ? null
-                        : currentFileName
-                    }
-                    label={
-                      uploadingStatus === "success" ||
-                      uploadingStatus === "error"
-                        ? "Uploading files"
-                        : `Uploading files ${uploadingIndex} of ${filesToUpload.length}`
-                    }
-                    status={getProgressbarStatus()}
-                    resultText={
-                      uploadingStatus === "success"
-                        ? "Upload complete"
-                        : "Upload failed"
-                    }
-                  />
-                ),
-                type: uploadingStatus,
-                dismissible:
-                  uploadingStatus === "success" || uploadingStatus === "error",
-                onDismiss: () => setUploadPanelDismissed(true),
-                buttonText:
-                  uploadingStatus === "success" ? "View files" : undefined,
-                onButtonClick: () =>
-                  navigate(
-                    `/rag/workspaces/${props.data.workspace?.value}?tab=file`
-                  ),
-              },
-            ]}
-          />
+        {showModal && (
+          <Modal
+            onDismiss={() => setShowModal(false)}
+            visible={showModal}
+            header="Kendra Data Sync"
+            footer={
+              <SpaceBetween direction="horizontal" size="xs">
+                <Button onClick={() => setShowModal(false)}>Cancel</Button>
+                <Button variant="primary" onClick={startKendraSync}>
+                  Start Sync
+                </Button>
+              </SpaceBetween>
+            }
+          >
+            Do you wish to start a Kendra data sync now?
+          </Modal>
         )}
       </SpaceBetween>
     </Form>

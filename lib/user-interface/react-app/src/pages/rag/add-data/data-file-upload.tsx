@@ -207,6 +207,16 @@ export default function DataFileUpload(props: DataFileUploadProps) {
                 ).join(", ")})`}
                 fileErrors={fileErrors}
                 errorText={uploadError}
+                i18nStrings={{
+                  uploadButtonText: (fileCount) =>
+                    fileCount ? "Choose files" : "Choose file",
+                  dropzoneText: (fileCount) =>
+                    fileCount ? "Drop files to upload" : "Drop file to upload",
+                  removeFileAriaLabel: (index) => `Remove file ${index + 1}`,
+                  limitShowFewer: "Show fewer files",
+                  limitShowMore: "Show more files",
+                  errorIconAriaLabel: "Error",
+                }}
               />
             </FormField>
           </SpaceBetween>

@@ -10,7 +10,7 @@ import {
   Flashbar,
 } from "@cloudscape-design/components";
 import { Labels } from "../../../common/constants";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../common/app-context";
 import { ApiClient } from "../../../common/api-client/api-client";
 import { Workspace } from "../../../API";
@@ -27,9 +27,31 @@ export default function KendraWorkspaceSettings(
   const [sendingRequest, setSendingRequest] = useState(false);
   const [globalError, setGlobalError] = useState("");
 
+  useEffect(() => {
+    if (!appContext) return;
+    const apiClient = new ApiClient(appContext);
+
+    const getStatus = async () => {
+      try {
+        const result = await apiClient.kendra.kendraIsSyncing(
+          props.workspace.id
+        );
+
+        setKendraIndexSyncing(result.data?.isKendraDataSynching === true);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const interval = setInterval(getStatus, 5000);
+    getStatus();
+
+    return () => clearInterval(interval);
+  });
+
   const onStartKendraDataSync = async () => {
     if (!appContext) return;
-    if (kendraIndexSyncing) return; // Prevent duplicate syncs while already syncing
+    if (kendraIndexSyncing) return;
 
     setSendingRequest(true);
     setGlobalError("");
@@ -47,23 +69,18 @@ export default function KendraWorkspaceSettings(
     setSendingRequest(false);
   };
 
-  const onUploadDocument = () => {
-    // Trigger Kendra sync when "Upload Document" is pressed
-    onStartKendraDataSync();
-  };
-
   return (
     <Form
       actions={
         !props.workspace.kendraIndexExternal ? (
           <SpaceBetween direction="horizontal" size="xs">
             <Button
-              data-testid="upload-document"
+              data-testid="create"
               variant="primary"
               disabled={sendingRequest || kendraIndexSyncing}
-              onClick={onUploadDocument} // Call the upload handler
+              onClick={onStartKendraDataSync}
             >
-              Upload Document
+              Start Kendra Data Sync
             </Button>
           </SpaceBetween>
         ) : undefined

@@ -104,11 +104,11 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             <div
                 style={{
                     display: "flex", // Flexbox layout
-                    justifyContent: "space-between", // Evenly space out cards
+                    //justifyContent: "space-between", // Evenly space out cards
                     alignItems: "flex-start", // Align items to the top
                     flexWrap: "wrap", // Wrap to the next row if necessary
                     gap: "0.5rem", // reduce spacing between cards
-                    padding: "1rem", // Optional padding around the layout
+                    padding: "0.5rem", // Optional padding around the layout
                 }}
             >
                 {visibleCards.map((task) => (

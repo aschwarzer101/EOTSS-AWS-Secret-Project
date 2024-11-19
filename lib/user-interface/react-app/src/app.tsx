@@ -54,7 +54,7 @@ function App() {
               <Route path="sessions" element={<SessionPage />} />
               <Route path="multichat" element={<MultiChatPlayground />} />
               <Route path="models" element={<Models />} />
-              <Route path="documentation/doc" element={<Documentation />} />
+              <Route path="documentation" element={<Documentation />} />
             </Route>
             <Route path="/rag" element={<Outlet />}>
               <Route path="" element={<Dashboard />} />

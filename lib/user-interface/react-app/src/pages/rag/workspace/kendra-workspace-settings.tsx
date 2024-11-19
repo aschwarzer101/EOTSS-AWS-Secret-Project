@@ -37,7 +37,14 @@ export default function KendraWorkspaceSettings(
           props.workspace.id
         );
 
-        setKendraIndexSyncing(result.data?.isKendraDataSynching === true);
+        const isSyncing = result.data?.isKendraDataSynching === true;
+        setKendraIndexSyncing(isSyncing);
+
+        // Automatically start syncing if not already syncing SARAH
+        if (!isSyncing) {
+          onStartKendraDataSync();
+          console.log('autosyncing kendra', isSyncing);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -47,7 +54,7 @@ export default function KendraWorkspaceSettings(
     getStatus();
 
     return () => clearInterval(interval);
-  });
+  }); 
 
   const onStartKendraDataSync = async () => {
     if (!appContext) return;

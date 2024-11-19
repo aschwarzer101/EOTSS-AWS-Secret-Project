@@ -39,8 +39,7 @@ const onFollow = useOnFollow();
         <Card.Header></Card.Header>
         <CardBody>
           <Card.Title style={{ fontSize: "22px" }}>{props.cardTitle}</Card.Title>
-          <Card.Text as= "p">{props.taskDescription}</Card.Text>
-          <Button
+          <Card.Text as="p" style={{ fontSize: "14px" }}>{props.taskDescription}</Card.Text>          <Button
             as="a"
             variant="primary"
             href={props.url}

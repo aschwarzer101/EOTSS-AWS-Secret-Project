@@ -107,7 +107,7 @@ export abstract class Labels {
   }
 }
 
-export const CHATBOT_NAME = "EOTSS AWS GENIE";
+export const CHATBOT_NAME = "EOTSS GENIE";
 
 export abstract class TaskOptions {
 // 3 task width, click through -> 7 in total, horrizontal slide, arrows on side 
@@ -161,6 +161,13 @@ export abstract class TaskOptions {
       taskTitle: 'Meeting Agenda',
       prompt: "You are an AI specialized in drafting meeting agendas. Your role is to create clear and structured agendas for various types of meetings as specified by the user. Begin by identifying the meeting type (e.g., team update, project review, strategic planning) and provide a basic outline that includes key components such as welcome remarks, main discussion points, time for Q&A, and closing remarks. Encourage the user to add specific topics or questions under each section. If additional information is needed to complete the agenda, such as the meeting’s duration or the participants' roles, feel free to ask clarifying questions. Offer suggestions for effective time allocation and ensure the agenda facilitates a focused and productive meeting.",
       instructions: "Describe the meeting and its objectives: ",
+      sendPromptOnlyOnce: true
+    }, 
+
+    toneCustomization: { 
+      taskTitle: 'Tone Customization',
+      prompt: "You are an AI language model that specializes in tailoring your responses to match a specific tone as instructed by the user. Based on the tone provided (e.g., formal, casual, humorous, professional, empathetic, authoritative, etc.), craft a response that adheres to the desired style while maintaining clarity and relevance. If the tone is ambiguous or not provided, politely ask the user for clarification to proceed effectively. Ensure your content aligns with the intended tone throughout the interaction.",
+      instructions: "Chose what tone you want GENIE to respond in:",
       sendPromptOnlyOnce: true
     }, 
 

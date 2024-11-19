@@ -242,22 +242,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
      // Handle error appropriately, e.g., set a global error state
    }
  };
- 
-//  const handleNavigateBack = () => {
-//   if (newWorkspace) {
-//     console.log('newworkspace found', newWorkspace);
-//     setState((prevState) => ({
-//       ...prevState,
-//       selectedWorkspace: {
-//         label: newWorkspace.name,
-//         value: newWorkspace.id,
-//       },
-//       console.log('state after newworkspace found', prevState)
-//     }));
-//   }
-//   navigate(-1); // Navigate back to the previous page
-//   setNavigatedToWorkspace(false); // Reset the state
-// };
 
  
 // setting message history to the ref
@@ -296,6 +280,8 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
               messageHistoryRef.current,
               response
             );
+
+            console.log
 
             if (
               response.action === ChatBotAction.FinalResponse ||

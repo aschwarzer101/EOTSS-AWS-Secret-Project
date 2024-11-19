@@ -152,6 +152,11 @@ export default function NavigationPanel() {
                     },
                     {
                         type: "link",
+                        text: "Tone Customization",
+                        href: `/chatbot/task-playground/${uuidv4()}/toneCustomization`
+                    },
+                    {
+                        type: "link",
                         text: "Document Formatting",
                         href: `/chatbot/task-playground/${uuidv4()}/documentFormatting`
                     },

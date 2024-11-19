@@ -77,7 +77,7 @@ function App() {
             <Route path="/documentation" element={<Outlet />}>
               <Route path="doc" element={<Documentation />} />
             </Route>
-            
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

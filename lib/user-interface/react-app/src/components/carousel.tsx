@@ -104,29 +104,29 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             <div
                 style={{
                     display: "flex", // Flexbox layout
-                    //justifyContent: "space-between", // Evenly space out cards
-                    alignItems: "flex-start", // Align items to the top
-                    flexWrap: "wrap", // Wrap to the next row if necessary
-                    gap: "0.5rem", // reduce spacing between cards
-                    padding: "0.5rem", // Optional padding around the layout
+                    flexWrap: "wrap", // Allow wrapping to the next row
+                    gap: "1rem", // Add some spacing between cards
+                    padding: "1rem", // Padding around the layout
+                    width: "100%", // Ensure container stretches fully
+                    boxSizing: "border-box", // Include padding in width calculation
                 }}
             >
                 {visibleCards.map((task) => (
                     <div
                         key={task.name}
                         style={{
-                            flex: "1 1 calc(33.33% - 1rem)",
-                            maxWidth: "calc(33.33% - 1rem)",
-                            minWidth: "250px",
+                            flex: "1 1 calc(30% - 1rem)", // Reduced to 30% to avoid wrapping
+                            maxWidth: "calc(30% - 1rem)", // Ensure it doesn't exceed 30%
+                            minWidth: "250px", // Ensure a minimum size for cards
                             height: "auto",
-                            minHeight: "200px",
+                            minHeight: "200px", // Minimum height for uniformity
                             display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
+                            flexDirection: "column", // Stack content vertically
+                            justifyContent: "space-between", // Space items evenly
                             backgroundColor: "transparent",
                             border: "none",
                             boxShadow: "none",
-                            margin: "0.5rem",
+                            margin: "0.5rem", // Add spacing around each card
                             padding: "1rem",
                             overflow: "hidden",
                             textOverflow: "ellipsis",

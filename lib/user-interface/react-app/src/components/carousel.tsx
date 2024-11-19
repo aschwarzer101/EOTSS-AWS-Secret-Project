@@ -107,7 +107,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     justifyContent: "space-between", // Evenly space out cards
                     alignItems: "flex-start", // Align items to the top
                     flexWrap: "wrap", // Wrap to the next row if necessary
-                    gap: "1.5rem", // Add spacing between cards
+                    gap: "0.5rem", // reduce spacing between cards
                     padding: "1rem", // Optional padding around the layout
                 }}
             >
@@ -125,8 +125,8 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                             backgroundColor: "transparent", // Remove white background
                             border: "none", // No borders
                             boxShadow: "none", // Remove box shadows
-                            margin: "0", // Remove unnecessary margins
-                            padding: "0", // Remove extra padding
+                            margin: "0.5rem", // Remove unnecessary margins
+                            padding: "0.5rem", // Remove extra padding
                         }}
                     >
                         {/* TaskCard remains unchanged */}

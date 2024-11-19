@@ -74,10 +74,10 @@ function App() {
               <Route path="workspaces/add-data" element={<AddData />} />
             </Route>
             
-            <Route path="/documentation" element={<Outlet />}>
+            {/* <Route path="/documentation" element={<Outlet />}>
               <Route path="doc" element={<Documentation />} />
-            </Route>
-            
+            </Route> */}
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -115,18 +115,21 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     <div
                         key={task.name}
                         style={{
-                            flex: "1 0 30%", // Each card takes up 30% of the row
-                            maxWidth: "30%", // Prevents growing too large
-                            minWidth: "250px", // Ensures proper size on smaller screens
-                            height: "200px", // Equal height for all cards
-                            display: "flex", // Flex layout for card content
-                            flexDirection: "column", // Stack content vertically
-                            justifyContent: "space-between", // Space out content
-                            backgroundColor: "transparent", // Remove white background
-                            border: "none", // No borders
-                            boxShadow: "none", // Remove box shadows
-                            margin: "0.25rem", // Remove unnecessary margins
-                            padding: "0.5rem", // Remove extra padding
+                            flex: "1 1 calc(33.33% - 1rem)",
+                            maxWidth: "calc(33.33% - 1rem)",
+                            minWidth: "250px",
+                            height: "auto",
+                            minHeight: "200px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            backgroundColor: "transparent",
+                            border: "none",
+                            boxShadow: "none",
+                            margin: "0.5rem",
+                            padding: "1rem",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
                         }}
                     >
                         {/* TaskCard remains unchanged */}

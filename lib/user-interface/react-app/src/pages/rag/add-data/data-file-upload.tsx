@@ -241,13 +241,28 @@ export default function DataFileUpload(props: DataFileUploadProps) {
             header="Kendra Data Sync"
             footer={
               <SpaceBetween direction="horizontal" size="xs">
-                <Button onClick={() => setShowModal(false)}>Close</Button>
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    setShowModal(false);
+                    navigate(
+                      `/rag/workspaces/${props.data.workspace?.value}?tab=file`
+                    );
+                  }}
+                >
+                  Upload more files
+                </Button>
                 <Button
                   variant="primary"
-                  onClick={startKendraSync}
+                  onClick={async () => {
+                    await startKendraSync();
+                    navigate("/playground");
+                  }}
                   disabled={isSyncing}
                 >
-                  {isSyncing ? "Syncing..." : "Start Sync"}
+                  {isSyncing
+                    ? "Syncing..."
+                    : "Start conversation with GENIE"}
                 </Button>
               </SpaceBetween>
             }

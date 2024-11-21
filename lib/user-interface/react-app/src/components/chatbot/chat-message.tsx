@@ -362,7 +362,15 @@ export default function ChatMessage(props: ChatMessageProps) {
 
             {props.message?.type === ChatBotMessageType.Human && (
                 <div className={styles.chat_message_container}>
-                    <div className={styles.input_message}>
+                    <div style={{
+                    maxWidth: "70%",
+                    textAlign: "right",
+                    backgroundColor: "#e0f7fa",
+                    borderRadius: "10px",
+                    padding: "15px",
+                    marginLeft: "auto",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                }}>
                         {getContentUpToForMore(props.message.content)}
                     </div>
                 </div>

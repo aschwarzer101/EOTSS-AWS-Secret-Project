@@ -59,3 +59,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+
+  # Deployment for EOTSS
+    name: Configure AWS Credentials
+    uses: aws-actions/configure-aws-credentials@v3
+    with:
+      role-duration-seconds: 3600
+      role-to-assume: arn:aws:iam::908027381379:role/eotss-genie-deployment-role
+      aws-region: us-east-1
+      role-session-name: ${{ github.actor }}

@@ -238,7 +238,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
           <Modal
             onDismiss={() => setShowModal(false)}
             visible={showModal}
-            header="Kendra Data Sync"
+            header="File Uploaded"
             footer={
               <SpaceBetween direction="horizontal" size="xs">
                 <Button
@@ -246,7 +246,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
                   onClick={() => {
                     setShowModal(false);
                     navigate(
-                      `/rag/workspaces/${props.data.workspace?.value}?tab=file`
+                      `/rag/workspaces/add-data?workspaceId=${props.data.workspace?.value}?tab=file`
                     );
                   }}
                 >
@@ -256,7 +256,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
                   variant="primary"
                   onClick={async () => {
                     await startKendraSync();
-                    navigate("/playground");
+                    navigate("/chatbot/playground");
                   }}
                   disabled={isSyncing}
                 >
@@ -267,8 +267,7 @@ export default function DataFileUpload(props: DataFileUploadProps) {
               </SpaceBetween>
             }
           >
-            Do you wish to start a Kendra data sync now? You can close this
-            popup while the sync continues in the background.
+            Your file has been uploaded successfully! You can now start a conversation with GENIE or upload more documents. 
           </Modal>
         )}
         {uploadingStatus !== "info" && !uploadPanelDismissed && (

@@ -14,7 +14,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
     const taskCards = [
         {
             name: "summarize",
-            cardTitle: "Summarize!",
+            cardTitle: "Summarize",
             taskDescription: "Summarize meeting notes, articles, memos.",
             instructions: "Paste your text below",
             url: `/chatbot/task-playground/${uuidv4()}/summarize`,
@@ -106,7 +106,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     display: "flex", // Flexbox layout
                     flexWrap: "wrap", // Allow wrapping to the next row
                     gap: "0.5rem", // Add some spacing between cards
-                    padding: "1rem", // Padding around the layout
+                    //padding: "1rem", // Padding around the layout
                     width: "100%", // Ensure container stretches fully
                     //boxSizing: "border-box", // Include padding in width calculation
                 }}
@@ -115,22 +115,23 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     <div
                         key={task.name}
                         style={{
-                            flex: "1 1 calc(30% - 1rem)", // Reduced to 30% to avoid wrapping
-                            maxWidth: "calc(30% - 1rem)", // Ensure it doesn't exceed 30%
-                            minWidth: "250px", // Ensure a minimum size for cards
-                            height: "auto",
-                            minHeight: "200px", // Minimum height for uniformity
+                            width: "373px", // Fixed width to match the purple card
+                            height: "180px", // Fixed height to match the purple card
                             display: "flex",
-                            flexDirection: "column", // Stack content vertically
-                            justifyContent: "space-between", // Space items evenly
-                            backgroundColor: "transparent",
-                            border: "none",
-                            boxShadow: "none",
-                            margin: "0.5rem", // Add spacing around each card
-                            padding: "1rem",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            alignItems: "center", // Center align items
+                            backgroundColor: "#ffffff", // White background for contrast
+                            borderRadius: "20px", // Rounded corners to match the purple card
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow for elevation
+                            margin: "0.5rem", // Margin around the card
+                            padding: "1rem", // Internal padding
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            transition: "transform 0.2s ease-in-out", // Hover scaling effect
                         }}
+                        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                     >
                         {/* TaskCard remains unchanged */}
                         <TaskCard

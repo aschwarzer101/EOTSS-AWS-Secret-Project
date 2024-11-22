@@ -603,6 +603,13 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     <SpaceBetween direction="vertical" size="l">
       <Container>
         <div className={styles.input_textarea_container}>
+          {/* SARAH doc upload */}
+          <Button
+            onClick={handleUploadDocument}
+            variant="icon"
+            iconName="upload" // Valid Cloudscape icon but removing the text 
+            ariaLabel="Upload Document"
+          />
           <TextareaAutosize
             className={styles.input_textarea}
             value={state.value}
@@ -619,56 +626,33 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 handleSendMessage();
               }
             }}
-            placeholder={listening ? "Listening..." : "Send a message"}
+            placeholder="Type a message"
           />
-          <div className={styles.icon_container}>
-            {/* Attachment Icon for Document Upload */}
-            <Button
-              onClick={handleUploadDocument}
-              variant="icon"
-              ariaLabel="Upload Document"
-              iconSvg={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21.44 11.05l-9.19 9.19a4.59 4.59 0 01-6.49 0 4.59 4.59 0 010-6.49L12.5 7.5" />
-                  <path d="M16 4.5L12.5 8" />
-                </svg>
-              }
-            />
-            {/* Send Button */}
-            <Button
-              disabled={
-                readyState !== ReadyState.OPEN ||
-                !state.models?.length ||
-                !state.selectedModel ||
-                props.running ||
-                state.value.trim().length === 0 ||
-                props.session.loading
-              }
-              onClick={handleSendMessage}
-              iconAlign="right"
-              iconName={!props.running ? "angle-right-double" : undefined}
-              variant="primary"
-            >
-              {props.running ? (
-                <>
-                  Loading&nbsp;&nbsp;
-                  <Spinner />
-                </>
-              ) : (
-                "Send"
-              )}
-            </Button>
-          </div>
+          {/* Send Button */}
+          <Button
+            disabled={
+              readyState !== ReadyState.OPEN ||
+              !state.models?.length ||
+              !state.selectedModel ||
+              props.running ||
+              state.value.trim().length === 0 ||
+              props.session.loading
+            }
+            onClick={handleSendMessage}
+            iconAlign="right"
+            iconName={!props.running ? "angle-right-double" : undefined}
+            variant="primary"
+            ariaLabel="Send Message"
+          >
+            {props.running ? (
+              <>
+                Loading&nbsp;&nbsp;
+                <Spinner />
+              </>
+            ) : (
+              "Send"
+            )}
+          </Button>
         </div>
       </Container>
       <div className={styles.input_controls}>
@@ -768,7 +752,8 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         </div>
       </div>
     </SpaceBetween>
-  );  
+  );
+  
 }
 
 function getSelectedWorkspaceOption(

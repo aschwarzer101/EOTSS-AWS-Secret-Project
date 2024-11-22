@@ -58,7 +58,7 @@
   box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
   overflow: auto; /* Prevent overflow issues */
 }
-
+/* 
   .carousel-item {
   padding: 2em 3em;
   color: #272343;
@@ -67,9 +67,50 @@
   background-color: #bae8e8;
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+} */
+
+.carousel-item {
+  width: 373px; /* Match the required width */
+  height: 180px; /* Match the required height */
+  padding: 1rem; /* Adjust padding for internal content */
+  background-color: #bae8e8; /* Blue background */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: flex; /* Flex layout */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Distribute content evenly */
+  align-items: center; /* Center-align content */
+  text-align: center; /* Center text */
+  transition: transform 0.2s ease-in-out; /* Hover scaling effect */
+  overflow: hidden; /* Prevent content overflow */
+  box-sizing: border-box; /* Include padding in total dimensions */
 }
 
-  .carousel-item-dark-mode {
+.carousel-item-dark-mode {
+  width: 373px; /* Same width as light mode */
+  height: 180px; /* Same height as light mode */
+  padding: 1rem; /* Adjust padding */
+  background-color: #bae8e8; /* Use a darker blue or adjust for dark mode */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(213, 241, 241, 0.3); /* Softer shadow for dark mode */
+  display: flex; /* Flex layout */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Distribute content evenly */
+  align-items: center; /* Center-align content */
+  text-align: center; /* Center text */
+  transition: transform 0.2s ease-in-out; /* Hover scaling effect */
+  overflow: hidden; /* Prevent content overflow */
+  box-sizing: border-box; /* Include padding in total dimensions */
+}
+
+.carousel-item:hover,
+.carousel-item-dark-mode:hover {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+}
+
+
+
+  /* .carousel-item-dark-mode {
   padding: 2em 3em;
   color: #272343;
   margin: 1rem;
@@ -77,7 +118,7 @@
   background-color: #bae8e8;
   box-sizing: border-box;
   box-shadow: 0 4px 8px 0 rgba(213, 241, 241, 0.3);
-}
+} */
 
 
 /*  .carousel-container {*/

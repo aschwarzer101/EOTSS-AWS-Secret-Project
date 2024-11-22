@@ -102,12 +102,11 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             {/* Flexbox layout for cards */}
             <div
                 style={{
-                    display: "flex", // Use flexbox for layout
-                    flexWrap: "nowrap", // Prevent wrapping to the next row
-                    justifyContent: "center", // Center the items horizontally
-                    gap: "1rem", // Space between cards
-                    padding: "2rem", // Padding around the grid
-                    overflowX: "auto", // Enable horizontal scrolling for smaller screens
+                    display: "flex",
+                    flexWrap: "wrap", // Allow cards to wrap onto the next row
+                    justifyContent: "center", // Center-align all cards
+                    gap: "1rem", // Add space between the cards
+                    padding: "2rem", // Add padding around the container
                 }}
             >
                 {visibleCards.map((task) => (
@@ -119,11 +118,10 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                         instructions={task.instructions}
                         url={task.url}
                         apiPrompt={task.apiPrompt}
-                        theme={theme} // Pass theme for light/dark mode
+                        theme={theme}
                     />
                 ))}
             </div>
-
             {/* Show More / Show Less Button */}
             <div style={{ textAlign: "center", marginTop: "2rem" }}>
                 <Button onClick={() => setShowAll(!showAll)} variant="primary">

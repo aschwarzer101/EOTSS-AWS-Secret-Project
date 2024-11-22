@@ -603,54 +603,9 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     <SpaceBetween direction="vertical" size="l">
       <Container>
         <div className={styles.input_textarea_container}>
-          <SpaceBetween size="xxs" direction="horizontal" alignItems="center">
-            {browserSupportsSpeechRecognition ? (
-              <Button
-                iconName={listening ? "microphone-off" : "microphone"}
-                variant="icon"
-                onClick={() =>
-                  listening
-                    ? SpeechRecognition.stopListening()
-                    : SpeechRecognition.startListening()
-                }
-              />
-            ) : (
-              <Icon name="microphone-off" variant="disabled" />
-            )}
-            {state.selectedModelMetadata?.inputModalities.includes(
-              ChabotInputModality.Image
-            ) && (
-              <Button
-                variant="icon"
-                onClick={() => setImageDialogVisible(true)}
-                iconSvg={
-                  <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-                    <rect
-                      x="2"
-                      y="2"
-                      width="19"
-                      height="19"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                }
-              ></Button>
-            )}
-          </SpaceBetween>
-          <ImageDialog
-            sessionId={props.session.id}
-            visible={imageDialogVisible}
-            setVisible={setImageDialogVisible}
-            configuration={props.configuration}
-            setConfiguration={props.setConfiguration}
-          />
           <TextareaAutosize
             className={styles.input_textarea}
-            value={state.value} // added here so the value in the component is bound to state
-            // readOnly={isReadOnly}
+            value={state.value}
             maxRows={6}
             minRows={1}
             spellCheck={true}
@@ -659,32 +614,22 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
               setState((state) => ({ ...state, value: e.target.value }))
             }
             onKeyDown={(e) => {
-              if (e.key == "Enter" && !e.shiftKey) {
+              if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 handleSendMessage();
               }
             }}
             placeholder={listening ? "Listening..." : "Send a message"}
           />
-          <div style={{ marginLeft: "8px" }}>
-            {state.selectedModelMetadata?.inputModalities.includes(
-              ChabotInputModality.Image
-            ) &&
-              files.length > 0 &&
-              files.map((file, idx) => (
-                <img
-                  key={idx}
-                  onClick={() => setImageDialogVisible(true)}
-                  src={file.url}
-                  style={{
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                    maxHeight: "30px",
-                    float: "left",
-                    marginRight: "8px",
-                  }}
-                />
-              ))}
+          <div className={styles.icon_container}>
+            {/* Attachment Icon for Document Upload */}
+            <Button
+              onClick={handleUploadDocument}
+              variant="icon"
+              iconName="attachment" // Available Cloudscape icon
+              ariaLabel="Upload Document"
+            />
+            {/* Send Button */}
             <Button
               disabled={
                 readyState !== ReadyState.OPEN ||
@@ -722,13 +667,13 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
           <Select
             disabled={props.running}
             statusType={state.modelsStatus}
-            loadingText="Loading models (might take few seconds)..."
+            loadingText="Loading models (might take a few seconds)..."
             placeholder="Select a model"
             empty={
               <div>
-                No models available. Please make sure you have access to Amazon
-                Bedrock or alternatively deploy a self hosted model on SageMaker
-                or add API_KEY to Secrets Manager
+                No models available. Please ensure you have access to Amazon
+                Bedrock or alternatively deploy a self-hosted model on SageMaker
+                or add API_KEY to Secrets Manager.
               </div>
             }
             filteringType="auto"
@@ -753,7 +698,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
               disabled={
                 props.running || !state.selectedModelMetadata?.ragSupported
               }
-              loadingText="Loading workspaces (might take few seconds)..."
+              loadingText="Loading workspaces (might take a few seconds)..."
               statusType={state.workspacesStatus}
               placeholder="Select a workspace (RAG data source)"
               filteringType="auto"
@@ -792,16 +737,6 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
-  
-            {/* SARAH New Upload Document Button */}
-            <Button
-              onClick={handleUploadDocument}
-              variant="primary"
-              iconName="upload"
-            >
-              Upload Document
-            </Button>
-  
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN
@@ -818,7 +753,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
         </div>
       </div>
     </SpaceBetween>
-  );
+  );  
 }
 
 function getSelectedWorkspaceOption(

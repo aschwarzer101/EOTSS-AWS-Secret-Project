@@ -20,9 +20,7 @@ export interface ChatBotTaskCard {
 }
 
 export function TaskCard(props: ChatBotTaskCard) {
-
-
-const onFollow = useOnFollow();
+  const onFollow = useOnFollow();
 
   const handleFollow = (event, url) => {
     event.preventDefault();
@@ -33,24 +31,42 @@ const onFollow = useOnFollow();
   };
 
   return (
-    <div onClick={(e)=>handleFollow(e, props.url)} style={{ cursor: 'pointer' }}>
-    <div className={props.theme === Mode.Dark ? "carousel-item-dark-mode" : "carousel-item"}>
-      <Card bg="info">
-        <Card.Header></Card.Header>
-        <CardBody>
-          <Card.Title style={{ fontSize: "22px" }}>{props.cardTitle}</Card.Title>
-          <Card.Text as="p" style={{ fontSize: "14px" }}>{props.taskDescription}</Card.Text>          <Button
-            as="a"
-            variant="primary"
-            href={props.url}
-            active
-            onClick={(e) => e.stopPropagation()}
-            //onClick={handleFollow}
+    <div
+      onClick={(e) => handleFollow(e, props.url)}
+      style={{ cursor: 'pointer' }}
+    >
+      {/* Apply carousel-item or carousel-item-dark-mode styles */}
+      <div
+        className={
+          props.theme === Mode.Dark
+            ? "carousel-item-dark-mode"
+            : "carousel-item"
+        }
+        style={{
+          width: "373px", // Match the purple card width
+          height: "180px", // Match the purple card height
+        }}
+      >
+        <Card bg="info" style={{ borderRadius: "20px", overflow: "hidden" }}>
+          <Card.Header></Card.Header>
+          <CardBody>
+            <Card.Title style={{ fontSize: "22px" }}>
+              {props.cardTitle}
+            </Card.Title>
+            <Card.Text as="p" style={{ fontSize: "14px" }}>
+              {props.taskDescription}
+            </Card.Text>
+            <Button
+              as="a"
+              variant="primary"
+              href={props.url}
+              active
+              onClick={(e) => e.stopPropagation()}
             >
-                Try it &rarr;
+              Try it &rarr;
             </Button>
-        </CardBody>
-      </Card>
+          </CardBody>
+        </Card>
       </div>
     </div>
   );

@@ -625,14 +625,14 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                   bottom: "calc(100% + 8px)", // Position above the button
                   left: "50%",
                   transform: "translateX(-50%)",
-                  backgroundColor: "#333",
-                  color: "#fff",
+                  backgroundColor: "#0950a2", // Blue background
+                  color: "#fff", // White text for contrast
                   fontSize: "12px",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
+                  padding: "6px 12px", // Adjust padding for better appearance
+                  borderRadius: "12px", // Rounded corners
                   whiteSpace: "nowrap",
                   zIndex: 10,
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", // Subtle shadow for depth
                 }}
               >
                 Upload Document

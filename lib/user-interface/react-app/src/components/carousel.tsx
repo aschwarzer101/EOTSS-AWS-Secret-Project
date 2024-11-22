@@ -99,53 +99,29 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
 
     return (
         <div>
-
             {/* Flexbox layout for cards */}
             <div
                 style={{
                     display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center", // Center-align cards
-                    gap: "1rem", // Space between cards
-                    padding: "2rem", // Padding around the grid
+                    flexWrap: "wrap", // Allow cards to wrap onto the next row
+                    justifyContent: "center", // Center-align all cards
+                    gap: "1rem", // Add space between the cards
+                    padding: "2rem", // Add padding around the container
                 }}
             >
                 {visibleCards.map((task) => (
-                    <div
+                    <TaskCard
                         key={task.name}
-                        style={{
-                            width: "373px", // Match the width of the purple cards
-                            height: "180px", // Match the height of the purple cards
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            backgroundColor: "#E0F7FA", // Blue background (replace with the correct shade if needed)
-                            borderRadius: "20px", // Rounded corners, same as the purple cards
-                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
-                            margin: "1rem", // Spacing between the cards
-                            padding: "1rem", // Internal spacing
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            transition: "transform 0.2s ease-in-out", // Hover effect for interactivity
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                    >
-                        {/* TaskCard remains unchanged */}
-                        <TaskCard
-                            name={task.name}
-                            cardTitle={task.cardTitle}
-                            taskDescription={task.taskDescription}
-                            instructions={task.instructions}
-                            url={task.url}
-                            apiPrompt={task.apiPrompt}
-                            theme={theme}
-                        />
-                    </div>
+                        name={task.name}
+                        cardTitle={task.cardTitle}
+                        taskDescription={task.taskDescription}
+                        instructions={task.instructions}
+                        url={task.url}
+                        apiPrompt={task.apiPrompt}
+                        theme={theme}
+                    />
                 ))}
             </div>
-    
             {/* Show More / Show Less Button */}
             <div style={{ textAlign: "center", marginTop: "2rem" }}>
                 <Button onClick={() => setShowAll(!showAll)} variant="primary">
@@ -154,8 +130,6 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             </div>
         </div>
     );
-    
-    
 };    
 
 export default CarouselNext;

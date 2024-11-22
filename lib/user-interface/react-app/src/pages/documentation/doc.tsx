@@ -10,7 +10,7 @@ const GenieFeaturesPage = () => {
   return (
     <div style={{ fontFamily: "Arial, sans-serif", textAlign: "center", color: "#333" }}>
       {/* Header */}
-      <header style={{ backgroundColor: "indigo", color: "white", padding: "20px" }}>
+      <header style={{ backgroundColor: "#000716", color: "white", padding: "20px" }}>
         <h1>Learn More About GENIE</h1>
         <p>Explore the features of our AI-powered chatbot and tools.</p>
       </header>
@@ -20,39 +20,29 @@ const GenieFeaturesPage = () => {
         {/* Chatbot Section */}
         <section
           style={{
-            border: "2px solid pink",
+            border: "2px #9dadff solid",
             borderRadius: "10px",
             marginBottom: "20px",
             padding: "15px",
-            backgroundColor: "#ffe4e1",
+            backgroundColor: "#c2ccff",
           }}
         >
-          <h2 style={{ color: "purple" }}>Chatbot</h2>
+          <h2 style={{ color: "black" }}>Chatbot</h2>
           <p>The Chatbot feature enables users to:</p>
           <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>Ask General Questions like using a search engine.</li>
-            <li>Query Uploaded Documents for specific information.</li>
+            <li><b>Ask General Questions: </b>Similar to queries you might enter into an internet search engine like Google.</li>
+            <li><b>Query Uploaded Documents: </b>Pose questions about a document or set of documents you’ve uploaded to GENIE.</li>
+            <li><b>Simplify Repetitive Tasks: </b>Optimize daily repeitive or time consuming tasks such as summarization, drafting, synthesizing, etc.</li>
           </ul>
-        </section>
-
-        {/* Bottom Bar Section */}
-        <section
-          style={{
-            border: "2px solid purple",
-            borderRadius: "10px",
-            marginBottom: "20px",
-            padding: "15px",
-            backgroundColor: "#e6e6fa",
-          }}
-        >
-          <h2 style={{ color: "indigo" }}>Bottom Bar</h2>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>
+          <h3 style={{ color: "black" }}>Bottom Bar</h3>
+          <p>
               <strong>Smart Model:</strong> Automatically selects the best model for your query.
+            </p>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
+            <li> No configuration required!</li>
+            <li> Automatically selects the best Large Language Model (LLM) from over 10 supported LLMs to answer your questions.
             </li>
-            <li>
-              Prefer customization? Manually select a model from the supported list.
-            </li>
+            <li> Prefer customization? You can manually select your preferred LLM for answering questions. </li>
           </ul>
         </section>
 

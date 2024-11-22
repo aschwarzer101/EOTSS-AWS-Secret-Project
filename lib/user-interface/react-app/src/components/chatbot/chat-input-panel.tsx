@@ -626,8 +626,23 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             <Button
               onClick={handleUploadDocument}
               variant="icon"
-              iconName="attachment" // Available Cloudscape icon
               ariaLabel="Upload Document"
+              iconSvg={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21.44 11.05l-9.19 9.19a4.59 4.59 0 01-6.49 0 4.59 4.59 0 010-6.49L12.5 7.5" />
+                  <path d="M16 4.5L12.5 8" />
+                </svg>
+              }
             />
             {/* Send Button */}
             <Button

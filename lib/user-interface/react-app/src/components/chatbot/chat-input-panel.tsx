@@ -599,20 +599,49 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
   ];
 
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
   return (
     <SpaceBetween direction="vertical" size="l">
       <Container>
-        <div className={styles.input_textarea_container}>
-          {/* SARAH doc upload */}
-          <Button
-            onClick={handleUploadDocument}
-            variant="icon"
-            iconName="upload" // Valid Cloudscape icon but removing the text 
-            ariaLabel="Upload Document"
-          />
+        <div className={styles.input_textarea_container} style={{ position: "relative" }}>
+          {/* SARAH doc upload with Tooltip */}
+          <div
+            style={{ position: "relative", display: "inline-block" }}
+            onMouseEnter={() => setTooltipVisible(true)} // Hover logic on wrapper
+            onMouseLeave={() => setTooltipVisible(false)} // Hide logic on wrapper
+          >
+            <Button
+              onClick={handleUploadDocument}
+              variant="icon"
+              iconName="file" // Valid Cloudscape icon but removing the text
+              ariaLabel="Upload Document"
+            />
+            {/* Tooltip */}
+            {tooltipVisible && (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "calc(100% + 8px)", // Position above the button
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  backgroundColor: "#333",
+                  color: "#fff",
+                  fontSize: "12px",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  whiteSpace: "nowrap",
+                  zIndex: 10,
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                Upload Document
+              </div>
+            )}
+          </div>
           <TextareaAutosize
             className={styles.input_textarea}
-            value={state.value}
+            value={state.value} // Keep the text input functionality
             maxRows={6}
             minRows={1}
             spellCheck={true}
@@ -628,31 +657,50 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             }}
             placeholder="Type a message"
           />
-          {/* Send Button */}
-          <Button
-            disabled={
-              readyState !== ReadyState.OPEN ||
-              !state.models?.length ||
-              !state.selectedModel ||
-              props.running ||
-              state.value.trim().length === 0 ||
-              props.session.loading
-            }
-            onClick={handleSendMessage}
-            iconAlign="right"
-            iconName={!props.running ? "angle-right-double" : undefined}
-            variant="primary"
-            ariaLabel="Send Message"
-          >
-            {props.running ? (
-              <>
-                Loading&nbsp;&nbsp;
-                <Spinner />
-              </>
-            ) : (
-              "Send"
-            )}
-          </Button>
+          <div style={{ marginLeft: "8px" }}>
+            {state.selectedModelMetadata?.inputModalities.includes(
+              ChabotInputModality.Image
+            ) &&
+              files.length > 0 &&
+              files.map((file, idx) => (
+                <img
+                  key={idx}
+                  onClick={() => setImageDialogVisible(true)}
+                  src={file.url}
+                  style={{
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    maxHeight: "30px",
+                    float: "left",
+                    marginRight: "8px",
+                  }}
+                />
+              ))}
+            {/* Send Button */}
+            <Button
+              disabled={
+                readyState !== ReadyState.OPEN ||
+                !state.models?.length ||
+                !state.selectedModel ||
+                props.running ||
+                state.value.trim().length === 0 ||
+                props.session.loading
+              }
+              onClick={handleSendMessage}
+              iconAlign="right"
+              iconName={!props.running ? "angle-right-double" : undefined}
+              variant="primary"
+            >
+              {props.running ? (
+                <>
+                  Loading&nbsp;&nbsp;
+                  <Spinner />
+                </>
+              ) : (
+                "Send"
+              )}
+            </Button>
+          </div>
         </div>
       </Container>
       <div className={styles.input_controls}>
@@ -670,7 +718,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
             placeholder="Select a model"
             empty={
               <div>
-                No models available. Please ensure you have access to Amazon
+                No models available. Please make sure you have access to Amazon
                 Bedrock or alternatively deploy a self-hosted model on SageMaker
                 or add API_KEY to Secrets Manager.
               </div>
@@ -736,6 +784,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
+    
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN
@@ -753,8 +802,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
       </div>
     </SpaceBetween>
   );
-  
-}
+}  
 
 function getSelectedWorkspaceOption(
   workspaces: Workspace[]

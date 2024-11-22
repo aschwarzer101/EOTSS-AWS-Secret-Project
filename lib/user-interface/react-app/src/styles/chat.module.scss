@@ -238,17 +238,13 @@
   margin-left: auto; /* Push the element to the right */
 }
 
-.input_textarea_container {
-  display: flex;
-  align-items: center;
-  position: relative;
+/* for doc upload*/
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
 }
 
-.icon_container {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  right: 10px; /* Adjust spacing if necessary */
-  top: 50%;
-  transform: translateY(-50%);
+div:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }

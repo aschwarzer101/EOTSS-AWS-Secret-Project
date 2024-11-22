@@ -599,17 +599,46 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
     ...OptionsHelper.getSelectOptions(state.workspaces ?? []),
   ];
 
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
   return (
     <SpaceBetween direction="vertical" size="l">
       <Container>
-        <div className={styles.input_textarea_container}>
-          {/* SARAH doc upload */}
-          <Button
-            onClick={handleUploadDocument}
-            variant="icon"
-            iconName="upload" // Valid Cloudscape icon but removing the text 
-            ariaLabel="Upload Document"
-          />
+        <div className={styles.input_textarea_container} style={{ position: "relative" }}>
+          {/* SARAH doc upload with Tooltip */}
+          <div
+            style={{ position: "relative", display: "inline-block" }}
+            onMouseEnter={() => setTooltipVisible(true)} // Hover logic on wrapper
+            onMouseLeave={() => setTooltipVisible(false)} // Hide logic on wrapper
+          >
+            <Button
+              onClick={handleUploadDocument}
+              variant="icon"
+              iconName="file" // Valid Cloudscape icon but removing the text
+              ariaLabel="Upload Document"
+            />
+            {/* Tooltip */}
+            {tooltipVisible && (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "calc(100% + 8px)", // Position above the button
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  backgroundColor: "#333",
+                  color: "#fff",
+                  fontSize: "12px",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  whiteSpace: "nowrap",
+                  zIndex: 10,
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                Upload Document
+              </div>
+            )}
+          </div>
           <TextareaAutosize
             className={styles.input_textarea}
             value={state.value} // Keep the text input functionality
@@ -755,7 +784,7 @@ const checkWorkspaceExists = async (name: string): Promise<boolean> => {
                 onClick={() => setConfigDialogVisible(true)}
               />
             </div>
-  
+    
             <StatusIndicator
               type={
                 readyState === ReadyState.OPEN

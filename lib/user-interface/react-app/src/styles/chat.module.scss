@@ -238,3 +238,13 @@
   margin-left: auto; /* Push the element to the right */
 }
 
+/* for doc upload*/
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+}
+
+div:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

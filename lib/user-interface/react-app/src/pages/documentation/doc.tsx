@@ -8,9 +8,9 @@ const GenieFeaturesPage = () => {
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", color: "#333" }}>
+    <div style={{ fontFamily: "Arial, sans-serif", textAlign: "center", color: "#333" }}>
       {/* Header */}
-      <header style={{ backgroundColor: "indigo", color: "white", padding: "20px", textAlign: "center" }}>
+      <header style={{ backgroundColor: "indigo", color: "white", padding: "20px" }}>
         <h1>Learn More About GENIE</h1>
         <p>Explore the features of our AI-powered chatbot and tools.</p>
       </header>
@@ -29,7 +29,7 @@ const GenieFeaturesPage = () => {
         >
           <h2 style={{ color: "purple" }}>Chatbot</h2>
           <p>The Chatbot feature enables users to:</p>
-          <ul>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
             <li>Ask General Questions like using a search engine.</li>
             <li>Query Uploaded Documents for specific information.</li>
           </ul>
@@ -46,7 +46,7 @@ const GenieFeaturesPage = () => {
           }}
         >
           <h2 style={{ color: "indigo" }}>Bottom Bar</h2>
-          <ul>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
             <li>
               <strong>Smart Model:</strong> Automatically selects the best model for your query.
             </li>
@@ -68,7 +68,7 @@ const GenieFeaturesPage = () => {
         >
           <h2 style={{ color: "pink" }}>Multi-Chat Playground</h2>
           <p>Compare outputs from multiple models side by side.</p>
-          <ul>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
             <li>Select a model for each panel.</li>
             <li>Choose a workspace or Basic Chat (No Workspace).</li>
             <li>Enter your question and compare outputs.</li>
@@ -101,7 +101,7 @@ const GenieFeaturesPage = () => {
             }}
           >
             <h2 style={{ color: "indigo" }}>Supported Models</h2>
-            <ul>
+            <ul style={{ listStyleType: "none", padding: 0 }}>
               <li>
                 <strong>Claude Series by Anthropic:</strong> Advanced conversational AI with various versions like Claude 3.5 Sonnet and Claude 3 Haiku for improved reasoning and speed.
               </li>
@@ -123,7 +123,7 @@ const GenieFeaturesPage = () => {
       </div>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: "indigo", color: "white", padding: "10px", textAlign: "center" }}>
+      <footer style={{ backgroundColor: "indigo", color: "white", padding: "10px" }}>
         <p>© 2024 GENIE AI Interface. All rights reserved.</p>
       </footer>
     </div>
@@ -131,4 +131,5 @@ const GenieFeaturesPage = () => {
 };
 
 export default GenieFeaturesPage;
+
 

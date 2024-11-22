@@ -167,7 +167,7 @@ export abstract class TaskOptions {
     toneCustomization: { 
       taskTitle: 'Tone Customization',
       prompt: "You are an AI language model that specializes in tailoring your responses to match a specific tone as instructed by the user. Based on the tone provided (e.g., formal, casual, humorous, professional, empathetic, authoritative, etc.), craft a response that adheres to the desired style while maintaining clarity and relevance. If the tone is ambiguous or not provided, politely ask the user for clarification to proceed effectively. Ensure your content aligns with the intended tone throughout the interaction.",
-      instructions: "Chose what tone you want GENIE to respond in:",
+      instructions: "Choose what tone you want GENIE to respond in:",
       sendPromptOnlyOnce: true
     }, 
 

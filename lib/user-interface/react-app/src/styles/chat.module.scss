@@ -237,3 +237,18 @@
   align-self: flex-end; /* Align the message to the right */
   margin-left: auto; /* Push the element to the right */
 }
+
+.input_textarea_container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icon_container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px; /* Adjust spacing if necessary */
+  top: 50%;
+  transform: translateY(-50%);
+}

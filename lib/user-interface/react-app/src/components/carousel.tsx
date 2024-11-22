@@ -102,11 +102,12 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
             {/* Flexbox layout for cards */}
             <div
                 style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center", // Center-align cards
+                    display: "flex", // Use flexbox for layout
+                    flexWrap: "nowrap", // Prevent wrapping to the next row
+                    justifyContent: "center", // Center the items horizontally
                     gap: "1rem", // Space between cards
                     padding: "2rem", // Padding around the grid
+                    overflowX: "auto", // Enable horizontal scrolling for smaller screens
                 }}
             >
                 {visibleCards.map((task) => (

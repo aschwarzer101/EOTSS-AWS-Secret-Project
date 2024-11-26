@@ -74,7 +74,6 @@
   height: 180px; /* Match the required height */
   padding: 1rem; /* Adjust padding for internal content */
   background-color: #bae8e8; /* Blue background */
-  border-radius: 20px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   display: flex; /* Flex layout */
   flex-direction: column; /* Stack content vertically */
@@ -91,7 +90,6 @@
   height: 180px; /* Same height as light mode */
   padding: 1rem; /* Adjust padding */
   background-color: #bae8e8; /* Use a darker blue or adjust for dark mode */
-  border-radius: 20px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(213, 241, 241, 0.3); /* Softer shadow for dark mode */
   display: flex; /* Flex layout */
   flex-direction: column; /* Stack content vertically */

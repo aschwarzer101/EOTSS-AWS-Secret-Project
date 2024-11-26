@@ -105,7 +105,7 @@ const CarouselNext = ({ theme }: CarouselNextProps) => {
                     display: "flex",
                     flexWrap: "wrap", // Allow cards to wrap onto the next row
                     justifyContent: "center", // Center-align all cards
-                    gap: "1rem", // Add space between the cards
+                    //gap: "1rem", // Add space between the cards
                     //padding: "2rem", // Add padding around the container
                 }}
             >

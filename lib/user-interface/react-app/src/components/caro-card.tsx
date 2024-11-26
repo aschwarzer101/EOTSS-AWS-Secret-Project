@@ -47,13 +47,13 @@ export function TaskCard(props: ChatBotTaskCard) {
           height: "180px", // Match the purple card height
         }}
       >
-        <Card bg="info" style={{ borderRadius: "20px", overflow: "hidden" }}>
+        <Card bg="info" style={{ borderRadius: "20px"}}>
           <Card.Header></Card.Header>
           <CardBody>
-            <Card.Title style={{ fontSize: "22px" }}>
+            <Card.Title style={{ fontSize: "22px"}}>
               {props.cardTitle}
             </Card.Title>
-            <Card.Text as="p" style={{ fontSize: "14px" }}>
+            <Card.Text as="p" style={{ fontSize: "14px"}}>
               {props.taskDescription}
             </Card.Text>
             <Button

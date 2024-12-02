@@ -40,7 +40,7 @@ export default function AppConfigured() {
       "domain": "sandbox-mass-gov.auth.us-east-1.amazoncognito.com",
       "scope": ["email", "openid", "profile"],
       "redirectSignIn": "https://dr7l4jtkt9o67.cloudfront.net/",
-      "redirectSignOut": "https://login.microsoftonline.com/3e861d16-48b7-4a0e-9806-8c04d81b7b2a/oauth2/v2.0/logout?post_logout_redirect_uri=https%3A%2F%2Fd34zoiv84m8ivb.cloudfront.net",
+      "redirectSignOut": "https://login.microsoftonline.com/3e861d16-48b7-4a0e-9806-8c04d81b7b2a/oauth2/v2.0/logout?redirect_uri=https://dr7l4jtkt9o67.cloudfront.net/",
       "responseType": "code"
     }};
     //updating

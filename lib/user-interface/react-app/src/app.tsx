@@ -30,6 +30,7 @@ import SessionPage from "./pages/chatbot/sessions/sessions";
 import {StorageHelper} from "./common/helpers/storage-helper.ts";
 import {Mode} from "@cloudscape-design/global-styles";
 import {useState} from "react";
+import Documentation from "./pages/documentation/doc";
 
 function App() {
   const appContext = useContext(AppContext);
@@ -74,9 +75,9 @@ function App() {
               <Route path="workspaces/add-data" element={<AddData />} />
             </Route>
             
-            {/* <Route path="/documentation" element={<Outlet />}>
+            <Route path="/documentation" element={<Outlet />}>
               <Route path="doc" element={<Documentation />} />
-            </Route> */}
+            </Route>
 
             <Route path="*" element={<NotFound />} />
           </Routes>
